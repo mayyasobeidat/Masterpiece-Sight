@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sight", "sight\sight.csproj", "{8A6B7538-1E1B-4FB1-9CA2-3E708B7CAAAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A6B7538-1E1B-4FB1-9CA2-3E708B7CAAAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6B7538-1E1B-4FB1-9CA2-3E708B7CAAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6B7538-1E1B-4FB1-9CA2-3E708B7CAAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6B7538-1E1B-4FB1-9CA2-3E708B7CAAAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F4E0EB0-7FF6-4F4B-A8B9-E436EBD5F629}
+	EndGlobalSection
+EndGlobal

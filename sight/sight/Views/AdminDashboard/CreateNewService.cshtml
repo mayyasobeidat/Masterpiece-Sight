@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "CreateNewService";
+}
+<style>
+    /*custom inpu file*/
+    .custom-file-input {
+        color: transparent;
+    }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: "▲ Upload Photo";
+            color: #fff;
+            display: inline-block;
+            background: #ffc107;
+            padding: 10px 22px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
+
+        .custom-file-input:focus {
+            outline: none !important;
+        }
+
+        .custom-file-input:active::before {
+            transform: scale(.9) translate(0px, 2px);
+            box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.20);
+        }
+</style>
+<div class="row g-4">
+    <h6 class="mb-4">Create Service</h6>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Service Name</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Description</label>
+                    <textarea class="form-control" placeholder="Describe this service" style="height: 150px;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-6">
+        <input type="file" class="custom-file-input" accept="image/*">
+        <img src="~/AdminDashboard/img/Portrait.jpg" width="100%" style="padding:20px 0;" />
+    </div>
+</div>
+
