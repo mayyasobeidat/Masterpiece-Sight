@@ -99,11 +99,22 @@ width: 90%; padding: 5%;
               <h5>We just need a few more details to complete your request so Barra can get back to you within 24 - 48 hours to confirm your booking.</h5>
 <br>
               <div class="mb-3">
-                <label class="form-label d-block">How many participants will be on the shoot?</label>
+                <h5>Please tell us about your shoot vision and goals, including anything specific you are hoping to see in your photos.*</h5>
                 <div class="form-floating mb-3 row-cols-lg-3">
-                  <input class="form-control" type="number" data-sb-validations="required" />
+                  <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
+                  <label for="message">Examples include:<br>
+                    1) any specific landmarks or locations you would like in the background<br>
+                    2) photo style, such as romantic, fun, playful, etc.<br>
+                    3) any must-have shots, such as solo shots or photos of only certain participants</label>
                 </div>
-                <p>For groups of more than 6 we require a shoot length minimum of 60 minutes, for groups of more than 10 we require a shoot length minimum of 90 minutes, and for groups of more than 15 we require a shoot length minimum of 2 hours.</p>
+                <p>The details you provide will help your photographer make the best suggestions for your shoot!
+                </p>
+
+                <div style="display: inline-block;" >
+                  <input type="checkbox" width="10px" id="checkbox1"> 
+                  <label for="checkbox1">I want to receive Flytographer’s weekly newsletter</label>
+                </div>
+                
 
               </div>
 
@@ -111,15 +122,9 @@ width: 90%; padding: 5%;
 
 
             <div class="mb-3">
-              <label class="form-label d-block">Choose your package *</label>
-              <div class="form-floating mb-3 row-cols-lg-3">
-                <select class="form-select" id="newField3" aria-label="New Field 3">
-                    <option value="1">60 minutes - 50JD</option>
-                    <option value="2">90 minutes - 70JD</option>
-                    <option value="3">120 minutes - 90JD</option>
-                </select>
-                <label for="newField3">Price</label>
-            </div>
+             <p> Be the first to hear about big sales, special offers, cool photography tips & travel inspo
+              arrow_right_altPreviousSubmit my Request</p>
+              
           </div>
 
       
@@ -128,7 +133,7 @@ width: 90%; padding: 5%;
           <button class="btn btn-light" id="submitButton" type="submit" style="width: 100%;">Previous</button>
         </div>
         <div class="col-md-3 col-sm-6">
-      <button class="btn btn-warning" id="submitButton" type="submit" style="width: 100%;">Next Step</button>
+      <button class="btn btn-warning" id="submitButton" type="submit" style="width: 100%;">Submit Request</button>
     </div>
 
 
