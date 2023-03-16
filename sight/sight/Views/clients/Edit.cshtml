@@ -1,0 +1,373 @@
+﻿@model sight.Models.client
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+}
+
+
+
+<style>
+    .profiless img {
+        height: 120px;
+    }
+
+    .mmm {
+        width: 100%;
+    }
+
+    .mm {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+    /*custom inpu file*/
+    .custom-file-input {
+        color: transparent;
+    }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: "▲ Upload Photo";
+            color: #fff;
+            display: inline-block;
+            background: #ffc107;
+            padding: 10px 22px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
+
+        .custom-file-input:focus {
+            outline: none !important;
+        }
+
+        .custom-file-input:active::before {
+            transform: scale(.9) translate(0px, 2px);
+            box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.20);
+        }
+</style>
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+    <div class="container">
+
+
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
+
+                    <div class="card profiless">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center mmm">
+
+                            <img src="~/assetsUser/img/@Model.photo" alt="Profile" class="rounded-circle mm">
+                            <h2>@Model.fullName</h2>
+                        </div>
+                    </div>
+
+
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                            <p>الحجوزات</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8">
+
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            @*Bordered Tabs*@
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content pt-2">
+
+                                <div class="tab-pane fade profile-overview" id="profile-overview">
+                          
+                                    <h5 class="card-title">Profile Details</h5>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                        <div class="col-lg-9 col-md-8">@Model.fullName</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Phone</div>
+                                        <div class="col-lg-9 col-md-8">@Model.PhoneNumber</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Email</div>
+                                        <div class="col-lg-9 col-md-8">@Model.AspNetUser.Email</div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+
+
+                                    @using (Html.BeginForm("Edit", "clients", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.id)
+
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control", style = "display:none;" })
+                                                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        //Profile Edit Form
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile">
+                                                <div class="pt-2">
+                                                    <input type="file" name="photo" class="custom-file-input" accept="image/*">
+                                                    @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control", @value = Model.fullName } })
+                                                @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @*@Html.EditorFor(model => model.AspNetUser.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @value = Model.AspNetUser.Email, @readonly = "readonly" } })
+                                                  @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
+                                                <label>@Html.DisplayFor(model => model.AspNetUser.Email)</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="text-center">
+                                            <input type="submit" value="Save Changes" class="btn btn-warning" />
+
+                                        </div>
+                                        //End Profile Edit Form
+
+
+
+
+                                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-booking">
+
+                                    Settings Form
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Booking</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="mb-3" style="padding: 5%; border: solid;">
+                                                    <p><strong>Booking Request Details</strong></p>
+                                                    <p><strong>Date:</strong> March 10, 2023</p>
+                                                    <p><strong>Time of day:</strong>Morning</p>
+                                                    <p><strong>Number of participants:</strong>2</p>
+                                                    <p><strong>Requested photographer:</strong>Baraa</p>
+                                                    <p><strong>Type of Photo shoot:</strong>Portrait</p>
+                                                    <p><strong>Package:</strong>90 minute booking</p>
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-warning">Connect</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                    @*End settings Form*@
+
+                                </div>
+
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-feedback">
+
+                                    @*feedback Form*@
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <table class="table-bordered table table-hover table-responsive">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Comment</th>
+                                                        <th></th>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ahmad</td>
+                                                        <td>Hi</td>
+                                                        <td><a href="#">view</a></td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                    End feedback
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    Change Password Form
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control" id="currentPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-warning">Change Password</button>
+                                        </div>
+                                    </form> End Change Password Form
+
+                                </div>
+
+                            </div>
+
+                            @*End Bordered Tabs*@
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>

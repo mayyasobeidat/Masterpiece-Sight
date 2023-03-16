@@ -1,0 +1,14 @@
+﻿@model IEnumerable<sight.Models.city>
+
+@{
+    Layout = null;
+}
+<select name="city" id="city" class="justify-content-center form-control-lg city" style="color: #999;">
+    <option value="0" selected style="color: black;">&nbsp;&nbsp;&nbsp;⟟Find Photographer by City</option>
+
+    @foreach (var item in Model)
+    {
+        <option value="@item.id"> &nbsp;&nbsp;&nbsp; @item.cityName</option>
+    }
+</select>
+

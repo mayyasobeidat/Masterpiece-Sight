@@ -1,0 +1,58 @@
+﻿@model IEnumerable<sight.Models.photosAdmin>
+
+@{
+    Layout = null;
+}
+
+
+
+
+<!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Portfolio</h2>
+            <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">P</span>ortfolio</p>
+
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="portfolio-flters">
+
+                    <li data-filter="*" class="filter-active">All</li>
+                    @foreach (var type in Model.Select(m => m.PhotographyType1.TypeName).Distinct())
+                    {
+                        <li data-filter=".@type">
+                            @type
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 portfolio-item @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)">
+                    <div class="portfolio-wrap">
+                        <img src="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo)" class="img-fluid" alt="@Html.DisplayFor(modelItem => item.title)">
+                        <div class="portfolio-info">
+                            <!-- <h4>App 1</h4> -->
+                            <p>
+                                @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)
+                            </p>
+                            <div class="portfolio-links">
+                                <a href="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="@Html.DisplayFor(modelItem => item.title)"><i class="bx bx-plus"></i></a>
+                                <a href="@Html.DisplayFor(modelItem => item.photographerProfile)" title="Go to the photographer's page" target="_blank"><i class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+</section>
+<!-- End Portfolio Section -->
+

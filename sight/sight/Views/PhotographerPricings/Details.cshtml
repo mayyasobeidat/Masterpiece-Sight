@@ -1,0 +1,59 @@
+﻿@model sight.Models.PhotographerPricing
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PhotographerPricing</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceOneHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceOneHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceOneAndHalfHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceOneAndHalfHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceTwoHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceTwoHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photographer.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.photographer.user_id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

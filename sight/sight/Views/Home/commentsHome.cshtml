@@ -1,0 +1,27 @@
+﻿@model IEnumerable<sight.Models.commentsHome>
+
+@{
+    Layout = null;
+}
+
+
+@foreach (var item in Model)
+{
+
+
+    <div class="swiper-slide">
+        <div class="testimonial-item">
+            <img src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.photographer.profilePhoto)" class="testimonial-img" alt="@Html.DisplayFor(modelItem => item.photographer.FullName)">
+            <h3>@Html.DisplayFor(modelItem => item.photographer.FullName)</h3>
+            <h6 style="font-family:'Times New Roman'; font-size:13px; opacity:0.5;">@String.Format("{0:MM/dd/yyyy}", item.created_at)</h6>
+            <p>
+                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                @Html.DisplayFor(modelItem => item.comment)                
+                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+            </p>
+        </div>
+    </div>
+    <!-- End testimonial item -->
+
+}
+

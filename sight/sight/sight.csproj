@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44339</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -50,6 +50,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -170,16 +172,93 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminDashboardController.cs" />
+    <Compile Include="Controllers\AspNetUsersController.cs" />
+    <Compile Include="Controllers\clientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PhotographerProfileController.cs" />
-    <Compile Include="Controllers\UsersPagesController.cs" />
+    <Compile Include="Controllers\PhotographerPricingsController.cs" />
+    <Compile Include="Controllers\photographersController.cs" />
+    <Compile Include="Controllers\PhotographyTypesController.cs" />
+    <Compile Include="Controllers\photosAdminsController.cs" />
+    <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\admin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\city.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\client.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\comment.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\commentsHome.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\photo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\photographer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhotographerPricing.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhotographerType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\photographer_cities.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhotographyType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\photosAdmin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\photo_sessions.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Subscription.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -210,6 +289,149 @@
     <Content Include="AdminDashboard\lib\tempusdominus\js\tempusdominus-bootstrap-4.js" />
     <Content Include="AdminDashboard\lib\tempusdominus\js\tempusdominus-bootstrap-4.min.js" />
     <Content Include="AdminDashboard\lib\waypoints\waypoints.min.js" />
+    <Content Include="assetsUser\555.png" />
+    <Content Include="assetsUser\css\style.css" />
+    <Content Include="assetsUser\img\0000.jpg" />
+    <Content Include="assetsUser\img\0000.png" />
+    <Content Include="assetsUser\img\000000 - Copy.png" />
+    <Content Include="assetsUser\img\000000.png" />
+    <Content Include="assetsUser\img\1.png" />
+    <Content Include="assetsUser\img\1111.png" />
+    <Content Include="assetsUser\img\11112.png" />
+    <Content Include="assetsUser\img\111122.png" />
+    <Content Include="assetsUser\img\1111res.png" />
+    <Content Include="assetsUser\img\2.png" />
+    <Content Include="assetsUser\img\2222.png" />
+    <Content Include="assetsUser\img\4357378.png" />
+    <Content Include="assetsUser\img\444.png" />
+    <Content Include="assetsUser\img\555.png" />
+    <Content Include="assetsUser\img\55511.png" />
+    <Content Include="assetsUser\img\about.jpg" />
+    <Content Include="assetsUser\img\apple-touch-icon.png" />
+    <Content Include="assetsUser\img\baraa.png" />
+    <Content Include="assetsUser\img\baraaCover.png" />
+    <Content Include="assetsUser\img\body.jpg" />
+    <Content Include="assetsUser\img\clients\client-1.png" />
+    <Content Include="assetsUser\img\clients\client-2.png" />
+    <Content Include="assetsUser\img\clients\client-3.png" />
+    <Content Include="assetsUser\img\clients\client-4.png" />
+    <Content Include="assetsUser\img\clients\client-5.png" />
+    <Content Include="assetsUser\img\clients\client-6.png" />
+    <Content Include="assetsUser\img\clients\client-7.png" />
+    <Content Include="assetsUser\img\clients\client-8.png" />
+    <Content Include="assetsUser\img\conn.png" />
+    <Content Include="assetsUser\img\counts-img.jpg" />
+    <Content Include="assetsUser\img\cta-bg.jpg" />
+    <Content Include="assetsUser\img\cta-bg1.jpg" />
+    <Content Include="assetsUser\img\cta-bg2.jpg" />
+    <Content Include="assetsUser\img\favicon.png" />
+    <Content Include="assetsUser\img\favicon1.png" />
+    <Content Include="assetsUser\img\features.jpg" />
+    <Content Include="assetsUser\img\Food.jpg" />
+    <Content Include="assetsUser\img\hero-bg.png" />
+    <Content Include="assetsUser\img\hero-bg00.jpg" />
+    <Content Include="assetsUser\img\hero-bg1.jpg" />
+    <Content Include="assetsUser\img\hero-bg11.jpg" />
+    <Content Include="assetsUser\img\Landscape.jpg" />
+    <Content Include="assetsUser\img\logo.png" />
+    <Content Include="assetsUser\img\mayar.png" />
+    <Content Include="assetsUser\img\mayyas.jpg" />
+    <Content Include="assetsUser\img\mayyas.png" />
+    <Content Include="assetsUser\img\Newborn.jpg" />
+    <Content Include="assetsUser\img\Occasions.jpg" />
+    <Content Include="assetsUser\img\portfolio\levitating-product-display-with-beauty-cream.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-1.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-11.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-2.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-22.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-3.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-30.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-33.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-4.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-44.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-5.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-55.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-6.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-60.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-7.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-71.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-8.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-88.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-9.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-99.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-details-1.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-details-2.jpg" />
+    <Content Include="assetsUser\img\portfolio\portfolio-details-3.jpg" />
+    <Content Include="assetsUser\img\portfolio\skin-care-product-composition.jpg" />
+    <Content Include="assetsUser\img\Portrait.jpg" />
+    <Content Include="assetsUser\img\Product.jpg" />
+    <Content Include="assetsUser\img\sedrh.jpg" />
+    <Content Include="assetsUser\img\sedrh.png" />
+    <Content Include="assetsUser\img\slide1.jpg" />
+    <Content Include="assetsUser\img\slide2.jpg" />
+    <Content Include="assetsUser\img\slide3.jpg" />
+    <Content Include="assetsUser\img\slide4.jpg" />
+    <Content Include="assetsUser\img\slide\slide-17.jpg" />
+    <Content Include="assetsUser\img\team\team-1.jpg" />
+    <Content Include="assetsUser\img\team\team-2.jpg" />
+    <Content Include="assetsUser\img\team\team-3.jpg" />
+    <Content Include="assetsUser\img\team\team-4.jpg" />
+    <Content Include="assetsUser\img\testimonials-bg.jpg" />
+    <Content Include="assetsUser\img\testimonials-bg1.jpg" />
+    <Content Include="assetsUser\img\testimonials\testimonials-1.jpg" />
+    <Content Include="assetsUser\img\testimonials\testimonials-1.png" />
+    <Content Include="assetsUser\img\testimonials\testimonials-11.jpg" />
+    <Content Include="assetsUser\img\testimonials\testimonials-2.jpg" />
+    <Content Include="assetsUser\img\testimonials\testimonials-3.jpg" />
+    <Content Include="assetsUser\img\testimonials\testimonials-4.jpg" />
+    <Content Include="assetsUser\img\testimonials\testimonials-5.jpg" />
+    <Content Include="assetsUser\js\main.js" />
+    <Content Include="assetsUser\scss\Readme.txt" />
+    <Content Include="assetsUser\vendor\aos\aos.css" />
+    <Content Include="assetsUser\vendor\aos\aos.js" />
+    <Content Include="assetsUser\vendor\bootstrap-icons\bootstrap-icons.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.rtl.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.rtl.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.rtl.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.rtl.css" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.rtl.min.css" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.esm.js" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.esm.min.js" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assetsUser\vendor\boxicons\css\animations.css" />
+    <Content Include="assetsUser\vendor\boxicons\css\boxicons.css" />
+    <Content Include="assetsUser\vendor\boxicons\css\boxicons.min.css" />
+    <Content Include="assetsUser\vendor\boxicons\css\transformations.css" />
+    <Content Include="assetsUser\vendor\boxicons\fonts\boxicons.svg" />
+    <Content Include="assetsUser\vendor\glightbox\css\glightbox.css" />
+    <Content Include="assetsUser\vendor\glightbox\css\glightbox.min.css" />
+    <Content Include="assetsUser\vendor\glightbox\css\plyr.css" />
+    <Content Include="assetsUser\vendor\glightbox\css\plyr.min.css" />
+    <Content Include="assetsUser\vendor\glightbox\js\glightbox.js" />
+    <Content Include="assetsUser\vendor\glightbox\js\glightbox.min.js" />
+    <Content Include="assetsUser\vendor\isotope-layout\isotope.pkgd.js" />
+    <Content Include="assetsUser\vendor\isotope-layout\isotope.pkgd.min.js" />
+    <Content Include="assetsUser\vendor\php-email-form\validate.js" />
+    <Content Include="assetsUser\vendor\purecounter\purecounter_vanilla.js" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.css" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.svg" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.symbol.svg" />
+    <Content Include="assetsUser\vendor\swiper\swiper-bundle.min.css" />
+    <Content Include="assetsUser\vendor\swiper\swiper-bundle.min.js" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\img\apple-touch-icon.png" />
     <Content Include="assets\img\favicon.png" />
@@ -288,6 +510,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="HtmlPage1.html" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="assets\vendor\bootstrap-icons\bootstrap-icons.json" />
@@ -405,6 +638,49 @@
     <Content Include="AdminDashboard\scss\bootstrap\scss\_type.scss" />
     <Content Include="AdminDashboard\scss\bootstrap\scss\_utilities.scss" />
     <Content Include="AdminDashboard\scss\bootstrap\scss\_variables.scss" />
+    <Content Include="assetsUser\css\css" />
+    <Content Include="assetsUser\vendor\bootstrap-icons\bootstrap-icons.json" />
+    <Content Include="assetsUser\vendor\bootstrap-icons\fonts\bootstrap-icons.woff" />
+    <Content Include="assetsUser\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.rtl.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\css\bootstrap.rtl.min.css.map" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.esm.js.map" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.esm.min.js.map" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="assetsUser\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="assetsUser\vendor\boxicons\fonts\boxicons.eot" />
+    <Content Include="assetsUser\vendor\boxicons\fonts\boxicons.ttf" />
+    <Content Include="assetsUser\vendor\boxicons\fonts\boxicons.woff" />
+    <Content Include="assetsUser\vendor\boxicons\fonts\boxicons.woff2" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.eot" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.less" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.ttf" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.woff" />
+    <Content Include="assetsUser\vendor\remixicon\remixicon.woff2" />
+    <Content Include="assetsUser\vendor\swiper\swiper-bundle.min.js.map" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -450,23 +726,68 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\PhotographerProfile\Index.cshtml" />
-    <Content Include="Views\PhotographerProfile\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_LayoutPhotographerProfile.cshtml" />
-    <Content Include="Views\Shared\_LayoutUsersPages.cshtml" />
-    <Content Include="Views\UsersPages\Index.cshtml" />
-    <Content Include="Views\UsersPages\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_LayoutRegister.cshtml" />
     <Content Include="Views\Shared\_LayoutAdminDashboard.cshtml" />
     <Content Include="Views\AdminDashboard\Index.cshtml" />
     <Content Include="Views\AdminDashboard\_ViewStart.cshtml" />
     <Content Include="Views\AdminDashboard\Services.cshtml" />
     <Content Include="Views\AdminDashboard\Photographers.cshtml" />
     <Content Include="Views\AdminDashboard\CreateNewService.cshtml" />
-    <Content Include="Views\AdminDashboard\Users.cshtml" />
     <Content Include="Views\AdminDashboard\Gallery.cshtml" />
     <Content Include="Views\AdminDashboard\AddNewPhoto.cshtml" />
     <Content Include="Views\AdminDashboard\Statistics.cshtml" />
     <Content Include="Views\AdminDashboard\Dashboard.cshtml" />
+    <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_LayoutUsersPages.cshtml" />
+    <Content Include="Views\Home\_ViewStart.cshtml" />
+    <Content Include="Views\Home\ChoosePhotographer.cshtml" />
+    <Content Include="Views\photographers\_ViewStart.cshtml" />
+    <Content Include="Views\photosAdmins\Create.cshtml" />
+    <Content Include="Views\photosAdmins\Delete.cshtml" />
+    <Content Include="Views\photosAdmins\Details.cshtml" />
+    <Content Include="Views\photosAdmins\Edit.cshtml" />
+    <Content Include="Views\photosAdmins\Index.cshtml" />
+    <Content Include="Views\Home\gallery.cshtml" />
+    <Content Include="Views\Home\commentsHome.cshtml" />
+    <Content Include="Views\Home\Photographer.cshtml" />
+    <Content Include="Views\Home\Client.cshtml" />
+    <Content Include="Views\Account\PhotographerProfileForm.cshtml" />
+    <Content Include="Views\AspNetUsers\Create.cshtml" />
+    <Content Include="Views\AspNetUsers\Delete.cshtml" />
+    <Content Include="Views\AspNetUsers\Details.cshtml" />
+    <Content Include="Views\AspNetUsers\Edit.cshtml" />
+    <Content Include="Views\AspNetUsers\Index.cshtml" />
+    <Content Include="Views\photographers\Create.cshtml" />
+    <Content Include="Views\photographers\Delete.cshtml" />
+    <Content Include="Views\photographers\Details.cshtml" />
+    <Content Include="Views\photographers\Edit.cshtml" />
+    <Content Include="Views\photographers\Index.cshtml" />
+    <Content Include="Views\photographers\photographers.cshtml" />
+    <Content Include="Views\photographers\PhotographerProfile.cshtml" />
+    <Content Include="Views\clients\Create.cshtml" />
+    <Content Include="Views\clients\Delete.cshtml" />
+    <Content Include="Views\clients\Details.cshtml" />
+    <Content Include="Views\clients\Edit.cshtml" />
+    <Content Include="Views\clients\Index.cshtml" />
+    <Content Include="Views\PhotographyTypes\Create.cshtml" />
+    <Content Include="Views\PhotographyTypes\Delete.cshtml" />
+    <Content Include="Views\PhotographyTypes\Details.cshtml" />
+    <Content Include="Views\PhotographyTypes\Edit.cshtml" />
+    <Content Include="Views\PhotographyTypes\Index.cshtml" />
+    <Content Include="Views\AdminDashboard\photographersCount.cshtml" />
+    <Content Include="Views\AdminDashboard\clientsCount.cshtml" />
+    <Content Include="Views\PhotographerPricings\Create.cshtml" />
+    <Content Include="Views\PhotographerPricings\Delete.cshtml" />
+    <Content Include="Views\PhotographerPricings\Details.cshtml" />
+    <Content Include="Views\PhotographerPricings\Edit.cshtml" />
+    <Content Include="Views\PhotographerPricings\Index.cshtml" />
+    <Content Include="Views\photographers\Pays.cshtml" />
+    <Content Include="Views\Subscriptions\Create.cshtml" />
+    <Content Include="Views\Subscriptions\Delete.cshtml" />
+    <Content Include="Views\Subscriptions\Details.cshtml" />
+    <Content Include="Views\Subscriptions\Edit.cshtml" />
+    <Content Include="Views\Subscriptions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -483,6 +804,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

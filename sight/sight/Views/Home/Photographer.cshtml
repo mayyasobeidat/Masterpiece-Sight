@@ -1,0 +1,649 @@
+﻿@model sight.Models.photographer
+
+@{
+    ViewBag.Title = "Photographer";
+}
+
+
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+    <div class="container">
+
+
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                            <img src="~/assetsUser/img/baraa.png" alt="Profile" class="rounded-circle">
+                            <h2>Baraa Mohammad</h2>
+                            <div class="social-links mt-2">
+                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                            <p>الدفع</p>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+                <div class="col-xl-8">
+
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            <!-- Bordered Tabs -->
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content pt-2">
+
+                                <div class="tab-pane fade profile-overview" id="profile-overview">
+                                    <h5 class="card-title">About</h5>
+                                    <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+
+                                    <h5 class="card-title">Profile Details</h5>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                        <div class="col-lg-9 col-md-8">Baraa Mohammad</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Age</div>
+                                        <div class="col-lg-9 col-md-8">20</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Job</div>
+                                        <div class="col-lg-9 col-md-8">Photographer</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">City</div>
+                                        <div class="col-lg-9 col-md-8">USA</div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Phone</div>
+                                        <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Email</div>
+                                        <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Type of Photography</div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <p>Product</p>
+                                            <p>Food</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+
+
+
+
+
+                                <!-- Profile Edit Form -->
+                                <div class="row mb-3">
+                                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <img src="~/assetsUser/img/baraa.png" alt="Profile">
+                                        <div class="pt-2">
+                                            <input type="file" class="custom-file-input" accept="image/*">
+                                            <!-- <a href="#" class="btn btn-warning btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Cover Photo</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <img src="~/assetsUser/img/baraaCover.png" alt="cover">
+                                        <div class="pt-2">
+                                            <input type="file" class="custom-file-input" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="fullName" type="text" class="form-control" id="fullName" value="Baraa Mohammad">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="Age" type="number" class="form-control" id="Age" value="20">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="job" type="text" class="form-control" id="Job" value="Photographer">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="City" class="col-md-4 col-lg-3 col-form-label">City</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="City" type="text" class="form-control" id="City" value="USA">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mb-3">
+                                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                                        <label class="form-check-label" for="changesMade">
+                                            Product
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" id="changesMade2" checked>
+                                        <label class="form-check-label" for="changesMade2">
+                                            Food
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" id="changesMade3">
+                                        <label class="form-check-label" for="changesMade3">
+                                            Portrait
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" id="changesMade4">
+                                        <label class="form-check-label" for="changesMade4">
+                                            Occasions
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" id="changesMade5">
+                                        <label class="form-check-label" for="changesMade5">
+                                            Landscape
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" id="changesMade6">
+                                        <label class="form-check-label" for="changesMade6">
+                                            Newborn
+                                        </label>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                                <div class="row mb-3">
+                                    <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-warning">Save Changes</button>
+                                </div>
+                                <!-- End Profile Edit Form -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-booking">
+
+                                    <!-- Settings Form -->
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Booking</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="mb-3" style="padding: 5%; border: solid;">
+                                                    <p><strong>Booking Request Details</strong></p>
+                                                    <p><strong>Date:</strong> March 10, 2023</p>
+                                                    <p><strong>Time of day:</strong>Morning</p>
+                                                    <p><strong>Number of participants:</strong>2</p>
+                                                    <p><strong>Requested photographer:</strong>Baraa</p>
+                                                    <p><strong>Type of Photo shoot:</strong>Portrait</p>
+                                                    <p><strong>Package:</strong>90 minute booking</p>
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-warning">Connect</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                    <!-- End settings Form -->
+
+                                </div>
+
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-feedback">
+
+                                    <!-- feedback Form -->
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <table class="table-bordered table table-hover table-responsive">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Comment</th>
+                                                        <th></th>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ahmad</td>
+                                                        <td>Hi</td>
+                                                        <td><a href="#">view</a></td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                    <!-- End feedback  -->
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    <!-- Change Password Form -->
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control" id="currentPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-warning">Change Password</button>
+                                        </div>
+                                    </form><!-- End Change Password Form -->
+
+                                </div>
+
+                            </div><!-- End Bordered Tabs -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+<!-- End #main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Photographer</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>photographer</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.subscription_type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.subscription_type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.subscription_type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.profilePhoto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.profilePhoto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.profilePhoto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.coverPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.coverPhoto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.coverPhoto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.bio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.age, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AspNetUser.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AspNetUser.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AspNetUser.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AspNetUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AspNetUser.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        @*@Html.DropDownListFor(model => model.id, (IEnumerable<SelectListItem>)ViewBag.city, "-- Select City --", new { @class = "form-control" })
+
+            @Html.DropDownListFor(model => model.id, (IEnumerable<SelectListItem>)ViewBag.type, "-- Select photography type --", new { @class = "form-control" })*@
+
+
+        @foreach (var city in ViewBag.city)
+        {
+            <div>
+                <input type="checkbox" name="city" value="@city.Value" id="@city.Value" />
+                <label for="@city.Value">@city.Text</label>
+            </div>
+        }
+
+        @foreach (var item in ViewBag.type)
+        {
+            <div>
+                <input type="checkbox" id="@item.Value" name="@item.Value" value="@item.Value" />
+                <label for="@item.Value">@item.Text</label>
+            </div>
+        }
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id, "City:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.id, (IEnumerable<SelectListItem>)ViewBag.city, "-- Select City --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id, "Photography Type:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var type in (IEnumerable<SelectListItem>)ViewBag.type)
+                {
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="type" value="@type.Value" @(type.Selected ? "checked=\"checked\"" : "")> @type.Text
+                        </label>
+                    </div>
+                }
+                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+}
+
+
+
+
+
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+</div>
+</div>
+}
+
+@Html.ActionLink("Back to List", "Index")

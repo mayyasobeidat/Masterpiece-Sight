@@ -4,60 +4,239 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+
+<style>
+    body{
+        background-image: url('@Url.Content("~/assetsUser/img/body.jpg")');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    .login{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2em;
+            color: #fff;
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.18);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(1.2px);
+-webkit-backdrop-filter: blur(1.2px);
+        }
+
+        ::placeholder {
+  color: white;
+  opacity: 0.8; /* Firefox */
+text-align: center;
 }
+
+h1{
+    color: #fff;
+    text-align: center;
+}
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #ffc451;
+            }
+
+               /* Switch Default */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 17px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 13px;
+                width: 13px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #ffc451;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #ffc451;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(13px);
+            -ms-transform: translateX(13px);
+            transform: translateX(13px);
+        }
+
+
+        .social-icon{
+    background-color: white;
+    border: 2px white solid;
+    border-radius: 50%;
+    margin: 3px;
+  }
+        .myLogo{
+  width: 100%;
+}
+        @@media only screen and (min-device-width: 0px) and (max-device-width:480px)
+        {
+            body{
+
+            }
+
+            .login{
+                width: 70%;
+            }
+
+
+.myLogo{
+  width: 60%;
+}
+
+input[type="text"], input[type="password"], input[type="email"],button[type="submit"] {
+  padding: 8px 20px;
+    margin-bottom: 13px;
+    margin-top: 0;
+
+}
+
+        }
+
+        @@media only screen and (min-device-width: 481px) and (max-device-width:768px)
+        {
+            body{
+
+            }
+
+
+        }
+
+</style>
+
+    <!-- Body -->
+<div class="container">
+    <div class="login">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h1>Log In</h1>
+            <br>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div>
+                @Html.TextBoxFor(m => m.Email, new { @type = "email", @class = "", @placeholder = "Email", @id = "email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div>
+                @Html.PasswordFor(m => m.Password, new { @class = "", @placeholder = "Password", @id = "password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+
+
+
+
+
+
+
+            <input type="submit" value="Log in" />
+            <br>
+            <br>
+
+
+
+
+
+
+
+            <!-- Switch Default -->
+            <div style="display: flex; align-items: center;">
+                &nbsp;
+                <label class="switch">
+                    @Html.CheckBoxFor(m => m.RememberMe, new { id = "rememberMeToggle" })
+                    <span class="slider"></span>
+                </label> &nbsp;
+                <span style="color: #ccc;"> Remember me</span>
+            </div>
+
+
+        }
+
+        <p style="color: #ccc;padding: 20px;">Don't have an account ? <a href="/Account/Register">Create Account</a></p>
+
+        <p class="w-100 text-center" style="color:white;">&mdash; Or Sign In With &mdash;</p>
+        <div class="w-100">
+            <p class="social-media d-flex justify-content-center">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+                @*<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook-official"></span></a>
+                <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+                <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-google"></span></a>*@
+
+            </p>
+        </div>
+
+
+        <!-- End Body-->
+
+
+
+
+
+
+
+    </div>
+
+
+
+</div>

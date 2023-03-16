@@ -1,0 +1,65 @@
+﻿@model sight.Models.PhotographerPricing
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PhotographerPricing</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceOneHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceOneHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceOneAndHalfHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceOneAndHalfHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceTwoHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceTwoHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photographer.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.photographer.user_id)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

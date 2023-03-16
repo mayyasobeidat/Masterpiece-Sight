@@ -1,0 +1,174 @@
+﻿@model sight.Models.photosAdmin
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+
+}
+
+
+
+
+<style>
+    /*custom inpu file*/
+    .custom-file-input {
+        color: transparent;
+    }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: "▲ Upload Photo";
+            color: #fff;
+            display: inline-block;
+            background: #ffc107;
+            padding: 10px 22px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
+
+        .custom-file-input:focus {
+            outline: none !important;
+        }
+
+        .custom-file-input:active::before {
+            transform: scale(.9) translate(0px, 2px);
+            box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.20);
+        }
+</style>
+<div class="row g-4">
+    <h6 class="mb-4">Add Photo</h6>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+            <div class="mb-3">
+                <label class="form-label">Potographer Name</label>
+                <select class="form-control" style="width: 100%; background-color: #000; ">
+                    <option selected="selected">Baraa</option>
+                    <option>Mayyas</option>
+                    <option>test</option>
+                    <option>test</option>
+                    <option>test</option>
+                    <option>test</option>
+                    <option>test</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Potographer Profile</label>
+                <select class="form-control" style="width: 100%; background-color: #000; ">
+                    <option selected="selected">Baraa</option>
+                    <option>Mayyas</option>
+                    <option>test</option>
+                    <option>test</option>
+                    <option>test</option>
+                    <option>test</option>
+                    <option>test</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-6">
+        <input type="file" class="custom-file-input" accept="image/*">
+        <img src="~/AdminDashboard/img/Portrait.jpg" width="100%" style="padding:20px 0;" />
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>photosAdmin</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.photographerProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.photographerProfile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.photographerProfile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.photo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.photo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.created_at, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.created_at, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.created_at, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.photographyType, "photographyType", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("photographyType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.photographyType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+@*<div class="form-group">
+    @Html.LabelFor(model => model.photographer.id, "photographers", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("photographers", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+        @Html.LabelFor(model => model.photographer.id, "photographersProfile", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("photographersProfile", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.photographer.id, "", new { @class = "text-danger" })
+        </div>
+    </div>*@

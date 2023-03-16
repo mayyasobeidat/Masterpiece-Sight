@@ -1,4 +1,5 @@
-﻿using System;
+﻿using sight.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,21 @@ namespace sight.Controllers
     public class AdminDashboardController : Controller
     {
         // GET: AdminDashboard
+        private sightEntities db = new sightEntities();
+
+
+        public ActionResult photographersCount()
+        {
+            var count = db.photographers.Count();
+            return Content(count.ToString());
+        }
+
+        public ActionResult clientsCount()
+        {
+            var count = db.clients.Count();
+            return Content(count.ToString());
+        }
+
         public ActionResult Index()
         {
             return View();

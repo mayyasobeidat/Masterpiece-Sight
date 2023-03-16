@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model sight.Models.photographer
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -34,7 +36,7 @@
     * Author: BootstrapMade.com
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
-    
+
 </head>
 
 <body>
@@ -48,20 +50,42 @@
 
             <nav id="navbar" class="nav-menu navbar">
                 <ul>
-                    <li><a href="#" class="nav-link active"><i class="bx bx-arrow-back"></i> <span>Go Back</span></a></li>
+                    <li><a href="/photographers/photographers" class="nav-link active"><i class="bx bx-arrow-back"></i> <span>Go Back</span></a></li>
                 </ul>
             </nav><!-- .nav-menu -->
 
+            <style>
+                #header .profile img{
+                    height:120px;
+                }
+                .mmm {
+                    width: 100%;
+                }
+
+                .mm {
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            </style>
 
 
             <div class="profile">
-                <img src="~/assets/img/profile-img.jpg" alt="" class="img-fluid rounded-circle">
-                <h1 class="text-light"><a href="index.html">Baraa Mohammad</a></h1>
+                <div class="mmm">
+                    <img src="~/assetsUser/img/@Html.DisplayFor(model => model.profilePhoto)" alt="" class="img-fluid rounded-circle mm">
+
+                </div>
+                <h1 class="text-light"><a href="index.html">@Html.DisplayFor(model => model.FullName)</a></h1>
                 <div class="social-links mt-3 text-center">
-                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+
+
+                    <a href="@Html.DisplayFor(model => model.twitter)" class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a href="@Html.DisplayFor(model => model.facebook)" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a href="@Html.DisplayFor(model => model.instagram)" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="@Html.DisplayFor(model => model.linkedin)" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+
                 </div>
             </div>
 
@@ -82,18 +106,18 @@
         @*<section class="breadcrumbs fixed-top">
             <div class="container" style="height: 60px; display: flex; align-items: center;">
                 <a href="index.html"><img src="~/assets/img/logo.png" class="logoBlack" /></a>*@
-                @*<div class="d-flex justify-content-between align-items-center">
-            <div class="col-md-1"><img src="~/assets/img/logo.png" width="50%" /></div>
-            <ol>
-                <li><a href="index.html"><i class="fa-solid fa-right-from-bracket"></i></a></li>
-                <li><a href="index.html"><img src="~/assets/img/logo.png" width="50%" /></a></li>
+        @*<div class="d-flex justify-content-between align-items-center">
+                <div class="col-md-1"><img src="~/assets/img/logo.png" width="50%" /></div>
+                <ol>
+                    <li><a href="index.html"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                    <li><a href="index.html"><img src="~/assets/img/logo.png" width="50%" /></a></li>
 
-            </ol>
-        </div>*@
+                </ol>
+            </div>*@
 
-            @*</div>
-        </section>*@
-    <!-- End Breadcrumbs -->
+        @*</div>
+            </section>*@
+        <!-- End Breadcrumbs -->
 
 
         @RenderBody()
@@ -111,7 +135,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/ -->
-                Go to the  <a href="~\C:\Users\dell\Desktop\ماستربيس\New folder\Gp\Gp\index.html">home page</a>
+                Go to the  <a href="/Home/Index">home page</a>
             </div>
         </div>
     </footer><!-- End  Footer -->

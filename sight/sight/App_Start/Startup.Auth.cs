@@ -50,19 +50,19 @@ namespace sight
             //    clientId: "",
             //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+               consumerKey: "494517526190333",
+               consumerSecret: "62b4ecfacfd4391a9a816ee609468976");
 
             app.UseFacebookAuthentication(
-               appId: "1196334390995025",
-               appSecret: "4aebdfde903da1b79aa26b8fc71110eb");
+              appId: "1196334390995025",
+              appSecret: "4aebdfde903da1b79aa26b8fc71110eb");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "769357665794-5tda7cfahdm7l50q05mad8htn6pkr8jg.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

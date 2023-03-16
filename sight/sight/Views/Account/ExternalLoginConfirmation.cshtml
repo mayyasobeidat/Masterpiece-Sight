@@ -2,34 +2,198 @@
 @{
     ViewBag.Title = "Register";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>Associate your @ViewBag.LoginProvider account.</h3>
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
 
-    <h4>Association Form</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <p class="text-info">
-        You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
-        Please enter a user name for this site below and click the Register button to finish
-        logging in.
-    </p>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
+<style>
+    body{
+        background-image: url('@Url.Content("~/assetsUser/img/body.jpg")');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+
+    h4,h2,h3 {
+        color:#fff
+    }
+
+    .login {
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1515158a;
+        padding: 30px;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2em;
+            color: #fff;
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.18);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(1.2px);
+-webkit-backdrop-filter: blur(1.2px);
+        }
+
+        ::placeholder {
+  color: white;
+  opacity: 0.8; /* Firefox */
+text-align: center;
 }
+
+h1{
+    color: #fff;
+    text-align: center;
+}
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #ffc451;
+            }
+
+               /* Switch Default */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 17px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 13px;
+                width: 13px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #ffc451;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #ffc451;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(13px);
+            -ms-transform: translateX(13px);
+            transform: translateX(13px);
+        }
+
+
+        .social-icon{
+    background-color: white;
+    border: 2px white solid;
+    border-radius: 50%;
+    margin: 3px;
+  }
+        .myLogo{
+  width: 100%;
+}
+        @@media only screen and (min-device-width: 0px) and (max-device-width:480px)
+        {
+            body{
+
+            }
+
+            .login{
+                width: 70%;
+            }
+
+
+.myLogo{
+  width: 60%;
+}
+
+input[type="text"], input[type="password"], input[type="email"],button[type="submit"] {
+  padding: 8px 20px;
+    margin-bottom: 13px;
+    margin-top: 0;
+
+}
+
+        }
+
+        @@media only screen and (min-device-width: 481px) and (max-device-width:768px)
+        {
+            body{
+
+            }
+
+
+        }
+
+</style>
+<div class="login">
+
+
+    <h2>@ViewBag.Title.</h2>
+    <h3>Associate your @ViewBag.LoginProvider account.</h3>
+
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <h4>Association Form</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <p class="text-info">
+            You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
+            Please enter a user name for this site below and click the Register button to finish
+            logging in.
+        </p>
+        <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+                <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    }
+
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

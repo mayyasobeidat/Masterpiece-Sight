@@ -1,0 +1,224 @@
+﻿@model IEnumerable<sight.Models.photographer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+
+
+<style>
+
+
+    .myIMG {
+        top: -50px;
+        left: -35px;
+        display: block;
+        z-index: 999;
+        cursor: pointer;
+        -webkit-transition-property: all;
+        -webkit-transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease;
+    }
+
+        .myIMG:hover {
+            transform: scale(4);
+        }
+
+</style>
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        @*<h4 class="mb-4">  @Html.ActionLink("Add New Photographer", "Create")</h4>*@
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Profile Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col">Accept</th>
+                        <th scope="col">Active</th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(modelItem => item.id)</th>
+                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.created_at)</td>
+                            <td>@Html.DisplayFor(modelItem => item.accept)</td>
+                            <td>@Html.DisplayFor(modelItem => item.is_hidden)</td>
+
+
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+
+                                @*<a class="btn btn-primary">Edit</a>
+            <a class="btn btn-primary">Details</a>
+            <a class="btn btn-primary">Delete</a>*@
+
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-responsive-xxl">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subscription_type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.profilePhoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.coverPhoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.accept)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.is_hidden)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.instagram)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facebook)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.twitter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.linkedin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subscription_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.profilePhoto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.coverPhoto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.accept)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_hidden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.instagram)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.facebook)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.twitter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.linkedin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>*@

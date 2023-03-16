@@ -1,39 +1,495 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+@model IEnumerable<sight.Models.PhotographyType>
+
+
+
 <style>
-    body {
-        
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1088%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='url(%23SvgjsLinearGradient1089)'%3e%3c/rect%3e%3cpath d='M1159.893%2c187.549C1201.142%2c185.48%2c1231.458%2c153.718%2c1252.265%2c118.041C1273.276%2c82.013%2c1285.96%2c39.947%2c1267.899%2c2.353C1247.415%2c-40.285%2c1207.165%2c-72.511%2c1159.893%2c-74.233C1109.821%2c-76.057%2c1061.255%2c-50.075%2c1037.34%2c-6.046C1014.349%2c36.281%2c1024.181%2c87.489%2c1049.945%2c128.188C1073.822%2c165.906%2c1115.309%2c189.785%2c1159.893%2c187.549' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1494.1956031925233 199.31942195193193L1438.3847737187011 98.6340203198466 1337.6993720866158 154.4448497936689 1393.510201560438 255.13025142575424z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M806.6255505727607 326.781421063395L884.5800737210753 434.0766173436868 913.9207468530526 248.82689791508034z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M777.9481313849199 82.99668745538867L626.0248909999395 58.93441005472354 753.8858539842547 234.919927840369z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M172.23831856367147 296.2848509050774L29.97829571954921 353.76163102201133 229.71509868060537 438.54487374919967z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1182.281%2c623.428C1213.832%2c623.111%2c1240.921%2c604.143%2c1257.652%2c577.391C1275.636%2c548.637%2c1287.781%2c512.109%2c1269.946%2c483.262C1252.669%2c455.318%2c1215.132%2c455.073%2c1182.281%2c455.486C1150.45%2c455.886%2c1115.364%2c458.512%2c1098.353%2c485.42C1080.465%2c513.715%2c1086.846%2c550.332%2c1104.239%2c578.933C1120.915%2c606.355%2c1150.188%2c623.751%2c1182.281%2c623.428' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M106.26565799444484 404.1049504384516L-24.54723498595348 366.59495697856164 68.75566453455488 534.91784341885z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1211.3641717306161 519.7492910035625L1307.241670674782 600.2000650058121 1387.6924446770315 504.32256606164617 1291.8149457328657 423.8717920593966z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M138.12458758320182 302.487217529475L157.22324218017496 400.7412777359632 295.0550051914206 322.9662657372594z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1173.15%2c494.444C1197.687%2c494.739%2c1217.23%2c477.332%2c1230.547%2c456.721C1245.457%2c433.644%2c1258.895%2c405.774%2c1246.174%2c381.421C1232.809%2c355.834%2c1201.982%2c345.409%2c1173.15%2c346.838C1146.732%2c348.147%2c1123.638%2c364.499%2c1111.672%2c388.088C1100.749%2c409.622%2c1106.013%2c434.462%2c1118.097%2c455.367C1130.168%2c476.249%2c1149.032%2c494.154%2c1173.15%2c494.444' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M441.8603293113687 244.50117048101762L569.6622148115135 214.99578035316281 412.35493918351386 116.69928498087272z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1194.8968703805483 634.5149394390712L1243.821135835715 538.4956620826382 1147.801858479282 489.5713966274715 1098.8775930241152 585.5906739839045z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1151.8941193237908 145.8221281921566L1155.8411039146947 35.80160585848422 1070.0932113145236 79.49233937878645z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M529.3016051020894 372.13285368469724L556.7276285453788 304.25106361872463 441.1919317247752 297.0529234867769z' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M723.244%2c38.991C737.614%2c38.842%2c748.652%2c27.321%2c755.161%2c14.509C761.027%2c2.962%2c760.406%2c-10.421%2c754.091%2c-21.729C747.599%2c-33.354%2c736.532%2c-41.797%2c723.244%2c-42.642C708.314%2c-43.591%2c692.19%2c-39.122%2c684.761%2c-26.137C677.367%2c-13.215%2c682.585%2c2.365%2c690.159%2c15.183C697.567%2c27.72%2c708.683%2c39.142%2c723.244%2c38.991' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M550.18%2c346.586C574.133%2c346.431%2c596.841%2c336.286%2c609.976%2c316.254C624.579%2c293.985%2c632.494%2c264.947%2c618.616%2c242.219C605.12%2c220.116%2c576.076%2c218.579%2c550.18%2c218.324C523.634%2c218.063%2c493.353%2c218.283%2c479.372%2c240.85C464.923%2c264.174%2c473.759%2c294.241%2c489.026%2c317.038C502.528%2c337.2%2c525.916%2c346.743%2c550.18%2c346.586' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1253.519%2c264.148C1301.021%2c264.194%2c1341.467%2c233.442%2c1365.501%2c192.468C1389.86%2c150.94%2c1401.162%2c98.049%2c1374.435%2c58.004C1349.56%2c20.733%2c1298.324%2c24.02%2c1253.519%2c24.683C1210.429%2c25.321%2c1162.538%2c25.628%2c1138.649%2c61.495C1112.745%2c100.388%2c1118.866%2c151.599%2c1141.91%2c192.252C1165.299%2c233.515%2c1206.088%2c264.102%2c1253.519%2c264.148' fill='rgba(197%2c 187%2c 0%2c 0.59)' class='triangle-float3'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1088'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='15.28%25' y1='-39.29%25' x2='84.72%25' y2='139.29%25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1089'%3e%3cstop stop-color='%230e2a47' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(109%2c 173%2c 255%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3cstyle%3e %40keyframes float1 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-10px%2c 0)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float1 %7b animation: float1 5s infinite%3b %7d %40keyframes float2 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-5px%2c -5px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float2 %7b animation: float2 4s infinite%3b %7d %40keyframes float3 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(0%2c -10px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float3 %7b animation: float3 6s infinite%3b %7d %3c/style%3e%3c/defs%3e%3c/svg%3e");
-    background-size:cover;
-    background-repeat:no-repeat;
+    .aboutSection {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
+    .profile-card {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background-color: #ededed;
+        padding: 10px;
+        transition: all 0.3s;
+    }
+
+        .profile-card img {
+            opacity: 0.8;
+            filter: grayscale(20%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s;
         }
-</style>
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    .profile-details {
+        text-align: center;
+        text-transform: capitalize;
+        transform: translateY(-80%);
+        opacity: 0;
+        transition: all 0.3s;
+    }
+
+        .profile-details h3 {
+            font-size: 20px;
+        }
+
+        .profile-details p {
+            font-size: 14px;
+            margin: 5px 0 10px;
+        }
+
+        .profile-details a {
+            color: #555;
+            font-size: 20px;
+        }
+
+            .profile-details a:not(:last-child) {
+                margin-right: 10px;
+            }
+
+    .profile-card:hover {
+        height: 270px;
+        border-radius: 15px;
+        padding: 25px;
+    }
+
+        .profile-card:hover img {
+            opacity: 1;
+            filter: grayscale(0%);
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            transform: translateY(-50%);
+        }
+
+        .profile-card:hover .profile-details {
+            opacity: 1;
+        }
+
+    .city {
+        padding: 4px;
+        border-radius: 4px;
+        box-shadow: 2px 2px 8px #999;
+        background: #eee;
+        border: none;
+        outline: none;
+        display: inline-block;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .city1 {
+        position: relative;
+        width: 50%;
+    }
+
+        .city1:after {
+            content: '<>';
+            font: 11px "Consolas", monospace;
+            color: #666;
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            transform: rotate(90deg);
+            right: 20px;
+            top: 15px;
+            padding: 0 0 2px;
+            border-bottom: 1px solid #ddd;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .city1:before {
+            content: '';
+            right: 20px;
+            top: 15px;
+            width: 20px;
+            height: 20px;
+            background: #eee;
+            position: absolute;
+            pointer-events: none;
+            display: block;
+        }
+
+    h2.myWords {
+        color: #F2C511;
+        text-align: center;
+        font-size: 36px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-family: "Poppins", sans-serif;
+        padding-bottom: 15px;
+    }
+
+        h2.myWords:hover {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient( 274deg, #F2C511, #C0382B, #F2C511, #C0382B, #F2C511, #C0382B );
+            -webkit-background-image: linear-gradient( 274deg, #F2C511, #C0382B, #F2C511, #C0382B, #F2C511, #C0382B );
+        }
+
+    .aboutText {
+        color: white;
+        font-size: large;
+        padding: 50px;
+        margin: 50px;
+        background: rgb(0 0 0 / 26%);
+        border-radius: 16px;
+        box-shadow: 0px 0px 14px 0px rgba(205, 255, 0, 0.1);
+    }
+
+    .imgAbout2 {
+        display: none;
+    }
+
+    .ourTeamPhotographer {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        padding: 40px 0;
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+
+
+        .city1 {
+            width: 100%;
+        }
+
+        .aboutSection {
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-direction: column-reverse;
+        }
+
+        .imgAbout2 {
+            display: block;
+        }
+
+        .imgAbout {
+            display: none;
+        }
+
+        .aboutText {
+            font-size: medium;
+            padding: 30px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        h2.myWords {
+            font-size: 25px;
+            padding: 10px;
+        }
+
+        .ourTeamPhotographer {
+            flex-direction: column;
+            gap: 20px;
+            padding: 40px 0;
+            align-items: center;
+        }
+    }
+</style>
+
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-xl-8 col-lg-8">
+                <h1 style="color: #ddd;">Find a local <span style="color: #F2C511;">photographer</span> in your region.</h1><br>
+                <h2 style="color: #ddd;">Choose the photographer you like. We'll look after the rest.</h2>
+
+            </div>
+        </div>
+        <div class="row gy-4 mt-5" style="display: flex; justify-content: center;" style="width: 50% !important;">
+            <label class="city1 row">
+
+                @Html.Action("ChoosePhotographer")
+            </label>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>
+<!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about">
+        <div style="display: flex; flex-direction: column; " data-aos="fade-up">
+            <div>
+                <h2 class="myWords">Where creativity and technology enter the picture.</h2>
+            </div>
+            <div class="aboutSection">
+                <img src="~/assetsUser/img/2222.png" width="40%">
+                <p class="aboutText" data-aos="fade-left" data-aos-delay="100">
+
+                    Hello and welcome to our website!<br>
+                    We created this site to bring photographers in our community and people who need their services together.
+                    Our goal was to make it easy to find a trusted photographer and see their work, as well as to make communication and booking sessions easier.
+                    <br><br><a href="#about" style="color: #FEF445; text-decoration: none;">Get to know us more..</a>
+                </p>
+            </div>
+            <div>
+                <img src="~/assetsUser/img/1111.png" width="100%" class="imgAbout">
+                <img src="~/assetsUser/img/1111res.png" width="100%" class="imgAbout2">
+
+            </div>
+        </div>
+    </section>
+    <!-- End About Section -->
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Services</h2>
+                <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">S</span>ervices</p>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="mb-3"></h3>
+                </div>
+
+                <div class="col-6 text-md-end">
+                    <a class="btn btn-warning mb-3 me-1"
+                       href="#carouselExampleIndicators2" role="button"
+                       data-bs-slide="prev">
+                        <i class="fa fa-arrow-left"></i>
+                    </a>
+                    <a class="btn btn-warning mb-3 " href="#carouselExampleIndicators2"
+                       role="button" data-bs-slide="next">
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="col-12">
+                    <div id="carouselExampleIndicators2" class="carousel slide"
+                         data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    @foreach (var item in Model.Take(3))
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card">
+                                                <img class="img-fluid" alt="100%x280"
+                                                     src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">
+                                                        @Html.DisplayFor(modelItem => item.TypeName)
+                                                    </h4>
+                                                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="row">
+                                    @foreach (var item in Model.Reverse().Take(3))
+                                    {
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card">
+                                                <img class="img-fluid" alt="100%x280"
+                                                     src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.TypeName)</h4>
+                                                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Services Section -->
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="text-center">
+                <h3>Join Us Now</h3>
+                <p> Join us now and experience the ultimate photography platform. Connect with talented photographers, book unique shoots and bring your vision to life. Don't miss out on endless possibilities. Click the 'Join us' button below and become a part of our community today.</p>
+                <a class="cta-btn" href="#">Join us</a>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Cta Section -->
+    <!-- ======= Portfolio Section ======= -->
+    @Html.Action("gallery")
+
+    <!-- End Portfolio Section -->
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    @Html.Action("commentsHome")
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Testimonials Section -->
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Team</h2>
+                <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">T</span>eam</p>
+            </div>
+
+
+            <div class="ourTeamPhotographer">
+
+                <div class="profile-card">
+                    <img src="~/assetsUser/img/mayyas.jpg" alt="" />
+                    <div class="profile-details">
+                        <h3>Mayyas Obeidat</h3>
+                        <p>Photographer and founder of this site</p>
+                        <div class="social-media-list">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="profile-card">
+                    <img src="~/assetsUser/img/sedrh.png" alt="" />
+                    <div class="profile-details">
+                        <h3>Sedrh Al-shathily</h3>
+                        <p>Portrait Photographer</p>
+                        <div class="social-media-list">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="profile-card">
+                    <img src="~/assetsUser/img/baraa.png" alt="" />
+                    <div class="profile-details">
+                        <h3>Baraa Mohammad</h3>
+                        <p>Product Photographer</p>
+                        <div class="social-media-list">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="profile-card">
+                    <img src="~/assetsUser/img/mayar.png" alt="" />
+                    <div class="profile-details">
+                        <h3>Mayar Karter</h3>
+                        <p>Food Photographer</p>
+                        <div class="social-media-list">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </section>
+
+    <!-- End Team Section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main><!-- End #main -->

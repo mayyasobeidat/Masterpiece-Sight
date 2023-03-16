@@ -3,39 +3,301 @@
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-image: url('@Url.Content("~/assetsUser/img/body.jpg")');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    .login {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 1.2em;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(1.2px);
+        -webkit-backdrop-filter: blur(1.2px);
+    }
+
+    ::placeholder {
+        color: white;
+        opacity: 0.8; /* Firefox */
+        text-align: center;
+    }
+
+    h1 {
+        color: #fff;
+        text-align: center;
+    }
+
+    .buttt {
+        width: 100%;
+        padding: 14px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        font-size: 1.2em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .buttt:hover {
+            background-color: #ffc451;
+        }
+
+    /* Switch Default */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 30px;
+        height: 17px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 13px;
+            width: 13px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #ffc451;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #ffc451;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(13px);
+        -ms-transform: translateX(13px);
+        transform: translateX(13px);
+    }
+
+
+
+
+
+
+    section {
+        padding: 15px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .tile {
+        height: 150px;
+        width: 150px;
+        position: relative;
+    }
+
+    input[type="radio"] {
+        -webkit-appearance: none;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(1.2px);
+        -webkit-backdrop-filter: blur(1.2px);
+        cursor: pointer;
+        border: 3px solid transparent;
+        outline: none;
+        box-shadow: 15px 15px 25px rgba(2,28,53,0.05);
+    }
+
+        input[type="radio"]:after {
+            position: absolute;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 400;
+            content: "\f111";
+            font-size: 22px;
+            top: 10px;
+            left: 10px;
+            color: #e2e6f3;
+        }
+
+        input[type="radio"]:checked {
+            border: 3px solid #478bfb;
+        }
+
+            input[type="radio"]:checked:after {
+                font-weight: 900;
+                content: "\f058";
+                color: #478bfb;
+            }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        height: 80%;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        cursor: pointer;
+    }
+
+        label .fas {
+            font-size: 60px;
+            color: #2c2c51;
+            width: 50%;
+        }
+
+    input[type="radio"]:checked + label .fas {
+        animation: grow 0.5s;
+        opacity: 0.7;
+    }
+
+    @@keyframes grow {
+        50% {
+            font-size: 80px;
+        }
+    }
+
+    label h6 {
+        font-family: "Poppins",sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        color: #7b7b93;
+    }
+
+
+
+
+
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+        body {
+        }
+
+        .login {
+            width: 80%;
+        }
+
+        .tile {
+            height: 120px;
+            width: 110px;
+        }
+
+        input[type="radio"]:after {
+            font-size: 15px;
+        }
+    }
+
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+        body {
+        }
+    }
+</style>
+
+
+
+
+
+
+<!-- Body -->
+<div class="container">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login", role = "form" }))
+    {
+
+        @Html.AntiForgeryToken()
+        <h1>Sign Up</h1>
+        <h5 style="color: #fff; text-align: center;">Choose Account Type</h5>
+        <section>
+            <div class="tile">
+            <input type="radio" name="Account" id="Photographer" value="Photographer" required>
+            <label for="Photographer">
+                <div class="fas"><img src="~/assetsUser/img/1.png" style="width:100%"></div>
+                <h6 style="color: #fff; text-align: center;">Photographer</h6>
+            </label>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        <div class="tile">
+            <input type="radio" name="Account" id="Client" value="Client">
+            <label for="Client">
+                <div class="fas"><img src="~/assetsUser/img/2.png" style="width:100%"></div>
+                <h6 style="color: #fff; text-align: center;">Client</h6>
+            </label>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
+
+       
+
+
+        </section>
+        @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "form-control" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Password" })
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <input type="submit" value="Register" class="buttt" />
+
+        <p style="color: #ccc;padding: 20px; text-align: center;">Do have an account ?  <a href="/Account/Login">Login</a></p>
+    }
+</div>
+
+
+
+
+
+@*<div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <label class="radio-inline">
+                @Html.RadioButtonFor(m => m.AspNetUserRoles, "Client", new { @checked = "checked" })
+                Client
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(m => m.AspNetUserRoles, "Photographer")
+                Photographer
+            </label>
         </div>
-    </div>
-}
+    </div>*@
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

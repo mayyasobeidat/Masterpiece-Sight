@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,6 +16,8 @@ namespace sight.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private sightEntities db = new sightEntities();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -57,6 +60,13 @@ namespace sight.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            //هذا الكود يتحقق إذا كان المستخدم مسجل دخوله، إذا كان كذلك، فإنه سيتم إعادة توجيه المستخدم إلى الصفحة الرئيسية "Home". يستخدم هذا الكود بشكل رئيسي في صفحة تسجيل الدخول أو التسجيل، لأنه يمنع المستخدم الذي سجل دخوله أو الذي تم تسجيله مسبقًا من الوصول إلى صفحة التسجيل أو تسجيل الدخول مرة أخرى. يتم تحديد ذلك عادة لتجنب إعادة تسجيل الدخول مرة أخرى واستخدام ذلك في الغالب للأمان.
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -68,6 +78,7 @@ namespace sight.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -90,6 +101,50 @@ namespace sight.Controllers
                     return View(model);
             }
         }
+
+
+
+
+        public ActionResult PhotographerProfileForm()
+        {
+            var photographer = User.Identity.GetUserId();
+            int photographerId = db.photographers.FirstOrDefault(a => a.user_id == photographer).id;
+            photographer photographers = db.photographers.Find(photographerId);
+
+
+            return View(photographers);
+        }
+
+
+
+        //public ActionResult butPhotographer([Bind(Include = "user_id,FullName,profilePhoto,coverPhoto,bio,age,instagram,facebook,twitter,linkedin")] photographer photographers, HttpPostedFileBase image, HttpPostedFileBase cv)
+        //{
+        //    //photographers.user_id = Session["photographerID"].ToString();
+        //    //db.photographers.Add(photographers);
+
+        //    db.SaveChanges();
+        //    return View();
+
+        //}
+      
+        public ActionResult butPhotographer([Bind(Include = "id,user_id,FullName,subscription_type,type_of_photography,areas,profilePhoto,coverPhoto,bio,accept,is_hidden,created_at")] photographer photographer, HttpPostedFileBase image, HttpPostedFileBase cv)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(photographer).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", photographer.user_id);
+            return View(photographer);
+        }
+
+
+
+
+
+
 
         //
         // GET: /Account/VerifyCode
@@ -139,6 +194,12 @@ namespace sight.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //هذا الكود يتحقق إذا كان المستخدم مسجل دخوله، إذا كان كذلك، فإنه سيتم إعادة توجيه المستخدم إلى الصفحة الرئيسية "Home". يستخدم هذا الكود بشكل رئيسي في صفحة تسجيل الدخول أو التسجيل، لأنه يمنع المستخدم الذي سجل دخوله أو الذي تم تسجيله مسبقًا من الوصول إلى صفحة التسجيل أو تسجيل الدخول مرة أخرى. يتم تحديد ذلك عادة لتجنب إعادة تسجيل الدخول مرة أخرى واستخدام ذلك في الغالب للأمان.
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -147,23 +208,66 @@ namespace sight.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string Account)
         {
+
+          
+
+
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    //Session["photographerID"] = user.Id;
+                    if (Account == "Photographer")
+                    {
+                        // تعيين الدور للمستخدم
+                        await UserManager.AddToRoleAsync(user.Id, "Photographer");
+                        //  Photographer
+                        photographer photographers = new photographer();
+                        photographers.user_id = user.Id;
+                        photographers.profilePhoto = "photographerProfile.png";
+                        photographers.coverPhoto = "newPhotographer.jpg";
+                        photographers.FullName = "Sight Photographer";
+                        photographers.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
+                        db.photographers.Add(photographers);
+                        db.SaveChanges();
+                        var userId = User.Identity.GetUserId();
+                        return RedirectToAction("Edit", "photographers", new { id = userId });
+                    }
+                    else if (Account == "Client")
+                    {
+                        // تعيين الدور للمستخدم
+                        await UserManager.AddToRoleAsync(user.Id, "Client");
+                        //  Client
+                        client clients = new client();
+                        clients.user_id = user.Id;
+                        clients.photo = "cliantProfile.png";
+                        clients.fullName = "Sight User";
+                        clients.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
+                        db.clients.Add(clients);
+                        db.SaveChanges();
+                        var userId = User.Identity.GetUserId();
+                        return RedirectToAction("Edit", "clients", new { id = userId });
+                        //return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        // 
+                        ModelState.AddModelError("", "Please choose account type.");
+                        return View(model);
+                    }
                 }
                 AddErrors(result);
             }
@@ -171,6 +275,11 @@ namespace sight.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+
+
+
 
         //
         // GET: /Account/ConfirmEmail
