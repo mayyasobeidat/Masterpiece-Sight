@@ -21,7 +21,7 @@ namespace sight.Models
         public int TypeID { get; set; }
         public System.DateTime session_date { get; set; }
         public System.TimeSpan session_time { get; set; }
-        public string status { get; set; }
+        public bool status { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
     
         public virtual city city { get; set; }

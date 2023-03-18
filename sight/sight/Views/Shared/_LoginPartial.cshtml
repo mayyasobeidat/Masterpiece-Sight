@@ -30,16 +30,16 @@
                 }
                 else if (User.IsInRole("Admin"))
                 {
-                    <li>@Html.ActionLink("Profile", "Index", "AdminDashboard", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
+                    <li>@Html.ActionLink("Dashboard", "Index", "AdminDashboard", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
                 }
                 else
                 {
                     <li>@Html.ActionLink("Profile " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                 }
 
-                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log off</a></li>
-                <li><a href="#">Drop Down 3</a></li>
-                <li><a href="#">Drop Down 4</a></li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log Out</a></li>
+                @*<li><a href="#">Drop Down 3</a></li>
+                <li><a href="#">Drop Down 4</a></li>*@
             </ul>
         </li>
     </ul>

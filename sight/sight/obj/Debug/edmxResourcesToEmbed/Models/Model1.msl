@@ -68,12 +68,12 @@
     <EntitySetMapping Name="clients">
       <EntityTypeMapping TypeName="sightModel.client">
         <MappingFragment StoreEntitySet="clients">
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="photo" ColumnName="photo" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -96,21 +96,6 @@
           <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
           <ScalarProperty Name="comment" ColumnName="comment" />
           <ScalarProperty Name="is_approved" ColumnName="is_approved" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="photo_sessions">
-      <EntityTypeMapping TypeName="sightModel.photo_sessions">
-        <MappingFragment StoreEntitySet="photo_sessions">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
-          <ScalarProperty Name="client_id" ColumnName="client_id" />
-          <ScalarProperty Name="city_id" ColumnName="city_id" />
-          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-          <ScalarProperty Name="session_date" ColumnName="session_date" />
-          <ScalarProperty Name="session_time" ColumnName="session_time" />
-          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -139,11 +124,6 @@
     <EntitySetMapping Name="photographers">
       <EntityTypeMapping TypeName="sightModel.photographer">
         <MappingFragment StoreEntitySet="photographers">
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="linkedin" ColumnName="linkedin" />
-          <ScalarProperty Name="twitter" ColumnName="twitter" />
-          <ScalarProperty Name="facebook" ColumnName="facebook" />
-          <ScalarProperty Name="instagram" ColumnName="instagram" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
@@ -155,6 +135,11 @@
           <ScalarProperty Name="is_hidden" ColumnName="is_hidden" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="instagram" ColumnName="instagram" />
+          <ScalarProperty Name="facebook" ColumnName="facebook" />
+          <ScalarProperty Name="twitter" ColumnName="twitter" />
+          <ScalarProperty Name="linkedin" ColumnName="linkedin" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -190,27 +175,14 @@
     <EntitySetMapping Name="photosAdmins">
       <EntityTypeMapping TypeName="sightModel.photosAdmin">
         <MappingFragment StoreEntitySet="photosAdmin">
-          <ScalarProperty Name="photographerID" ColumnName="photographerID" />
-          <ScalarProperty Name="photographerName" ColumnName="photographerName" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="photographerProfile" ColumnName="photographerProfile" />
           <ScalarProperty Name="photo" ColumnName="photo" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="photographyType" ColumnName="photographyType" />
           <ScalarProperty Name="title" ColumnName="title" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Subscriptions">
-      <EntityTypeMapping TypeName="sightModel.Subscription">
-        <MappingFragment StoreEntitySet="Subscription">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="PhotographerId" ColumnName="PhotographerId" />
-          <ScalarProperty Name="startDate" ColumnName="startDate" />
-          <ScalarProperty Name="endDate" ColumnName="endDate" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="theCounter" ColumnName="theCounter" />
-          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="photographerName" ColumnName="photographerName" />
+          <ScalarProperty Name="photographerID" ColumnName="photographerID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -233,5 +205,37 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Subscriptions">
+      <EntityTypeMapping TypeName="sightModel.Subscription">
+        <MappingFragment StoreEntitySet="Subscription">
+          <ScalarProperty Name="cardName" ColumnName="cardName" />
+          <ScalarProperty Name="cardExpiry" ColumnName="cardExpiry" />
+          <ScalarProperty Name="cvv" ColumnName="cvv" />
+          <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="theCounter" ColumnName="theCounter" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="PhotographerId" ColumnName="PhotographerId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="photo_sessions">
+      <EntityTypeMapping TypeName="sightModel.photo_sessions">
+        <MappingFragment StoreEntitySet="photo_sessions">
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="session_time" ColumnName="session_time" />
+          <ScalarProperty Name="session_date" ColumnName="session_date" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="city_id" ColumnName="city_id" />
+          <ScalarProperty Name="client_id" ColumnName="client_id" />
+          <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

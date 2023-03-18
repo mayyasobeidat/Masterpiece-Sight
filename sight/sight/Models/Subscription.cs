@@ -15,12 +15,16 @@ namespace sight.Models
     public partial class Subscription
     {
         public int ID { get; set; }
-        public Nullable<int> PhotographerId { get; set; }
-        public System.DateTime startDate { get; set; }
-        public System.DateTime endDate { get; set; }
-        public decimal Price { get; set; }
+        public int PhotographerId { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
+        public Nullable<int> Price { get; set; }
         public Nullable<int> theCounter { get; set; }
         public bool status { get; set; }
+        public Nullable<long> cardNumber { get; set; }
+        public Nullable<int> cvv { get; set; }
+        public string cardExpiry { get; set; }
+        public string cardName { get; set; }
     
         public virtual photographer photographer { get; set; }
     }

@@ -32,6 +32,100 @@ namespace sight.Controllers
             var photographers = db.photographers.Include(p => p.AspNetUser);
             return View(photographers.ToList());
         }
+        public ActionResult photographersInCity()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.photographer_cities)
+                                .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersInIrbid()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.photographer_cities)
+                                .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersInAmman()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.photographer_cities)
+                                .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Amman"))
+                                .ToList();
+            return View(photographers);
+        }
+
+         public ActionResult photographersInJarash()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.photographer_cities)
+                                .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Jarash"))
+                                .ToList();
+            return View(photographers);
+        }
+
+
+        public ActionResult photographersPortrait()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.PhotographerTypes)
+                                .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Portrait"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersProduct()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.PhotographerTypes)
+                                .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Product"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersNewborn()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.PhotographerTypes)
+                                .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Newborn"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersFood()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.PhotographerTypes)
+                                .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Food"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersOccasions()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.PhotographerTypes)
+                                .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Occasions"))
+                                .ToList();
+            return View(photographers);
+        }
+
+        public ActionResult photographersLandscape()
+        {
+            var photographers = db.photographers
+                                .Include(p => p.PhotographerTypes)
+                                .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Landscape"))
+                                .ToList();
+            return View(photographers);
+        }
+
+
+
+
 
         public ActionResult PhotographerProfile(int? id)
         {
@@ -89,25 +183,42 @@ namespace sight.Controllers
             return View(photographer);
         }
 
+
         // GET: photographers/Edit/5
         public ActionResult Edit(int? id)
         {
-            var x = User.Identity.GetUserId();
-            id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var x = User.Identity.GetUserId();
+                id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+                ViewBag.photographerid = id;
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                photographer photographer = db.photographers.Find(id);
+                Session["coverPhoto"] = photographer.coverPhoto;
+                Session["profilePhoto"] = photographer.profilePhoto;
+                if (photographer == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", photographer.user_id);
+                return View(photographer);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // ...
+
+                // Return a generic error page
+                return View("Error");
             }
 
-            photographer photographer = db.photographers.Find(id);
-            Session["coverPhoto"] = photographer.coverPhoto;
-            Session["profilePhoto"] = photographer.profilePhoto;
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", photographer.user_id);
-            return View(photographer);
+
+          
         }
 
         // POST: photographers/Edit/5
@@ -139,6 +250,8 @@ namespace sight.Controllers
                 db.Entry(photographer).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Edit");
+
+
             }
             ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", photographer.user_id);
             return View(photographer);

@@ -95,10 +95,25 @@
                                     Hurry up to show your customers
                                 </h4>
                             </div>
-                            @*@Html.Action("Create", "PhotographerPricings")*@
-                            @*@Html.Action("Create", "Subscriptions")*@
-
                             @Html.Action("Pays")
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <div>
+                                <h4 style="text-align:center">
+                                    Your status is now <span style="color:red">not visible </span>on our website because you have not paid the monthly subscription fee<br />
+                                    <span style="text-align:center">Hurry up to show your customers</span>
+                                </h4>
+                                <div class="container">
+                                    @Html.Action("Edit", "Subscriptions")
+                                </div>
+
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -169,10 +184,10 @@
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
-                                        @*<div class="col-lg-9 col-md-8">@Model.AspNetUser.Email</div>*@
+                                        <div class="col-lg-9 col-md-8">@Model.AspNetUser.Email</div>
                                     </div>
 
-                                    <div class="row">
+                                    @*<div class="row">
                                         <div class="col-lg-3 col-md-4 label">Type of Photography</div>
                                         <div class="col-lg-9 col-md-8">
                                             @foreach (var item in Model.PhotographerTypes)
@@ -181,7 +196,7 @@
 
                                             }
                                         </div>
-                                    </div>
+                                    </div>*@
 
                                 </div>
 
@@ -251,41 +266,103 @@
 
                                             </div>
                                         </div>
-                                        foreach (var item in Model.photographer_cities)
-                                        {
-                                            <input type="checkbox" name="type" value="@item.city_id" />
+                                        @*foreach (var item in Model.photographer_cities)
+                                            {
+                                                <input type="checkbox" name="type" value="@item.city_id" />
 
-                                            @item.city.cityName <span>&nbsp;</span>
+                                                @item.city.cityName <span>&nbsp;</span>
+                                            }*@
+
+
+
+
+
+
+                                        {
+                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                            sight.Models.PhotographerType Type = new sight.Models.PhotographerType();
+                                            var dev = db.PhotographerTypes.ToList();
+
+
+                                            <div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                                <div class="col-md-8 col-lg-9">
+
+                                                    @foreach (var item in dev)
+                                                    {
+
+                                                        bool isChecked = @ViewBag.photographerid == item.PhotographerID;
+                                                        <label>
+
+                                                            <input type="checkbox" class="form-check-input" name="@item.PhotographyType.TypeID" value="@item.PhotographyType.TypeName" @(isChecked ? "checked" : "")>
+                                                            @item.PhotographyType.TypeName
+                                                            @*<input type="checkbox" class="form-check-input" name="PhotographyTypeyoo" value="@item.PhotographyType.TypeID" @(isChecked ? "checked" : "")>
+                                                                @item.PhotographyType.TypeName*@
+                                                        </label>
+                                                    }
+
+                                                </div>
+                                            </div>
+
+                                        }
+
+
+                                        {
+                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                            sight.Models.photographer_cities Type = new sight.Models.photographer_cities();
+                                            var dev = db.photographer_cities.ToList();
+
+
+                                            <div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">City</label>
+                                                <div class="col-md-8 col-lg-9">
+
+                                                    @foreach (var item in dev)
+                                                    {
+
+                                                        bool isChecked = @ViewBag.photographerid == item.photographer_id;
+                                                        <label>
+
+                                                            <input type="checkbox" class="form-check-input" name="@item.city.id" value="@item.city.cityName" @(isChecked ? "checked" : "")>
+                                                            @item.city.cityName
+
+                                                        </label>
+                                                    }
+
+                                                </div>
+                                            </div>
+
                                         }
 
 
 
-                                        <div class="row mb-3">
-                                            <label for="Address" class="col-md-4 col-lg-3 col-form-label">City</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                                <label class="form-check-label" for="changesMade">
-                                                    Amman
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade2" checked>
-                                                <label class="form-check-label" for="changesMade2">
-                                                    Irbid
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade3">
-                                                <label class="form-check-label" for="changesMade3">
-                                                    Jarash
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade4">
-                                                <label class="form-check-label" for="changesMade4">
-                                                    Ajluon
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade5">
-                                                <label class="form-check-label" for="changesMade5">
-                                                    Alzarqa
-                                                </label>
 
-                                            </div>
-                                        </div>
+                                        @*<div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">City</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                                                    <label class="form-check-label" for="changesMade">
+                                                        Amman
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade2" checked>
+                                                    <label class="form-check-label" for="changesMade2">
+                                                        Irbid
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade3">
+                                                    <label class="form-check-label" for="changesMade3">
+                                                        Jarash
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade4">
+                                                    <label class="form-check-label" for="changesMade4">
+                                                        Ajluon
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade5">
+                                                    <label class="form-check-label" for="changesMade5">
+                                                        Alzarqa
+                                                    </label>
+
+                                                </div>
+                                            </div>*@
 
 
 
@@ -303,7 +380,7 @@
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 @*@Html.EditorFor(model => model.AspNetUser.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @value = Model.AspNetUser.Email, @readonly = "readonly" } })
-                                                  @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
+                                                    @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
                                                 <label>@Html.DisplayFor(model => model.AspNetUser.Email)</label>
                                             </div>
                                         </div>
@@ -311,35 +388,35 @@
 
 
 
-                                        <div class="row mb-3">
-                                            <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                                <label class="form-check-label" for="changesMade">
-                                                    Product
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade2" checked>
-                                                <label class="form-check-label" for="changesMade2">
-                                                    Food
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade3">
-                                                <label class="form-check-label" for="changesMade3">
-                                                    Portrait
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade4">
-                                                <label class="form-check-label" for="changesMade4">
-                                                    Occasions
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade5">
-                                                <label class="form-check-label" for="changesMade5">
-                                                    Landscape
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" id="changesMade6">
-                                                <label class="form-check-label" for="changesMade6">
-                                                    Newborn
-                                                </label>
-                                            </div>
-                                        </div>
+                                        @*<div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                                                    <label class="form-check-label" for="changesMade">
+                                                        Product
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade2" checked>
+                                                    <label class="form-check-label" for="changesMade2">
+                                                        Food
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade3">
+                                                    <label class="form-check-label" for="changesMade3">
+                                                        Portrait
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade4">
+                                                    <label class="form-check-label" for="changesMade4">
+                                                        Occasions
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade5">
+                                                    <label class="form-check-label" for="changesMade5">
+                                                        Landscape
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="changesMade6">
+                                                    <label class="form-check-label" for="changesMade6">
+                                                        Newborn
+                                                    </label>
+                                                </div>
+                                            </div>*@
 
 
 
@@ -694,3 +771,5 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>*@
+
+

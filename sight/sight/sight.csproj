@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -46,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -160,9 +162,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.2.2\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -172,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminDashboardController.cs" />
+    <Compile Include="Controllers\adminsController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\clientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -180,6 +180,7 @@
     <Compile Include="Controllers\photographersController.cs" />
     <Compile Include="Controllers\PhotographyTypesController.cs" />
     <Compile Include="Controllers\photosAdminsController.cs" />
+    <Compile Include="Controllers\photo_sessionsController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -511,6 +512,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="HtmlPage2.html" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -783,11 +785,32 @@
     <Content Include="Views\PhotographerPricings\Edit.cshtml" />
     <Content Include="Views\PhotographerPricings\Index.cshtml" />
     <Content Include="Views\photographers\Pays.cshtml" />
+    <Content Include="Views\admins\Create.cshtml" />
+    <Content Include="Views\admins\Delete.cshtml" />
+    <Content Include="Views\admins\Details.cshtml" />
+    <Content Include="Views\admins\Edit.cshtml" />
+    <Content Include="Views\admins\Index.cshtml" />
     <Content Include="Views\Subscriptions\Create.cshtml" />
     <Content Include="Views\Subscriptions\Delete.cshtml" />
     <Content Include="Views\Subscriptions\Details.cshtml" />
     <Content Include="Views\Subscriptions\Edit.cshtml" />
     <Content Include="Views\Subscriptions\Index.cshtml" />
+    <Content Include="Views\photographers\photographersInCity.cshtml" />
+    <Content Include="Views\photographers\photographersInIrbid.cshtml" />
+    <Content Include="Views\photographers\photographersInAmman.cshtml" />
+    <Content Include="Views\photographers\photographersInJarash.cshtml" />
+    <Content Include="Views\photographers\photographersPortrait.cshtml" />
+    <Content Include="Views\photographers\photographersProduct.cshtml" />
+    <Content Include="Views\photographers\photographersNewborn.cshtml" />
+    <Content Include="Views\photographers\photographersFood.cshtml" />
+    <Content Include="Views\photographers\photographersOccasions.cshtml" />
+    <Content Include="Views\photographers\photographersLandscape.cshtml" />
+    <Content Include="Views\photo_sessions\Create.cshtml" />
+    <Content Include="Views\photo_sessions\Delete.cshtml" />
+    <Content Include="Views\photo_sessions\Details.cshtml" />
+    <Content Include="Views\photo_sessions\Edit.cshtml" />
+    <Content Include="Views\photo_sessions\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -842,9 +865,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

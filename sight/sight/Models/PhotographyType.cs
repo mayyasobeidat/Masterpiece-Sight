@@ -17,9 +17,9 @@ namespace sight.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhotographyType()
         {
-            this.photo_sessions = new HashSet<photo_sessions>();
             this.PhotographerTypes = new HashSet<PhotographerType>();
             this.photosAdmins = new HashSet<photosAdmin>();
+            this.photo_sessions = new HashSet<photo_sessions>();
         }
     
         public int TypeID { get; set; }
@@ -28,10 +28,10 @@ namespace sight.Models
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<photo_sessions> photo_sessions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhotographerType> PhotographerTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<photosAdmin> photosAdmins { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<photo_sessions> photo_sessions { get; set; }
     }
 }

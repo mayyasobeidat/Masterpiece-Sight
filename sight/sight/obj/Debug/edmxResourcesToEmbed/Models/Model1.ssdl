@@ -111,7 +111,7 @@
     <Property Name="TypeID" Type="int" Nullable="false" />
     <Property Name="session_date" Type="date" Nullable="false" />
     <Property Name="session_time" Type="time" Precision="7" Nullable="false" />
-    <Property Name="status" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
     <Property Name="created_at" Type="datetime" />
   </EntityType>
   <EntityType Name="photographer_cities">
@@ -200,12 +200,16 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PhotographerId" Type="int" />
-    <Property Name="startDate" Type="date" Nullable="false" />
-    <Property Name="endDate" Type="date" Nullable="false" />
-    <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="PhotographerId" Type="int" Nullable="false" />
+    <Property Name="startDate" Type="date" />
+    <Property Name="endDate" Type="date" />
+    <Property Name="Price" Type="int" />
     <Property Name="theCounter" Type="int" />
     <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="cardNumber" Type="bigint" />
+    <Property Name="cvv" Type="int" />
+    <Property Name="cardExpiry" Type="varchar" MaxLength="50" />
+    <Property Name="cardName" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -398,7 +402,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Subscript__Photo__489AC854">
-    <End Role="photographers" Type="Self.photographers" Multiplicity="0..1" />
+    <End Role="photographers" Type="Self.photographers" Multiplicity="1" />
     <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="photographers">
@@ -465,6 +469,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_photographers_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="photographers" Type="Self.photographers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="photographers">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_photosAdmin_photographers">
     <End Role="photographers" Type="Self.photographers" Multiplicity="1" />
     <End Role="photosAdmin" Type="Self.photosAdmin" Multiplicity="*" />
@@ -474,6 +490,18 @@
       </Principal>
       <Dependent Role="photosAdmin">
         <PropertyRef Name="photographerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_photosAdmin_PhotographyTypes">
+    <End Role="PhotographyTypes" Type="Self.PhotographyTypes" Multiplicity="1" />
+    <End Role="photosAdmin" Type="Self.photosAdmin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographyTypes">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="photosAdmin">
+        <PropertyRef Name="photographyType" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -578,8 +606,16 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
+    <AssociationSet Name="FK_photographers_AspNetUsers" Association="Self.FK_photographers_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="photographers" EntitySet="photographers" />
+    </AssociationSet>
     <AssociationSet Name="FK_photosAdmin_photographers" Association="Self.FK_photosAdmin_photographers">
       <End Role="photographers" EntitySet="photographers" />
+      <End Role="photosAdmin" EntitySet="photosAdmin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_photosAdmin_PhotographyTypes" Association="Self.FK_photosAdmin_PhotographyTypes">
+      <End Role="PhotographyTypes" EntitySet="PhotographyTypes" />
       <End Role="photosAdmin" EntitySet="photosAdmin" />
     </AssociationSet>
   </EntityContainer>

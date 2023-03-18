@@ -23,7 +23,7 @@ namespace sight.Models
         public string photographerName { get; set; }
         public int photographerID { get; set; }
     
-        public virtual PhotographyType PhotographyType1 { get; set; }
         public virtual photographer photographer { get; set; }
+        public virtual PhotographyType PhotographyType1 { get; set; }
     }
 }

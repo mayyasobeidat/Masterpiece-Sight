@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Infinite Client Logo slider</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        body {
+            background: #000;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .brand-carousel {
+            background: #eee;
+            margin-top: 15%;
+        }
+
+        .owl-dots {
+            text-align: center;
+            margin-top: 4%;
+        }
+
+        .owl-dot {
+            display: inline-block;
+            height: 15px !important;
+            width: 15px !important;
+            background-color: #878787 !important;
+            opacity: 0.8;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+
+            .owl-dot.active {
+                background-color: #000 !important;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="brand-carousel section-padding owl-carousel">
+        <div class="single-logo"><img alt="" src="https://i.postimg.cc/4x0p7Qhn/logo.png"></div>
+        <div class="single-logo"><img alt="" src="https://i.postimg.cc/4x0p7Qhn/logo.png"></div>
+        <div class="single-logo"><img alt="" src="https://i.postimg.cc/4x0p7Qhn/logo.png"></div>
+        <div class="single-logo"><img alt="" src="https://i.postimg.cc/4x0p7Qhn/logo.png"></div>
+        <div class="single-logo"><img alt="" src="https://i.postimg.cc/4x0p7Qhn/logo.png"></div>
+        <div class="single-logo"><img alt="" src="https://i.postimg.cc/4x0p7Qhn/logo.png"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+    </script>
+    <script>
+	   $('.brand-carousel').owlCarousel({
+	 loop:true,
+	 margin:10,
+	 autoplay:true,
+	 responsive:{
+	   0:{
+	     items:1
+	   },
+	   600:{
+	     items:3
+	   },
+	   1000:{
+	     items:5
+	   }
+	 }
+	})
+
+    </script>
+</body>
+</html>

@@ -60,7 +60,9 @@
     <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="clients" Relationship="Self.FK__clients__user_id__22751F6C" FromRole="AspNetUsers" ToRole="clients" />
-    <NavigationProperty Name="photographers" Relationship="Self.FK__photograp__user___1EA48E88" FromRole="AspNetUsers" ToRole="photographers" />
+    <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
+    <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1" ToRole="AspNetUsers" />
+    <NavigationProperty Name="photographers" Relationship="Self.FK_photographers_AspNetUsers" FromRole="AspNetUsers" ToRole="photographers" />
     <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
   </EntityType>
   <EntityType Name="city">
@@ -69,22 +71,22 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="cityName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="photo_sessions" Relationship="Self.FK__photo_ses__city___41EDCAC5" FromRole="cities" ToRole="photo_sessions" />
     <NavigationProperty Name="photographer_cities" Relationship="Self.FK__photograp__city___3587F3E0" FromRole="cities" ToRole="photographer_cities" />
+    <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__city___41EDCAC5" FromRole="city" ToRole="photo_sessions" />
   </EntityType>
   <EntityType Name="client">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="photo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="fullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK__clients__user_id__22751F6C" FromRole="clients" ToRole="AspNetUsers" />
     <NavigationProperty Name="comments" Relationship="Self.FK__comments__client__282DF8C2" FromRole="clients" ToRole="comments" />
-    <NavigationProperty Name="photo_sessions" Relationship="Self.FK__photo_ses__clien__40F9A68C" FromRole="clients" ToRole="photo_sessions" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__clien__40F9A68C" FromRole="client" ToRole="photo_sessions" />
   </EntityType>
   <EntityType Name="comment">
     <Key>
@@ -109,24 +111,6 @@
     <Property Name="is_approved" Type="Boolean" Nullable="false" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <NavigationProperty Name="photographer" Relationship="Self.FK__commentsH__photo__681373AD" FromRole="commentsHome" ToRole="photographers" />
-  </EntityType>
-  <EntityType Name="photo_sessions">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="photographer_id" Type="Int32" Nullable="false" />
-    <Property Name="client_id" Type="Int32" Nullable="false" />
-    <Property Name="city_id" Type="Int32" Nullable="false" />
-    <Property Name="TypeID" Type="Int32" Nullable="false" />
-    <Property Name="session_date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="session_time" Type="Time" Nullable="false" Precision="7" />
-    <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="created_at" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="city" Relationship="Self.FK__photo_ses__city___41EDCAC5" FromRole="photo_sessions" ToRole="cities" />
-    <NavigationProperty Name="client" Relationship="Self.FK__photo_ses__clien__40F9A68C" FromRole="photo_sessions" ToRole="clients" />
-    <NavigationProperty Name="photographer" Relationship="Self.FK__photo_ses__photo__40058253" FromRole="photo_sessions" ToRole="photographers" />
-    <NavigationProperty Name="PhotographyType" Relationship="Self.FK__photo_ses__TypeI__42E1EEFE" FromRole="photo_sessions" ToRole="PhotographyTypes" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>
@@ -155,7 +139,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="subscription_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -166,21 +150,21 @@
     <Property Name="is_hidden" Type="Boolean" Nullable="false" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="age" Type="Int32" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__photograp__user___1EA48E88" FromRole="photographers" ToRole="AspNetUsers" />
-    <NavigationProperty Name="comments" Relationship="Self.FK__comments__photog__2739D489" FromRole="photographers" ToRole="comments" />
-    <NavigationProperty Name="commentsHomes" Relationship="Self.FK__commentsH__photo__681373AD" FromRole="photographers" ToRole="commentsHome" />
-    <NavigationProperty Name="photo_sessions" Relationship="Self.FK__photo_ses__photo__40058253" FromRole="photographers" ToRole="photo_sessions" />
-    <NavigationProperty Name="photographer_cities" Relationship="Self.FK__photograp__photo__3493CFA7" FromRole="photographers" ToRole="photographer_cities" />
-    <NavigationProperty Name="PhotographerPricings" Relationship="Self.FK__Photograp__Photo__45BE5BA9" FromRole="photographers" ToRole="PhotographerPricing" />
-    <NavigationProperty Name="PhotographerTypes" Relationship="Self.FK__Photograp__Photo__3A4CA8FD" FromRole="photographers" ToRole="PhotographerTypes" />
-    <NavigationProperty Name="photos" Relationship="Self.FK__photos__photogra__2BFE89A6" FromRole="photographers" ToRole="photos" />
-    <NavigationProperty Name="Subscriptions" Relationship="Self.FK__Subscript__Photo__489AC854" FromRole="photographers" ToRole="Subscription" />
     <Property Name="instagram" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="facebook" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="twitter" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="linkedin" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="photosAdmins" Relationship="sightModel.FK_photosAdmin_photographers" FromRole="photographer" ToRole="photosAdmin" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_photographers_AspNetUsers" FromRole="photographers" ToRole="AspNetUsers" />
+    <NavigationProperty Name="comments" Relationship="Self.FK__comments__photog__2739D489" FromRole="photographers" ToRole="comments" />
+    <NavigationProperty Name="commentsHomes" Relationship="Self.FK__commentsH__photo__681373AD" FromRole="photographers" ToRole="commentsHome" />
+    <NavigationProperty Name="photographer_cities" Relationship="Self.FK__photograp__photo__3493CFA7" FromRole="photographers" ToRole="photographer_cities" />
+    <NavigationProperty Name="PhotographerPricings" Relationship="Self.FK__Photograp__Photo__45BE5BA9" FromRole="photographers" ToRole="PhotographerPricing" />
+    <NavigationProperty Name="PhotographerTypes" Relationship="Self.FK__Photograp__Photo__3A4CA8FD" FromRole="photographers" ToRole="PhotographerTypes" />
+    <NavigationProperty Name="photos" Relationship="Self.FK__photos__photogra__2BFE89A6" FromRole="photographers" ToRole="photos" />
+    <NavigationProperty Name="photosAdmins" Relationship="Self.FK_photosAdmin_photographers" FromRole="photographers" ToRole="photosAdmin" />
+    <NavigationProperty Name="Subscriptions" Relationship="sightModel.FK__Subscript__Photo__489AC854" FromRole="photographer" ToRole="Subscription" />
+    <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photographer" ToRole="photo_sessions" />
   </EntityType>
   <EntityType Name="PhotographerType">
     <Key>
@@ -201,9 +185,9 @@
     <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="photo_sessions" Relationship="Self.FK__photo_ses__TypeI__42E1EEFE" FromRole="PhotographyTypes" ToRole="photo_sessions" />
     <NavigationProperty Name="PhotographerTypes" Relationship="Self.FK__Photograp__TypeI__3B40CD36" FromRole="PhotographyTypes" ToRole="PhotographerTypes" />
-    <NavigationProperty Name="photosAdmins" Relationship="Self.FK__photosAdm__photo__5CA1C101" FromRole="PhotographyTypes" ToRole="photosAdmin" />
+    <NavigationProperty Name="photosAdmins" Relationship="sightModel.FK_photosAdmin_PhotographyTypes" FromRole="PhotographyType" ToRole="photosAdmin" />
+    <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__TypeI__42E1EEFE" FromRole="PhotographyType" ToRole="photo_sessions" />
   </EntityType>
   <EntityType Name="photo">
     <Key>
@@ -225,23 +209,10 @@
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="photographyType" Type="Int32" Nullable="false" />
     <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="PhotographyType1" Relationship="Self.FK__photosAdm__photo__5CA1C101" FromRole="photosAdmin" ToRole="PhotographyTypes" />
     <Property Name="photographerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="photographerID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="photographer" Relationship="sightModel.FK_photosAdmin_photographers" FromRole="photosAdmin" ToRole="photographer" />
-  </EntityType>
-  <EntityType Name="Subscription">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PhotographerId" Type="Int32" />
-    <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="theCounter" Type="Int32" />
-    <Property Name="status" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="photographer" Relationship="Self.FK__Subscript__Photo__489AC854" FromRole="Subscription" ToRole="photographers" />
+    <NavigationProperty Name="photographer" Relationship="Self.FK_photosAdmin_photographers" FromRole="photosAdmin" ToRole="photographers" />
+    <NavigationProperty Name="PhotographyType1" Relationship="sightModel.FK_photosAdmin_PhotographyTypes" FromRole="photosAdmin" ToRole="PhotographyType" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -305,7 +276,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__photograp__user___1EA48E88">
+  <Association Name="FK_AspNetUsers_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+    <End Role="AspNetUsers1" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUsers1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_photographers_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
     <End Role="photographers" Type="Self.photographer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -314,18 +297,6 @@
       </Principal>
       <Dependent Role="photographers">
         <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__photo_ses__city___41EDCAC5">
-    <End Role="cities" Type="Self.city" Multiplicity="1" />
-    <End Role="photo_sessions" Type="Self.photo_sessions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cities">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="photo_sessions">
-        <PropertyRef Name="city_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -353,18 +324,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__photo_ses__clien__40F9A68C">
-    <End Role="clients" Type="Self.client" Multiplicity="1" />
-    <End Role="photo_sessions" Type="Self.photo_sessions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="clients">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="photo_sessions">
-        <PropertyRef Name="client_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__comments__photog__2739D489">
     <End Role="photographers" Type="Self.photographer" Multiplicity="1" />
     <End Role="comments" Type="Self.comment" Multiplicity="*" />
@@ -386,30 +345,6 @@
       </Principal>
       <Dependent Role="commentsHome">
         <PropertyRef Name="photographer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__photo_ses__photo__40058253">
-    <End Role="photographers" Type="Self.photographer" Multiplicity="1" />
-    <End Role="photo_sessions" Type="Self.photo_sessions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="photographers">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="photo_sessions">
-        <PropertyRef Name="photographer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__photo_ses__TypeI__42E1EEFE">
-    <End Role="PhotographyTypes" Type="Self.PhotographyType" Multiplicity="1" />
-    <End Role="photo_sessions" Type="Self.photo_sessions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PhotographyTypes">
-        <PropertyRef Name="TypeID" />
-      </Principal>
-      <Dependent Role="photo_sessions">
-        <PropertyRef Name="TypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -461,15 +396,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Subscript__Photo__489AC854">
-    <End Role="photographers" Type="Self.photographer" Multiplicity="0..1" />
-    <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+  <Association Name="FK_photosAdmin_photographers">
+    <End Role="photographers" Type="Self.photographer" Multiplicity="1" />
+    <End Role="photosAdmin" Type="Self.photosAdmin" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="photographers">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="Subscription">
-        <PropertyRef Name="PhotographerId" />
+      <Dependent Role="photosAdmin">
+        <PropertyRef Name="photographerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -482,18 +417,6 @@
       </Principal>
       <Dependent Role="PhotographerTypes">
         <PropertyRef Name="TypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__photosAdm__photo__5CA1C101">
-    <End Role="PhotographyTypes" Type="Self.PhotographyType" Multiplicity="1" />
-    <End Role="photosAdmin" Type="Self.photosAdmin" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PhotographyTypes">
-        <PropertyRef Name="TypeID" />
-      </Principal>
-      <Dependent Role="photosAdmin">
-        <PropertyRef Name="photographyType" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -511,7 +434,6 @@
     <EntitySet Name="clients" EntityType="Self.client" />
     <EntitySet Name="comments" EntityType="Self.comment" />
     <EntitySet Name="commentsHomes" EntityType="Self.commentsHome" />
-    <EntitySet Name="photo_sessions" EntityType="Self.photo_sessions" />
     <EntitySet Name="photographer_cities" EntityType="Self.photographer_cities" />
     <EntitySet Name="PhotographerPricings" EntityType="Self.PhotographerPricing" />
     <EntitySet Name="photographers" EntityType="Self.photographer" />
@@ -519,7 +441,6 @@
     <EntitySet Name="PhotographyTypes" EntityType="Self.PhotographyType" />
     <EntitySet Name="photos" EntityType="Self.photo" />
     <EntitySet Name="photosAdmins" EntityType="Self.photosAdmin" />
-    <EntitySet Name="Subscriptions" EntityType="Self.Subscription" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <AssociationSet Name="FK__admins__user_id__2FCF1A8A" Association="Self.FK__admins__user_id__2FCF1A8A">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -537,13 +458,13 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="clients" EntitySet="clients" />
     </AssociationSet>
-    <AssociationSet Name="FK__photograp__user___1EA48E88" Association="Self.FK__photograp__user___1EA48E88">
+    <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUsers1" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_photographers_AspNetUsers" Association="Self.FK_photographers_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="photographers" EntitySet="photographers" />
-    </AssociationSet>
-    <AssociationSet Name="FK__photo_ses__city___41EDCAC5" Association="Self.FK__photo_ses__city___41EDCAC5">
-      <End Role="cities" EntitySet="cities" />
-      <End Role="photo_sessions" EntitySet="photo_sessions" />
     </AssociationSet>
     <AssociationSet Name="FK__photograp__city___3587F3E0" Association="Self.FK__photograp__city___3587F3E0">
       <End Role="cities" EntitySet="cities" />
@@ -553,10 +474,6 @@
       <End Role="clients" EntitySet="clients" />
       <End Role="comments" EntitySet="comments" />
     </AssociationSet>
-    <AssociationSet Name="FK__photo_ses__clien__40F9A68C" Association="Self.FK__photo_ses__clien__40F9A68C">
-      <End Role="clients" EntitySet="clients" />
-      <End Role="photo_sessions" EntitySet="photo_sessions" />
-    </AssociationSet>
     <AssociationSet Name="FK__comments__photog__2739D489" Association="Self.FK__comments__photog__2739D489">
       <End Role="photographers" EntitySet="photographers" />
       <End Role="comments" EntitySet="comments" />
@@ -564,14 +481,6 @@
     <AssociationSet Name="FK__commentsH__photo__681373AD" Association="Self.FK__commentsH__photo__681373AD">
       <End Role="photographers" EntitySet="photographers" />
       <End Role="commentsHome" EntitySet="commentsHomes" />
-    </AssociationSet>
-    <AssociationSet Name="FK__photo_ses__photo__40058253" Association="Self.FK__photo_ses__photo__40058253">
-      <End Role="photographers" EntitySet="photographers" />
-      <End Role="photo_sessions" EntitySet="photo_sessions" />
-    </AssociationSet>
-    <AssociationSet Name="FK__photo_ses__TypeI__42E1EEFE" Association="Self.FK__photo_ses__TypeI__42E1EEFE">
-      <End Role="PhotographyTypes" EntitySet="PhotographyTypes" />
-      <End Role="photo_sessions" EntitySet="photo_sessions" />
     </AssociationSet>
     <AssociationSet Name="FK__photograp__photo__3493CFA7" Association="Self.FK__photograp__photo__3493CFA7">
       <End Role="photographers" EntitySet="photographers" />
@@ -589,36 +498,149 @@
       <End Role="photographers" EntitySet="photographers" />
       <End Role="photos" EntitySet="photos" />
     </AssociationSet>
-    <AssociationSet Name="FK__Subscript__Photo__489AC854" Association="Self.FK__Subscript__Photo__489AC854">
+    <AssociationSet Name="FK_photosAdmin_photographers" Association="Self.FK_photosAdmin_photographers">
       <End Role="photographers" EntitySet="photographers" />
-      <End Role="Subscription" EntitySet="Subscriptions" />
+      <End Role="photosAdmin" EntitySet="photosAdmins" />
     </AssociationSet>
     <AssociationSet Name="FK__Photograp__TypeI__3B40CD36" Association="Self.FK__Photograp__TypeI__3B40CD36">
       <End Role="PhotographyTypes" EntitySet="PhotographyTypes" />
       <End Role="PhotographerTypes" EntitySet="PhotographerTypes" />
     </AssociationSet>
-    <AssociationSet Name="FK__photosAdm__photo__5CA1C101" Association="Self.FK__photosAdm__photo__5CA1C101">
-      <End Role="PhotographyTypes" EntitySet="PhotographyTypes" />
-      <End Role="photosAdmin" EntitySet="photosAdmins" />
-    </AssociationSet>
     <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
-    <AssociationSet Name="FK_photosAdmin_photographers" Association="sightModel.FK_photosAdmin_photographers">
-      <End Role="photographer" EntitySet="photographers" />
+    <AssociationSet Name="FK_photosAdmin_PhotographyTypes" Association="sightModel.FK_photosAdmin_PhotographyTypes">
+      <End Role="PhotographyType" EntitySet="PhotographyTypes" />
       <End Role="photosAdmin" EntitySet="photosAdmins" />
     </AssociationSet>
+    <EntitySet Name="Subscriptions" EntityType="sightModel.Subscription" />
+    <AssociationSet Name="FK__Subscript__Photo__489AC854" Association="sightModel.FK__Subscript__Photo__489AC854">
+      <End Role="photographer" EntitySet="photographers" />
+      <End Role="Subscription" EntitySet="Subscriptions" />
+    </AssociationSet>
+    <EntitySet Name="photo_sessions" EntityType="sightModel.photo_sessions" />
+    <AssociationSet Name="FK__photo_ses__city___41EDCAC5" Association="sightModel.FK__photo_ses__city___41EDCAC5">
+      <End Role="city" EntitySet="cities" />
+      <End Role="photo_sessions" EntitySet="photo_sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__photo_ses__clien__40F9A68C" Association="sightModel.FK__photo_ses__clien__40F9A68C">
+      <End Role="client" EntitySet="clients" />
+      <End Role="photo_sessions" EntitySet="photo_sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__photo_ses__photo__40058253" Association="sightModel.FK__photo_ses__photo__40058253">
+      <End Role="photographer" EntitySet="photographers" />
+      <End Role="photo_sessions" EntitySet="photo_sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__photo_ses__TypeI__42E1EEFE" Association="sightModel.FK__photo_ses__TypeI__42E1EEFE">
+      <End Role="PhotographyType" EntitySet="PhotographyTypes" />
+      <End Role="photo_sessions" EntitySet="photo_sessions" />
+    </AssociationSet>
   </EntityContainer>
-  <Association Name="FK_photosAdmin_photographers">
-    <End Type="sightModel.photographer" Role="photographer" Multiplicity="1" />
+  <Association Name="FK_photosAdmin_PhotographyTypes">
+    <End Type="sightModel.PhotographyType" Role="PhotographyType" Multiplicity="1" />
     <End Type="sightModel.photosAdmin" Role="photosAdmin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographyType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="photosAdmin">
+        <PropertyRef Name="photographyType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Subscription">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PhotographerId" Type="Int32" Nullable="false" />
+    <Property Name="startDate" Type="DateTime" Precision="0" />
+    <Property Name="endDate" Type="DateTime" Precision="0" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="theCounter" Type="Int32" />
+    <Property Name="status" Type="Boolean" Nullable="false" />
+    <Property Name="cardNumber" Type="Int64" />
+    <Property Name="cvv" Type="Int32" />
+    <Property Name="cardExpiry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="photographer" Relationship="sightModel.FK__Subscript__Photo__489AC854" FromRole="Subscription" ToRole="photographer" />
+  </EntityType>
+  <Association Name="FK__Subscript__Photo__489AC854">
+    <End Type="sightModel.photographer" Role="photographer" Multiplicity="1" />
+    <End Type="sightModel.Subscription" Role="Subscription" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="photographer">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="photosAdmin">
-        <PropertyRef Name="photographerID" />
+      <Dependent Role="Subscription">
+        <PropertyRef Name="PhotographerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="photo_sessions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="photographer_id" Type="Int32" Nullable="false" />
+    <Property Name="client_id" Type="Int32" Nullable="false" />
+    <Property Name="city_id" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="session_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="session_time" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="status" Type="Boolean" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="city" Relationship="sightModel.FK__photo_ses__city___41EDCAC5" FromRole="photo_sessions" ToRole="city" />
+    <NavigationProperty Name="client" Relationship="sightModel.FK__photo_ses__clien__40F9A68C" FromRole="photo_sessions" ToRole="client" />
+    <NavigationProperty Name="photographer" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photo_sessions" ToRole="photographer" />
+    <NavigationProperty Name="PhotographyType" Relationship="sightModel.FK__photo_ses__TypeI__42E1EEFE" FromRole="photo_sessions" ToRole="PhotographyType" />
+  </EntityType>
+  <Association Name="FK__photo_ses__city___41EDCAC5">
+    <End Type="sightModel.city" Role="city" Multiplicity="1" />
+    <End Type="sightModel.photo_sessions" Role="photo_sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="photo_sessions">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__photo_ses__clien__40F9A68C">
+    <End Type="sightModel.client" Role="client" Multiplicity="1" />
+    <End Type="sightModel.photo_sessions" Role="photo_sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="photo_sessions">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__photo_ses__photo__40058253">
+    <End Type="sightModel.photographer" Role="photographer" Multiplicity="1" />
+    <End Type="sightModel.photo_sessions" Role="photo_sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="photographer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="photo_sessions">
+        <PropertyRef Name="photographer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__photo_ses__TypeI__42E1EEFE">
+    <End Type="sightModel.PhotographyType" Role="PhotographyType" Multiplicity="1" />
+    <End Type="sightModel.photo_sessions" Role="photo_sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographyType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="photo_sessions">
+        <PropertyRef Name="TypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

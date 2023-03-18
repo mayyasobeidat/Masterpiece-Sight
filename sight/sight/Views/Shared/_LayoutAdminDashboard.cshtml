@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -47,7 +49,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="/Home/Index" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa bi-camera me-2"></i>SIGHT</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -86,9 +88,9 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
+                @*<form class="d-none d-md-flex ms-4">
                     <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-                </form>
+                </form>*@
                 <div class="navbar-nav align-items-center ms-auto">
                     @*<div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -136,17 +138,27 @@
                             <span class="d-none d-lg-inline-flex">Mayyas</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
+                            @*<a href="#" class="dropdown-item">My Profile</a>*@
                             @*<a href="#" class="dropdown-item">Settings</a>*@
-                            <a href="#" class="dropdown-item">Log Out</a>
-                        </div>
+                            @if (Request.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    @Html.AntiForgeryToken() 
+                                    
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
+                                    
+                                }
+                            }
+                                    @*<a href="#" class="dropdown-item">Log Out</a>*@
+                                </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
-                    @RenderBody()
+                @RenderBody()
 
             </div>
             <!-- Blank End -->
@@ -155,7 +167,7 @@
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">SIGHT</a>, All Right Reserved.
+                            &copy; <a href="/Home/Index">SIGHT</a>, All Right Reserved.
                         </div>
                     </div>
                 </div>

@@ -297,15 +297,17 @@
 
                     <div class="box sub">
                         <h2>Monthly Subscription</h2>
-                        <h5><span class="price">49 JD</span> <span>per month</span></h5>
+                        <h5><span class="price">100 JD</span> <span>per month</span></h5>
                         <p>Sight</p>
                         @*<div class="foorrm">
-                            <input type="text" class="form-control">
-                            <input type="number" class="form-control">
-                            <input type="number" class="form-control">
-                            <input type="date" class="form-control" />
-                        </div>*@
-                        @Html.Action("Create", "Subscriptions")
+            <input type="text" class="form-control">
+            <input type="number" class="form-control">
+            <input type="number" class="form-control">
+            <input type="date" class="form-control" />
+        </div>*@
+                        @Html.Action("Edit", "Subscriptions")
+
+                        @*@Html.Action("Edit", "Subscriptions", new { id = ViewBag.PhotographerId })*@
 
                         @*<a href="#">Pay</a>*@
                     </div>

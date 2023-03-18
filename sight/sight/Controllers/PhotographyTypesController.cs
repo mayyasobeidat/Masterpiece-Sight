@@ -21,6 +21,9 @@ namespace sight.Controllers
             return View(db.PhotographyTypes.ToList());
         }
 
+  
+
+
         // GET: PhotographyTypes/Details/5
         public ActionResult Details(int? id)
         {

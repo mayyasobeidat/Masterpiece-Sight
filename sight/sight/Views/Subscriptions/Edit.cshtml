@@ -1,87 +1,122 @@
 ﻿@model sight.Models.Subscription
 
 @{
+    ViewBag.Title = "Edit";
     Layout = null;
 }
 
-<!DOCTYPE html>
+<style>
+    .foorrm {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas: "a a""b c";
+        row-gap: 9px;
+    }
+</style>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>Subscription</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.ID)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.PhotographerId, "PhotographerId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("PhotographerId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PhotographerId, "", new { @class = "text-danger" })
-                </div>
+
+@using (Html.BeginForm("Edit", "Subscriptions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+
+    <div class="form-horizontal foorrm">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.PhotographerId, "PhotographerId", htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-12">
+                @Html.DropDownList("PhotographerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PhotographerId, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.startDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.startDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
-                </div>
+        </div>
+
+        <div class="form-group text-start">
+            <span>Card Number</span>
+            <input class="form-control" data-val="true" data-val-length="The CardNumber must be at least 16 and at max 19 characters." data-val-length-max="19" data-val-length-min="16" data-val-required="The CardNumber field is required." id="cardNumber" maxlength="19" minlength="19" name="cardNumber" oninput="cardNumber(this)" placeholder="0000 0000 0000 0000" required="required" type="text" value="">
+            @Html.ValidationMessageFor(model => model.cardNumber, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group text-start">
+            <span>Name</span>
+            <input type="text" class="form-control" id="cardName" name="cardName"  placeholder="Ex : Mayyas Obeidat" minlength="3" maxlength="15" required>
+        </div>
+
+        <div class="form-group text-start">
+            <span>CVV</span>
+            <input type="text" id="cvv" name="cvv" class="form-control" placeholder="123" minlength="3" maxlength="3" required oninput="cvv(this)">
+            @Html.ValidationMessageFor(model => model.cvv, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group text-start">
+            <span>Card Expiry</span>
+            <input type="text" class="form-control" id="cardExpiry" name="cardExpiry" placeholder="mm/yy" minlength="5" maxlength="5" required="required" oninput="cvv(this)" pattern="\d{2}/\d{2}">
+            @Html.ValidationMessageFor(model => model.cardExpiry, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group text-start">
+            <span>Start date</span>
+            @Html.TextBoxFor(model => model.startDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+            @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
-                </div>
+        </div>
+
+        <div class="form-group text-start">
+            <span>Price (JD)</span>
+            <p class="form-control" id="cardExpiry">@Model.Price</p>
+            @*@Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @Value = Model.Price } })*@
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.theCounter, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.theCounter, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.theCounter, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.theCounter, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.theCounter, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.theCounter, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.status)
-                        @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-12">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.status)
+                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
+
+
     </div>
-</body>
-</html>
+    <br />
+
+    <div class="form-group d-flex flex-column">
+
+        <input type="submit" value="Pay" class="btn btn-default bg-black text-white" />
+    </div>
+}
+
+<script>
+    function cardNumber(input) {
+        console.log(input);
+        if (input.value.length > 19) {
+            input.value = input.value.slice(0, 19);
+        }
+    }
+
+    function cvv(input) {
+        console.log(input);
+        if (input.value.length > 3) {
+            input.value = input.value.slice(0, 3);
+        }
+    }
+</script>

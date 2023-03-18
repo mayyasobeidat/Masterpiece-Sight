@@ -90,6 +90,11 @@ namespace sight.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var user = UserManager.FindByEmail(model.Email);
+                    if (UserManager.IsInRole(user.Id, "Admin"))
+                    {
+                        return RedirectToAction("Dashboard", "AdminDashboard");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -241,7 +246,15 @@ namespace sight.Controllers
                         photographers.coverPhoto = "newPhotographer.jpg";
                         photographers.FullName = "Sight Photographer";
                         photographers.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
+                        Subscription subscription = new Subscription();
+                        subscription.PhotographerId = photographers.id;
+                        subscription.Price = 100;
+
+
+
                         db.photographers.Add(photographers);
+                        db.Subscriptions.Add(subscription);
+                        db.SaveChanges();
                         db.SaveChanges();
                         var userId = User.Identity.GetUserId();
                         return RedirectToAction("Edit", "photographers", new { id = userId });
