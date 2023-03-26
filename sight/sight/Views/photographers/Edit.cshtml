@@ -288,16 +288,18 @@
                                                 <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
                                                 <div class="col-md-8 col-lg-9">
 
+                  
+
                                                     @foreach (var item in dev)
                                                     {
 
                                                         bool isChecked = @ViewBag.photographerid == item.PhotographerID;
                                                         <label>
 
-                                                            <input type="checkbox" class="form-check-input" name="@item.PhotographyType.TypeID" value="@item.PhotographyType.TypeName" @(isChecked ? "checked" : "")>
+                                                            <input type="checkbox" class="form-check-input" name="@item.PhotographyType.TypeID"  id="@item.PhotographyType.TypeID" value="@item.PhotographyType.TypeID" @(isChecked ? "checked" : "")>
                                                             @item.PhotographyType.TypeName
                                                             @*<input type="checkbox" class="form-check-input" name="PhotographyTypeyoo" value="@item.PhotographyType.TypeID" @(isChecked ? "checked" : "")>
-                                                                @item.PhotographyType.TypeName*@
+                @item.PhotographyType.TypeName*@
                                                         </label>
                                                     }
 

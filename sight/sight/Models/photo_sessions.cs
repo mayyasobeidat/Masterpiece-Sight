@@ -23,10 +23,14 @@ namespace sight.Models
         public System.TimeSpan session_time { get; set; }
         public bool status { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
+        public int howMany { get; set; }
+        public Nullable<int> pricing_id { get; set; }
+        public string theDescription { get; set; }
     
         public virtual city city { get; set; }
         public virtual client client { get; set; }
         public virtual photographer photographer { get; set; }
         public virtual PhotographyType PhotographyType { get; set; }
+        public virtual PhotographerPricing PhotographerPricing { get; set; }
     }
 }

@@ -113,6 +113,9 @@
     <Property Name="session_time" Type="time" Precision="7" Nullable="false" />
     <Property Name="status" Type="bit" Nullable="false" />
     <Property Name="created_at" Type="datetime" />
+    <Property Name="howMany" Type="int" Nullable="false" />
+    <Property Name="pricing_id" Type="int" />
+    <Property Name="theDescription" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>
@@ -469,6 +472,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_photo_sessions_PhotographerPricing">
+    <End Role="PhotographerPricing" Type="Self.PhotographerPricing" Multiplicity="0..1" />
+    <End Role="photo_sessions" Type="Self.photo_sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographerPricing">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="photo_sessions">
+        <PropertyRef Name="pricing_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_photographers_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="photographers" Type="Self.photographers" Multiplicity="*" />
@@ -605,6 +620,10 @@
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_photo_sessions_PhotographerPricing" Association="Self.FK_photo_sessions_PhotographerPricing">
+      <End Role="PhotographerPricing" EntitySet="PhotographerPricing" />
+      <End Role="photo_sessions" EntitySet="photo_sessions" />
     </AssociationSet>
     <AssociationSet Name="FK_photographers_AspNetUsers" Association="Self.FK_photographers_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

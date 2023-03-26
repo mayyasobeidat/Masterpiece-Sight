@@ -226,8 +226,11 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,user_id,FullName,subscription_type,profilePhoto,coverPhoto,bio,accept,is_hidden,age,instagram,facebook,twitter,linkedin,PhoneNumber")] photographer photographer, HttpPostedFileBase coverPhoto, HttpPostedFileBase profilePhoto)
+        public ActionResult Edit([Bind(Include = "id,user_id,FullName,subscription_type,profilePhoto,coverPhoto,bio,accept,is_hidden,age,instagram,facebook,twitter,linkedin,PhoneNumber")] photographer photographer, HttpPostedFileBase coverPhoto, HttpPostedFileBase profilePhoto, FormCollection form)
         {
+
+
+
             photographer.profilePhoto = Session["profilePhoto"].ToString();
             photographer.coverPhoto = Session["coverPhoto"].ToString();
             if (ModelState.IsValid)
@@ -247,7 +250,58 @@ namespace sight.Controllers
                     coverPhoto.SaveAs(Path.Combine(Server.MapPath("~/assetsUser/img/") + coverPhoto.FileName));
                     photographer.coverPhoto = cvPath;
                 }
+
+
+
                 db.Entry(photographer).State = EntityState.Modified;
+
+
+
+
+
+
+                var x = User.Identity.GetUserId();
+                int id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+    
+
+                PhotographerType Type = new PhotographerType();
+
+                foreach (var item2 in db.PhotographyTypes.ToList())
+                { bool f = true;
+                    string starValuea = form[item2.TypeID.ToString()];
+                    if (starValuea == item2.TypeID.ToString())
+                    {
+                        int sstarValuea = Convert.ToInt32(starValuea);
+
+                        if (Type.TypeID == sstarValuea)
+                        {
+                            f = false;
+                        }
+                        //Session["vv6"] = "Checked6" + item2.TypeID.ToString();
+                        if (f == true)
+                        {
+                            Type.TypeID = sstarValuea;
+                            Type.PhotographerID = id;
+                        }
+
+
+                    }
+                    else
+                    {
+                        continue;
+                        //Session["vv6"] = "UNChecked6"+ item2.OrderID.ToString();
+                    }
+                }
+
+
+                db.PhotographerTypes.Add(Type);
+
+
+
+
+
+
+
                 db.SaveChanges();
                 return RedirectToAction("Edit");
 

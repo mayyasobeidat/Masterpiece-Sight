@@ -90,12 +90,15 @@ namespace sight.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var user = UserManager.FindByEmail(model.Email);
-                    if (UserManager.IsInRole(user.Id, "Admin"))
+
+                    var user = await UserManager.FindByEmailAsync(model.Email);
+                    if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
                     {
                         return RedirectToAction("Dashboard", "AdminDashboard");
                     }
                     return RedirectToLocal(returnUrl);
+
+    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

@@ -4,49 +4,49 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="858c493dab80470f9262843953b1d818" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="sightModel.admin" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.AspNetRole" Width="1.5" PointX="0.75" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.AspNetUser" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.city" Width="1.5" PointX="8.25" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.client" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.comment" Width="1.5" PointX="10.5" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.commentsHome" Width="1.5" PointX="7.5" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.photographer_cities" Width="1.5" PointX="10.5" PointY="25.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.PhotographerPricing" Width="1.5" PointX="7.5" PointY="24.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.photographer" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.PhotographerType" Width="1.5" PointX="10.5" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.PhotographyType" Width="2" PointX="8.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.photo" Width="1.5" PointX="7.5" PointY="30.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.photosAdmin" Width="2.875" PointX="7.5" PointY="33.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="sightModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="sightModel.FK__admins__user_id__2FCF1A8A" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__clients__user_id__22751F6C" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK_AspNetUsers_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK_photographers_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__photograp__city___3587F3E0" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__comments__client__282DF8C2" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__comments__photog__2739D489" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__commentsH__photo__681373AD" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__photograp__photo__3493CFA7" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__Photograp__Photo__45BE5BA9" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__Photograp__Photo__3A4CA8FD" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__photos__photogra__2BFE89A6" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK_photosAdmin_photographers" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK__Photograp__TypeI__3B40CD36" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="sightModel.FK_photosAdmin_PhotographyTypes" />
-        <EntityTypeShape EntityType="sightModel.Subscription" Width="1.5" PointX="7.5" PointY="37.125" />
-        <AssociationConnector Association="sightModel.FK__Subscript__Photo__489AC854" />
-        <EntityTypeShape EntityType="sightModel.photo_sessions" Width="1.5" PointX="13" PointY="17.5" />
+      <Diagram DiagramId="b9fffd90cdcb4a1b84150e95f6ba9d10" Name="Diagram1" ZoomLevel="30">
+        <EntityTypeShape EntityType="sightModel.admin" Width="1.5" PointX="3" PointY="13.75" />
+        <EntityTypeShape EntityType="sightModel.AspNetRole" Width="1.5" PointX="3.75" PointY="8.375" />
+        <EntityTypeShape EntityType="sightModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="16.625" />
+        <EntityTypeShape EntityType="sightModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="11.25" />
+        <EntityTypeShape EntityType="sightModel.AspNetUser" Width="1.5" PointX="0.75" PointY="21" />
+        <EntityTypeShape EntityType="sightModel.city" Width="1.5" PointX="8.25" PointY="21.125" />
+        <EntityTypeShape EntityType="sightModel.client" Width="1.5" PointX="3" PointY="22.125" />
+        <EntityTypeShape EntityType="sightModel.comment" Width="1.5" PointX="8.25" PointY="27.25" />
+        <EntityTypeShape EntityType="sightModel.commentsHome" Width="1.5" PointX="5.25" PointY="40.875" />
+        <EntityTypeShape EntityType="sightModel.photo_sessions" Width="1.5" PointX="10.5" PointY="26.375" />
+        <EntityTypeShape EntityType="sightModel.photographer_cities" Width="1.5" PointX="8.25" PointY="33.75" />
+        <EntityTypeShape EntityType="sightModel.PhotographerPricing" Width="1.5" PointX="5.25" PointY="25.625" />
+        <EntityTypeShape EntityType="sightModel.photographer" Width="1.5" PointX="3" PointY="28.75" />
+        <EntityTypeShape EntityType="sightModel.PhotographerType" Width="1.5" PointX="8.25" PointY="30.75" />
+        <EntityTypeShape EntityType="sightModel.PhotographyType" Width="1.5" PointX="8.25" PointY="24" />
+        <EntityTypeShape EntityType="sightModel.photo" Width="1.5" PointX="5.25" PointY="31.625" />
+        <EntityTypeShape EntityType="sightModel.photosAdmin" Width="1.5" PointX="5.25" PointY="35.375" />
+        <EntityTypeShape EntityType="sightModel.Subscription" Width="1.5" PointX="5.25" PointY="43.75" />
+        <EntityTypeShape EntityType="sightModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="sightModel.FK__admins__user_id__2FCF1A8A" />
+        <AssociationConnector Association="sightModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="sightModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="sightModel.FK__clients__user_id__22751F6C" />
+        <AssociationConnector Association="sightModel.FK_photographers_AspNetUsers" />
         <AssociationConnector Association="sightModel.FK__photo_ses__city___41EDCAC5" />
+        <AssociationConnector Association="sightModel.FK__photograp__city___3587F3E0" />
+        <AssociationConnector Association="sightModel.FK__comments__client__282DF8C2" />
         <AssociationConnector Association="sightModel.FK__photo_ses__clien__40F9A68C" />
+        <AssociationConnector Association="sightModel.FK__comments__photog__2739D489" />
+        <AssociationConnector Association="sightModel.FK__commentsH__photo__681373AD" />
         <AssociationConnector Association="sightModel.FK__photo_ses__photo__40058253" />
         <AssociationConnector Association="sightModel.FK__photo_ses__TypeI__42E1EEFE" />
+        <AssociationConnector Association="sightModel.FK_photo_sessions_PhotographerPricing" />
+        <AssociationConnector Association="sightModel.FK__photograp__photo__3493CFA7" />
+        <AssociationConnector Association="sightModel.FK__Photograp__Photo__45BE5BA9" />
+        <AssociationConnector Association="sightModel.FK__Photograp__Photo__3A4CA8FD" />
+        <AssociationConnector Association="sightModel.FK__photos__photogra__2BFE89A6" />
+        <AssociationConnector Association="sightModel.FK__Subscript__Photo__489AC854" />
+        <AssociationConnector Association="sightModel.FK_photosAdmin_photographers" />
+        <AssociationConnector Association="sightModel.FK__Photograp__TypeI__3B40CD36" />
+        <AssociationConnector Association="sightModel.FK_photosAdmin_PhotographyTypes" />
+        <AssociationConnector Association="sightModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

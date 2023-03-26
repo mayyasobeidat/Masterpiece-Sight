@@ -14,6 +14,12 @@ namespace sight.Models
     
     public partial class PhotographerPricing
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PhotographerPricing()
+        {
+            this.photo_sessions = new HashSet<photo_sessions>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> PhotographerID { get; set; }
         public string PhotographyType { get; set; }
@@ -21,6 +27,8 @@ namespace sight.Models
         public decimal PriceOneAndHalfHour { get; set; }
         public decimal PriceTwoHours { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<photo_sessions> photo_sessions { get; set; }
         public virtual photographer photographer { get; set; }
     }
 }

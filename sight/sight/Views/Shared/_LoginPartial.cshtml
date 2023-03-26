@@ -20,7 +20,7 @@
             <a href="#"><span>@User.Identity.GetUserName().Split('@')[0]</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
                 @*<li>@Html.ActionLink("Profile " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>*@
-                @if (User.IsInRole("Photographer"))
+                @if (User.IsInRole("Photographer") )
                 {
                     <li>@Html.ActionLink("Profile", "Edit", "Photographers", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
                 }
