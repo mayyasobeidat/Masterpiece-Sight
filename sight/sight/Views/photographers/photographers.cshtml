@@ -133,7 +133,37 @@
                         <div class="cardButt">
                             @*@Html.ActionLink("Request to Book" + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo-sessions", new { id = item.id }, new { @class = "btn btn-warning" })*@
 
-                            @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo_sessions", new { id = item.id }, new { @class = "btn btn-warning" })
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (User.IsInRole("Photographer"))
+                                {
+                                    <a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>
+
+                                }
+                                else if (User.IsInRole("Client"))
+                                {
+                                    @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo_sessions", new { id = item.id }, new { @class = "btn btn-warning" })
+                                }
+                                else if (User.IsInRole("Admin"))
+                                {
+                                    <a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>
+                                }
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Login", "Account", new { id = item.id }, new { @class = "btn btn-warning" })
+                            }
+
+
+
+
+
+
+
+
+
+
 
                             @*<a href="#" class="btn btn-warning">
             Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])

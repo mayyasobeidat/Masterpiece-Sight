@@ -72,7 +72,7 @@
 
         <div class="form-group text-start">
             <span>Price (JD)</span>
-            <p class="form-control" id="cardExpiry">@Model.Price</p>
+            <p class="form-control" id="cardExpiry" style="color:black">@ViewBag.prices</p>
             @*@Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @Value = Model.Price } })*@
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>

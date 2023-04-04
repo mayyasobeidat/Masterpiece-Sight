@@ -296,12 +296,6 @@ namespace sight.Controllers
 
                 db.PhotographerTypes.Add(Type);
 
-
-
-
-
-
-
                 db.SaveChanges();
                 return RedirectToAction("Edit");
 
@@ -311,6 +305,20 @@ namespace sight.Controllers
             return View(photographer);
         }
 
+        // GET: photographers1/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            photographer photographer = db.photographers.Find(id);
+            if (photographer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(photographer);
+        }
 
         // POST: photographers/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -331,5 +339,6 @@ namespace sight.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

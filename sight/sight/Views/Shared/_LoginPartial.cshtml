@@ -20,13 +20,13 @@
             <a href="#"><span>@User.Identity.GetUserName().Split('@')[0]</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
                 @*<li>@Html.ActionLink("Profile " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>*@
-                @if (User.IsInRole("Photographer") )
+                @if (User.IsInRole("Photographer"))
                 {
-                    <li>@Html.ActionLink("Profile", "Edit", "Photographers", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
+                    <li>@Html.ActionLink("Profile", "Edit", "photographersProfile", routeValues: new {}, htmlAttributes: new { title = "Manage" })</li>
                 }
                 else if (User.IsInRole("Client"))
                 {
-                    <li>@Html.ActionLink("Profile", "Edit", "Clients", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
+                    <li>@Html.ActionLink("Profile", "Edit", "Clients", routeValues: new {}, htmlAttributes: new { title = "Manage" })</li>
                 }
                 else if (User.IsInRole("Admin"))
                 {
@@ -39,7 +39,7 @@
 
                 <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log Out</a></li>
                 @*<li><a href="#">Drop Down 3</a></li>
-                <li><a href="#">Drop Down 4</a></li>*@
+        <li><a href="#">Drop Down 4</a></li>*@
             </ul>
         </li>
     </ul>

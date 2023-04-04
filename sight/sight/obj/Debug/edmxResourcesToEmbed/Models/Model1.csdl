@@ -12,7 +12,6 @@
     <EntitySet Name="commentsHomes" EntityType="sightModel.commentsHome" />
     <EntitySet Name="photo_sessions" EntityType="sightModel.photo_sessions" />
     <EntitySet Name="photographer_cities" EntityType="sightModel.photographer_cities" />
-    <EntitySet Name="PhotographerPricings" EntityType="sightModel.PhotographerPricing" />
     <EntitySet Name="photographers" EntityType="sightModel.photographer" />
     <EntitySet Name="PhotographerTypes" EntityType="sightModel.PhotographerType" />
     <EntitySet Name="PhotographyTypes" EntityType="sightModel.PhotographyType" />
@@ -72,17 +71,9 @@
       <End Role="PhotographyType" EntitySet="PhotographyTypes" />
       <End Role="photo_sessions" EntitySet="photo_sessions" />
     </AssociationSet>
-    <AssociationSet Name="FK_photo_sessions_PhotographerPricing" Association="sightModel.FK_photo_sessions_PhotographerPricing">
-      <End Role="PhotographerPricing" EntitySet="PhotographerPricings" />
-      <End Role="photo_sessions" EntitySet="photo_sessions" />
-    </AssociationSet>
     <AssociationSet Name="FK__photograp__photo__3493CFA7" Association="sightModel.FK__photograp__photo__3493CFA7">
       <End Role="photographer" EntitySet="photographers" />
       <End Role="photographer_cities" EntitySet="photographer_cities" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Photograp__Photo__45BE5BA9" Association="sightModel.FK__Photograp__Photo__45BE5BA9">
-      <End Role="photographer" EntitySet="photographers" />
-      <End Role="PhotographerPricing" EntitySet="PhotographerPricings" />
     </AssociationSet>
     <AssociationSet Name="FK__Photograp__Photo__3A4CA8FD" Association="sightModel.FK__Photograp__Photo__3A4CA8FD">
       <End Role="photographer" EntitySet="photographers" />
@@ -111,6 +102,19 @@
     <AssociationSet Name="AspNetUserRoles" Association="sightModel.AspNetUserRoles">
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="PhotographerPricings" EntityType="sightModel.PhotographerPricing" />
+    <AssociationSet Name="FK_photo_sessions_PhotographerPricing" Association="sightModel.FK_photo_sessions_PhotographerPricing">
+      <End Role="PhotographerPricing" EntitySet="PhotographerPricings" />
+      <End Role="photo_sessions" EntitySet="photo_sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Photograp__Photo__45BE5BA9" Association="sightModel.FK__Photograp__Photo__45BE5BA9">
+      <End Role="photographer" EntitySet="photographers" />
+      <End Role="PhotographerPricing" EntitySet="PhotographerPricings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhotographerPricing_PhotographyTypes" Association="sightModel.FK_PhotographerPricing_PhotographyTypes">
+      <End Role="PhotographyType" EntitySet="PhotographyTypes" />
+      <End Role="PhotographerPricing" EntitySet="PhotographerPricings" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="admin">
@@ -256,19 +260,6 @@
     <NavigationProperty Name="city" Relationship="sightModel.FK__photograp__city___3587F3E0" FromRole="photographer_cities" ToRole="city" />
     <NavigationProperty Name="photographer" Relationship="sightModel.FK__photograp__photo__3493CFA7" FromRole="photographer_cities" ToRole="photographer" />
   </EntityType>
-  <EntityType Name="PhotographerPricing">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PhotographerID" Type="Int32" />
-    <Property Name="PhotographyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PriceOneHour" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="PriceOneAndHalfHour" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="PriceTwoHours" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK_photo_sessions_PhotographerPricing" FromRole="PhotographerPricing" ToRole="photo_sessions" />
-    <NavigationProperty Name="photographer" Relationship="sightModel.FK__Photograp__Photo__45BE5BA9" FromRole="PhotographerPricing" ToRole="photographer" />
-  </EntityType>
   <EntityType Name="photographer">
     <Key>
       <PropertyRef Name="id" />
@@ -294,11 +285,11 @@
     <NavigationProperty Name="commentsHomes" Relationship="sightModel.FK__commentsH__photo__681373AD" FromRole="photographer" ToRole="commentsHome" />
     <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photographer" ToRole="photo_sessions" />
     <NavigationProperty Name="photographer_cities" Relationship="sightModel.FK__photograp__photo__3493CFA7" FromRole="photographer" ToRole="photographer_cities" />
-    <NavigationProperty Name="PhotographerPricings" Relationship="sightModel.FK__Photograp__Photo__45BE5BA9" FromRole="photographer" ToRole="PhotographerPricing" />
     <NavigationProperty Name="PhotographerTypes" Relationship="sightModel.FK__Photograp__Photo__3A4CA8FD" FromRole="photographer" ToRole="PhotographerType" />
     <NavigationProperty Name="photos" Relationship="sightModel.FK__photos__photogra__2BFE89A6" FromRole="photographer" ToRole="photo" />
     <NavigationProperty Name="Subscriptions" Relationship="sightModel.FK__Subscript__Photo__489AC854" FromRole="photographer" ToRole="Subscription" />
     <NavigationProperty Name="photosAdmins" Relationship="sightModel.FK_photosAdmin_photographers" FromRole="photographer" ToRole="photosAdmin" />
+    <NavigationProperty Name="PhotographerPricings" Relationship="sightModel.FK__Photograp__Photo__45BE5BA9" FromRole="photographer" ToRole="PhotographerPricing" />
   </EntityType>
   <EntityType Name="PhotographerType">
     <Key>
@@ -322,6 +313,7 @@
     <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__TypeI__42E1EEFE" FromRole="PhotographyType" ToRole="photo_sessions" />
     <NavigationProperty Name="PhotographerTypes" Relationship="sightModel.FK__Photograp__TypeI__3B40CD36" FromRole="PhotographyType" ToRole="PhotographerType" />
     <NavigationProperty Name="photosAdmins" Relationship="sightModel.FK_photosAdmin_PhotographyTypes" FromRole="PhotographyType" ToRole="photosAdmin" />
+    <NavigationProperty Name="PhotographerPricing" Relationship="sightModel.FK_PhotographerPricing_PhotographyTypes" FromRole="PhotographyType" ToRole="PhotographerPricing" />
   </EntityType>
   <EntityType Name="photo">
     <Key>
@@ -535,18 +527,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_photo_sessions_PhotographerPricing">
-    <End Type="sightModel.PhotographerPricing" Role="PhotographerPricing" Multiplicity="0..1" />
-    <End Type="sightModel.photo_sessions" Role="photo_sessions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PhotographerPricing">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="photo_sessions">
-        <PropertyRef Name="pricing_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__photograp__photo__3493CFA7">
     <End Type="sightModel.photographer" Role="photographer" Multiplicity="1" />
     <End Type="sightModel.photographer_cities" Role="photographer_cities" Multiplicity="*" />
@@ -556,18 +536,6 @@
       </Principal>
       <Dependent Role="photographer_cities">
         <PropertyRef Name="photographer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Photograp__Photo__45BE5BA9">
-    <End Type="sightModel.photographer" Role="photographer" Multiplicity="0..1" />
-    <End Type="sightModel.PhotographerPricing" Role="PhotographerPricing" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="photographer">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="PhotographerPricing">
-        <PropertyRef Name="PhotographerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -646,5 +614,55 @@
   <Association Name="AspNetUserRoles">
     <End Type="sightModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="sightModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="PhotographerPricing">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PhotographerID" Type="Int32" />
+    <Property Name="PhotographyTypeID" Type="Int32" Nullable="false" />
+    <Property Name="PriceOneHour" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="PriceOneAndHalfHour" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="PriceTwoHours" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK_photo_sessions_PhotographerPricing" FromRole="PhotographerPricing" ToRole="photo_sessions" />
+    <NavigationProperty Name="photographer" Relationship="sightModel.FK__Photograp__Photo__45BE5BA9" FromRole="PhotographerPricing" ToRole="photographer" />
+    <NavigationProperty Name="PhotographyType" Relationship="sightModel.FK_PhotographerPricing_PhotographyTypes" FromRole="PhotographerPricing" ToRole="PhotographyType" />
+  </EntityType>
+  <Association Name="FK_photo_sessions_PhotographerPricing">
+    <End Type="sightModel.PhotographerPricing" Role="PhotographerPricing" Multiplicity="0..1" />
+    <End Type="sightModel.photo_sessions" Role="photo_sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographerPricing">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="photo_sessions">
+        <PropertyRef Name="pricing_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Photograp__Photo__45BE5BA9">
+    <End Type="sightModel.photographer" Role="photographer" Multiplicity="0..1" />
+    <End Type="sightModel.PhotographerPricing" Role="PhotographerPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="photographer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PhotographerPricing">
+        <PropertyRef Name="PhotographerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhotographerPricing_PhotographyTypes">
+    <End Type="sightModel.PhotographyType" Role="PhotographyType" Multiplicity="1" />
+    <End Type="sightModel.PhotographerPricing" Role="PhotographerPricing" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographyType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="PhotographerPricing">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

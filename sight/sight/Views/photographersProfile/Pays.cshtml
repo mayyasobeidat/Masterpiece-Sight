@@ -1,0 +1,318 @@
+﻿@model sight.Models.photographer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+    <style>
+
+        @@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,800");
+        @@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
+        @@import url(https://fonts.googleapis.com/css?family=Audiowide);
+
+
+
+
+
+        ol, ul {
+            list-style: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        caption, th, td {
+            text-align: left;
+            font-weight: normal;
+            vertical-align: middle;
+        }
+
+        q, blockquote {
+            quotes: none;
+        }
+
+            q:before, q:after, blockquote:before, blockquote:after {
+                content: "";
+                content: none;
+            }
+
+        a img {
+            border: none;
+        }
+
+        article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+            display: block;
+        }
+
+
+
+
+
+        strong {
+            font-weight: bold;
+        }
+
+        /*====================================
+          Some styles to spruce up the demo
+        =====================================*/
+
+
+
+
+        .wrap {
+            padding: 1em;
+            text-align: center;
+        }
+
+        @@media (min-width: 43.75em) {
+            .wrap {
+                padding: 1em 2em;
+            }
+        }
+
+        /*====================================
+          Our moodal Window styles
+        =====================================*/
+        .moodal {
+            display: inline-block;
+            padding: 1em;
+        }
+
+        @@media (min-width: 43.75em) {
+            .moodal {
+                padding: 1.5em;
+            }
+        }
+
+        .moodal > label {
+            background: #FFD300;
+            border: 1px solid #f0c600;
+            border-radius: .2em;
+            color: #000000;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            padding: 0.75em 1.5em;
+            text-shadow: 1px 1px 1px #fff;
+            transition: all 0.55s;
+        }
+
+            .moodal > label:hover {
+                -webkit-transform: scale(0.97);
+                transform: scale(0.97);
+            }
+
+        .moodal__overlay {
+            background: #000000;
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            right: 0;
+            text-align: center;
+            text-shadow: none;
+            top: 0;
+            z-index: 600;
+        }
+
+        .moodal__wrap {
+            padding: 1em 0;
+            position: relative;
+            margin: 0 auto;
+            max-width: 900px;
+            width: 90%;
+        }
+
+        @@media (min-width: 50em) {
+            .moodal__wrap {
+                padding: 1.75em;
+            }
+        }
+
+        @@media (min-height: 37.5em) {
+            .moodal__wrap {
+                left: 50%;
+                position: absolute;
+                top: 80%;
+                -webkit-transform: translate(-50%, -80%);
+                transform: translate(-50%, -80%);
+            }
+        }
+
+        .moodal__wrap label {
+            background: #FFD300;
+            border-radius: 50%;
+            color: #000000;
+            cursor: pointer;
+            display: inline-block;
+            height: 1.5em;
+            line-height: 1.5;
+            position: absolute;
+            right: .5em;
+            top: .5em;
+            width: 1.5em;
+        }
+
+        .moodal__wrap h2 {
+            color: #FFD300;
+            margin-bottom: 1em;
+            text-transform: uppercase;
+        }
+
+        .moodal__wrap p {
+            color: #FFD300;
+            text-align: justify;
+        }
+
+        .moodal input:focus ~ label {
+            -webkit-transform: scale(0.97);
+            transform: scale(0.97);
+        }
+
+        #moodal__trigger {
+            position: absolute;
+            top: -1000px;
+        }
+
+        .moodal__overlay {
+            opacity: 0;
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+            transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: -100;
+        }
+
+        input:checked ~ .moodal__overlay {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            z-index: 800;
+        }
+
+
+        .box {
+            padding: 40px;
+        }
+
+        .join {
+            grid-area: a;
+        }
+
+        .sub {
+            grid-area: b;
+            background-color: #f2c511;
+        }
+
+        .why {
+            grid-area: c;
+            background-color: hsl(179, 62%, 50%);
+        }
+
+
+
+        .join p {
+            color: hsl(218, 22%, 67%);
+            line-height: 1.4;
+        }
+
+        h5 span.price {
+            color: #FFF;
+            font-size: 28px;
+            font-weight: 700;
+            padding-right: 10px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        h5 span {
+            color: hsl(204, 43%, 93%);
+            font-weight: 400;
+        }
+
+        .sub p {
+            color: #FFF;
+        }
+
+        .sub a {
+            display: block;
+            text-align: center;
+            background-color: #212529;
+            text-decoration: none;
+            color: #FFF;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 12px 0;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+
+        .why ul {
+            list-style: none;
+        }
+
+        .why li {
+            color: #FFF;
+            padding-bottom: 4px;
+            font-size: 14px;
+        }
+
+        @@media only screen and (max-width: 425px) {
+
+
+            .box {
+                padding: 30px;
+            }
+        }
+
+        .foorrm {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-template-areas: "a a""b c";
+            row-gap: 9px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <!--End of Wrap -->
+    <!--Start of moodal -->
+    <div class="moodal">
+        <input id="moodal__trigger" type="checkbox" />
+        <label for="moodal__trigger">Subscription Payment</label>
+        <div class="moodal__overlay" role="dialog" aria-labelledby="moodal__title" aria-describedby="moodal_desc">
+            <div class="moodal__wrap">
+                <label for="moodal__trigger">&#10006;</label>
+                <div class="wrapper">
+
+                    <div class="box sub">
+                        <h2>Monthly Subscription</h2>
+                        <h5><span class="price">100 JD</span> <span>per month</span></h5>
+                        <p>Sight</p>
+                        @*<div class="foorrm">
+            <input type="text" class="form-control">
+            <input type="number" class="form-control">
+            <input type="number" class="form-control">
+            <input type="date" class="form-control" />
+        </div>*@
+                        @Html.Action("Edit", "Subscriptions")
+
+                        @*@Html.Action("Edit", "Subscriptions", new { id = ViewBag.PhotographerId })*@
+
+                        @*<a href="#">Pay</a>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of moodal -->
+</body>
+</html>

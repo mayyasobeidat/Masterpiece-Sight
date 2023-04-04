@@ -1,0 +1,43 @@
+﻿@model sight.Models.PhotographerType
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PhotographerType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photographer.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.photographer.user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyType.TypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -90,17 +90,16 @@
                             <div class="mb-3">
                                 <label class="form-label d-block">What day would you like to book your photo shoot?*</label>
                                 <div class="form-floating mb-3 row-cols-lg-3">
-                                    @Html.TextBoxFor(model => model.session_time, "{0:hh\\:mm}", new
-                                    {
-                                        @class = "form-control",
-                                        @type = "time"
-                                   ,
-                                        @id = "NewField9"
-                                    })
+                                    @Html.TextBoxFor(model => model.session_time, "{0:hh\\:mm}", new { @class = "form-control", @type = "time", @id = "NewField9" })
                                     @Html.ValidationMessageFor(model => model.session_time, "", new { @class = "text-danger" })
                                     <label for="newField9">Time</label>
                                 </div>
                             </div>
+
+                            
+
+
+
 
                             <div class="mb-3">
                                 <p style="    border: solid; background: gainsboro; padding: 10px;">
@@ -126,7 +125,7 @@
                             <div class="mb-3">
                                 <label class="form-label d-block">How many participants will be on the shoot?</label>
                                 <div class="form-floating mb-3 row-cols-lg-3">
-                                    @Html.EditorFor(model => model.howMany, new { htmlAttributes = new { @class = "form-control", type = "number", data_sb_validations = "required", @id = "NewFields" } })
+                                    @Html.EditorFor(model => model.howMany, new { htmlAttributes = new { @class = "form-control", type = "number", data_sb_validations = "required", @id = "NewFields", min = "1", max = "20" } })
                                     @Html.ValidationMessageFor(model => model.howMany, "", new { @class = "text-danger" })
                                     <label for="newFields">The number of people</label>
 
@@ -196,6 +195,8 @@
                                 <div class="col-md-3 col-sm-6">
                                     @*<button class="btn btn-warning" id="nextBtn2" type="submit" style="width: 100%;">Next Step</button>*@
                                     <input type="submit" value="Submit" id="nextBtn2" class="btn btn-warning" style="width: 100%;" />
+                                    @*<button class="btn btn-warning"  type="button"   id="nextBtn2" style="width: 100%;">Finish</button>*@
+
 
                                 </div>
 
@@ -208,7 +209,7 @@
 
                         </div>
 
-                        <div id="form3" style="display:none;">
+                        @*<div id="form3" style="display:none;">
 
                             <h2>Your booking request is sent!</h2>
                             <h5>You will be notified when a photographer responds. Responses typically take 24 - 48 hours.</h5>
@@ -231,6 +232,7 @@
 
                             <div class="d-flex align-items-center justify-content-center">
                                 <div class="col-md-3 col-sm-6">
+
                                     <button class="btn btn-warning" id="submitButton" type="submit" style="width: 100%;">Pay Upfront</button>
                                 </div>
 
@@ -242,7 +244,7 @@
 
 
 
-                        </div>
+                        </div>*@
 
 
                     </div>
@@ -285,8 +287,8 @@
         // أضف حدث مستمع للنقر على زر "Next" في الصفحة الثانية
         nextBtn2.addEventListener("click", function () {
             // قم بتغيير خصائص CSS لكل نموذج لإظهار النموذج الثالث وإخفاء النموذج الثاني
-            form2.style.display = "none";
-            form3.style.display = "block";
+            //form2.style.display = "none";
+            //form3.style.display = "block";
 
             // قم بتحديد نص الزر على "Finish"
             nextBtn2.innerHTML = "Finish";

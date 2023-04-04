@@ -13,11 +13,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PhotographyType)
+            @Html.DisplayNameFor(model => model.PhotographyTypeID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PhotographyType)
+            @Html.DisplayFor(model => model.PhotographyTypeID)
         </dd>
 
         <dt>
@@ -50,6 +50,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.photographer.user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyType.TypeName)
         </dd>
 
     </dl>

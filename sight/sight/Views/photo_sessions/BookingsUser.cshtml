@@ -1,0 +1,55 @@
+﻿@model IEnumerable<sight.Models.photo_sessions>
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <table class="table-bordered table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.session_date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.session_time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.city.cityName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.photographer.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @String.Format("{0:MM/dd/yyyy}", item.session_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.session_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city.cityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.photographer.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+

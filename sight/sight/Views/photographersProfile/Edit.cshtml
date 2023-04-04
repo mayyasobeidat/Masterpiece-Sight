@@ -1,0 +1,583 @@
+﻿@model sight.Models.photographer
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+}
+
+
+
+<style>
+    .profiless img {
+        height: 120px;
+    }
+
+    .mmm {
+        width: 100%;
+    }
+
+    .mm {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+    /*custom inpu file*/
+    .custom-file-input {
+        color: transparent;
+    }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: "▲ Upload Photo";
+            color: #fff;
+            display: inline-block;
+            background: #ffc107;
+            padding: 10px 22px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
+
+        .custom-file-input:focus {
+            outline: none !important;
+        }
+
+        .custom-file-input:active::before {
+            transform: scale(.9) translate(0px, 2px);
+            box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.20);
+        }
+</style>
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+
+
+
+    <div class="container">
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="card profiless">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center mmm">
+
+                            <img src="~/assetsUser/img/@Model.profilePhoto" alt="Profile" class="rounded-circle mm">
+                            <a href="/photographers/PhotographerProfile/@Model.id"><h2>@Model.FullName</h2></a>
+                            <div class="social-links mt-2">
+                                <a href="@Model.twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="@Model.facebook" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="@Model.instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="@Model.linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+                    @*<br>
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <div>
+                                <h4 style="text-align:center">
+                                    We have chosen hypothetical prices for your photo sessions in line with the current market<br />
+                                    You can adjust these prices as desired.
+                                </h4>
+                            </div>
+                            @Html.ActionLink("Go", "Index", "PhotographerPricings")
+                        </div>
+                    </div>*@
+
+
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <div>
+                                <h4 style="text-align:center">
+                                    We have chosen hypothetical prices for your photo sessions in line with the current market<br />
+                                    You can adjust these prices as desired.
+                                </h4>
+                            </div>
+                            @Html.Action("Index", "PhotographerPricings")
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <br>
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <div>
+                                <h4 style="text-align:center">
+                                    Your status is now <span style="color:red">not visible </span>on our website because you have not paid the monthly subscription fee<br /><br />
+                                    Hurry up to show your customers
+                                </h4>
+                            </div>
+                            @Html.Action("Pays")
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="col-xl-8">
+
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            @*Bordered Tabs*@
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content pt-2">
+
+
+                                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+
+
+                                    @using (Html.BeginForm("Edit", "photographersProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.id)
+
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control", style = "display:none;" })
+                                                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        //Profile Edit Form
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img src="~/assetsUser/img/@Model.profilePhoto" name="profilePhoto" alt="Profile" id="myImage">
+                                                <div class="pt-2">
+                                                    <input type="file" name="profilePhoto" class="custom-file-input" accept="image/*" id="myFileInput">
+                                                    @Html.ValidationMessageFor(model => model.profilePhoto, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <script>
+                                            const fileInput = document.getElementById('myFileInput');
+                                            const imagePreview = document.getElementById('myImage');
+
+                                            fileInput.addEventListener('change', function () {
+                                                const file = this.files[0];
+
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.addEventListener('load', function () {
+                                                        imagePreview.src = URL.createObjectURL(file);
+                                                    });
+                                                    reader.readAsDataURL(file);
+                                                } else {
+                                                    imagePreview.src = 'default-image-source.jpg';
+                                                }
+                                            });
+
+                                        </script>
+
+
+
+
+
+
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Cover Photo</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img src="~/assetsUser/img/@Model.coverPhoto" alt="cover" id="myImageCover">
+                                                <div class="pt-2">
+                                                    <input type="file" name="coverPhoto" class="custom-file-input" accept="image/*" id="myFileInputCover">
+                                                    @Html.ValidationMessageFor(model => model.coverPhoto, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            const fileInputC = document.getElementById('myFileInputCover');
+                                            const imagePreviewC = document.getElementById('myImageCover');
+
+                                            fileInputC.addEventListener('change', function () {
+                                                const file = this.files[0];
+
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.addEventListener('load', function () {
+                                                        imagePreviewC.src = URL.createObjectURL(file);
+                                                    });
+                                                    reader.readAsDataURL(file);
+                                                } else {
+                                                    imagePreview.src = 'default-image-source.jpg';
+                                                }
+                                            });
+
+                                        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <div class="row mb-3">
+
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @value = Model.FullName } })
+                                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.TextAreaFor(model => model.bio, new { @class = "form-control", @rows = "5", @style = "height:100px;", @value = Model.bio })
+                                                @Html.ValidationMessageFor(model => model.bio, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control", @type = "number", @value = Model.age, @min = 0, @max = 100 } })
+                                                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        {
+                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                            sight.Models.city Type = new sight.Models.city();
+                                            var dev = db.cities.ToList();
+
+
+                                <div class="row mb-3">
+                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
+                                    <div class="col-md-4 col-lg-4">
+
+                                        @foreach (var item in dev)
+                                        {
+                                            <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
+
+                                        }
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+
+                                        @foreach (var item in Model.photographer_cities)
+                                        {
+                                            <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
+
+                                        }
+                                    </div>
+
+                                </div>
+                                        }
+
+                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <label class="form-control">@User.Identity.Name</label>
+                                            </div>
+                                        </div>
+
+
+
+                                        {
+                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                            sight.Models.PhotographyType Type = new sight.Models.PhotographyType();
+                                            var dev = db.PhotographyTypes.ToList();
+
+
+                                <div class="row mb-3">
+                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                    <div class="col-md-4 col-lg-4">
+
+                                        @foreach (var item in dev)
+                                        {
+                                            <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
+
+                                        }
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+
+                                        @foreach (var item in Model.PhotographerTypes)
+                                        {
+                                            <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
+
+                                        }
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                                        }
+
+
+
+                                     
+
+                                        @*<div class="row mb-3">
+                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                <div class="col-md-8 col-lg-9">
+
+                    @foreach (var item in Model.PhotographerTypes)
+                    {
+                        @item.PhotographyType.TypeName <span>&nbsp;</span>
+
+                    }
+                </div>
+            </div>*@
+
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="@Model.twitter">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="@Model.facebook">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="@Model.instagram">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="@Model.linkedin">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <input type="submit" value="Save Changes" class="btn btn-warning" />
+
+                                        </div>
+                                        //End Profile Edit Form
+
+
+
+
+                                    }
+
+
+
+                                </div>
+
+                                        <div class="tab-pane fade pt-3" id="profile-booking">
+
+                                            Settings Form
+                                            <form>
+
+                                                <div class="row mb-3">
+                                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Booking</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <div class="mb-3" style="padding: 5%; border: solid;">
+                                                            <p><strong>Booking Request Details</strong></p>
+                                                            <p><strong>Date:</strong> March 10, 2023</p>
+                                                            <p><strong>Time of day:</strong>Morning</p>
+                                                            <p><strong>Number of participants:</strong>2</p>
+                                                            <p><strong>Requested photographer:</strong>Baraa</p>
+                                                            <p><strong>Type of Photo shoot:</strong>Portrait</p>
+                                                            <p><strong>Package:</strong>90 minute booking</p>
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-warning">Connect</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+                                            @*End settings Form*@
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="tab-pane fade pt-3" id="profile-feedback">
+
+                                            @*feedback Form*@
+                                            <form>
+
+                                                <div class="row mb-3">
+                                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <table class="table-bordered table table-hover table-responsive">
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Comment</th>
+                                                                <th></th>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Ahmad</td>
+                                                                <td>Hi</td>
+                                                                <td><a href="#">view</a></td>
+
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+                                            End feedback
+
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+                                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                                            Change Password Form
+                                            <form>
+
+                                                <div class="row mb-3">
+                                                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="password" type="password" class="form-control" id="currentPassword">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-warning">Change Password</button>
+                                                </div>
+                                            </form> End Change Password Form
+
+                                        </div>
+
+                                    </div>
+
+                            @*End Bordered Tabs*@
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+@*End #main*@
+
+
+

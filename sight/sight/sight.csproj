@@ -187,6 +187,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PhotographerPricingsController.cs" />
     <Compile Include="Controllers\photographersController.cs" />
+    <Compile Include="Controllers\photographersProfileController.cs" />
+    <Compile Include="Controllers\PhotographerTypesController.cs" />
     <Compile Include="Controllers\PhotographyTypesController.cs" />
     <Compile Include="Controllers\photosAdminsController.cs" />
     <Compile Include="Controllers\photo_sessionsController.cs" />
@@ -338,6 +340,7 @@
     <Content Include="assetsUser\img\favicon1.png" />
     <Content Include="assetsUser\img\features.jpg" />
     <Content Include="assetsUser\img\Food.jpg" />
+    <Content Include="assetsUser\img\free.png" />
     <Content Include="assetsUser\img\hero-bg.png" />
     <Content Include="assetsUser\img\hero-bg00.jpg" />
     <Content Include="assetsUser\img\hero-bg1.jpg" />
@@ -382,6 +385,7 @@
     <Content Include="assetsUser\img\slide3.jpg" />
     <Content Include="assetsUser\img\slide4.jpg" />
     <Content Include="assetsUser\img\slide\slide-17.jpg" />
+    <Content Include="assetsUser\img\sl_051421_43010_26 [Converted].png" />
     <Content Include="assetsUser\img\team\team-1.jpg" />
     <Content Include="assetsUser\img\team\team-2.jpg" />
     <Content Include="assetsUser\img\team\team-3.jpg" />
@@ -790,11 +794,6 @@
     <Content Include="Views\PhotographyTypes\Index.cshtml" />
     <Content Include="Views\AdminDashboard\photographersCount.cshtml" />
     <Content Include="Views\AdminDashboard\clientsCount.cshtml" />
-    <Content Include="Views\PhotographerPricings\Create.cshtml" />
-    <Content Include="Views\PhotographerPricings\Delete.cshtml" />
-    <Content Include="Views\PhotographerPricings\Details.cshtml" />
-    <Content Include="Views\PhotographerPricings\Edit.cshtml" />
-    <Content Include="Views\PhotographerPricings\Index.cshtml" />
     <Content Include="Views\photographers\Pays.cshtml" />
     <Content Include="Views\admins\Create.cshtml" />
     <Content Include="Views\admins\Delete.cshtml" />
@@ -822,7 +821,28 @@
     <Content Include="Views\photo_sessions\Edit.cshtml" />
     <Content Include="Views\photo_sessions\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutBooking.cshtml" />
-    <Content Include="Views\photo_sessions\Details - Copy.cshtml" />
+    <Content Include="Views\photo_sessions\BookingUser.cshtml" />
+    <Content Include="Views\photo_sessions\BookingsUser.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Shared\_LoginPartiallogin.cshtml" />
+    <Content Include="Views\photo_sessions\BookingPhotographer.cshtml" />
+    <Content Include="Views\photographersProfile\Create.cshtml" />
+    <Content Include="Views\photographersProfile\Delete.cshtml" />
+    <Content Include="Views\photographersProfile\Details.cshtml" />
+    <Content Include="Views\photographersProfile\Edit.cshtml" />
+    <Content Include="Views\photographersProfile\Index.cshtml" />
+    <Content Include="Views\photographersProfile\Pays.cshtml" />
+    <Content Include="Views\PhotographerTypes\Create.cshtml" />
+    <Content Include="Views\PhotographerTypes\Delete.cshtml" />
+    <Content Include="Views\PhotographerTypes\Details.cshtml" />
+    <Content Include="Views\PhotographerTypes\Edit.cshtml" />
+    <Content Include="Views\PhotographerTypes\Index.cshtml" />
+    <Content Include="Views\PhotographerPricings\Create.cshtml" />
+    <Content Include="Views\PhotographerPricings\Delete.cshtml" />
+    <Content Include="Views\PhotographerPricings\Details.cshtml" />
+    <Content Include="Views\PhotographerPricings\Edit.cshtml" />
+    <Content Include="Views\PhotographerPricings\Index.cshtml" />
+    <Content Include="Views\photo_sessions\CreateFenish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

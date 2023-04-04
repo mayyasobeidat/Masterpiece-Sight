@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @*<ul class="nav navbar-right">
+            <li class="nav-link scrollto">
+                @Html.ActionLink("Hello " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log out</a></li>
+        </ul>*@
+
+
+
+<nav class="navbar" style="display:block !important">
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#"><span>@User.Identity.GetUserName().Split('@')[0]</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                @*<li>@Html.ActionLink("Profile " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>*@
+                @if (User.IsInRole("Photographer") )
+                {
+                    <li>@Html.ActionLink("Profile", "Edit", "photographersProfile", routeValues: new {}, htmlAttributes: new { title = "Manage" })</li>
+                }
+                else if (User.IsInRole("Client"))
+                {
+                    <li>@Html.ActionLink("Profile", "Edit", "Clients", routeValues: new {}, htmlAttributes: new { title = "Manage" })</li>
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("Dashboard", "Index", "AdminDashboard", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Profile " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                }
+
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log Out</a></li>
+                @*<li><a href="#">Drop Down 3</a></li>
+                <li><a href="#">Drop Down 4</a></li>*@
+            </ul>
+        </li>
+    </ul>
+
+</nav>
+    <!-- .navbar -->
+
+
+
+
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+        <li>
+            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "get-started-btn scrollto" })
+        </li>
+
+    </ul>
+}

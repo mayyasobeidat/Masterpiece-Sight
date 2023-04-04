@@ -94,6 +94,8 @@ namespace sight.Controllers
 
             if (ModelState.IsValid)
             {
+              
+
                 string imgPath = "";
                 if (photo != null)
                 {

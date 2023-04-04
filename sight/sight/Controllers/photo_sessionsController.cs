@@ -22,6 +22,66 @@ namespace sight.Controllers
             return View(photo_sessions.ToList());
         }
 
+        public ActionResult CreateFenish()
+        {
+            var photo_sessions = db.photo_sessions.Include(p => p.city).Include(p => p.client).Include(p => p.photographer).Include(p => p.PhotographyType).Include(p => p.PhotographerPricing);
+            return View(photo_sessions.ToList());
+        }
+
+        public ActionResult BookingUser()
+        {
+          
+            var userId = User.Identity.GetUserId(); // افترض أنه يتم استخدام ASP.NET Identity
+
+            int iduser = db.clients.FirstOrDefault(a => a.user_id == userId).id;
+
+            var photo_sessions = db.photo_sessions
+                .Include(p => p.city)
+                .Include(p => p.client)
+                .Include(p => p.photographer)
+                .Include(p => p.PhotographyType)
+                .Include(p => p.PhotographerPricing)
+                .Where(p => p.client_id == iduser); // أضف العبارة WHERE هنا
+            return View(photo_sessions.ToList());
+
+        }
+
+
+        public ActionResult BookingsUser()
+        {
+
+            var userId = User.Identity.GetUserId(); // افترض أنه يتم استخدام ASP.NET Identity
+
+            int iduser = db.clients.FirstOrDefault(a => a.user_id == userId).id;
+
+            var photo_sessions = db.photo_sessions
+                .Include(p => p.city)
+                .Include(p => p.client)
+                .Include(p => p.photographer)
+                .Include(p => p.PhotographyType)
+                .Include(p => p.PhotographerPricing)
+                .Where(p => p.client_id == iduser); // أضف العبارة WHERE هنا
+            return View(photo_sessions.ToList());
+
+        }
+
+        public ActionResult BookingPhotographer()
+        {
+
+            var userId = User.Identity.GetUserId(); // افترض أنه يتم استخدام ASP.NET Identity
+            int iduser = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
+
+            var photo_sessions = db.photo_sessions
+                .Include(p => p.city)
+                .Include(p => p.client)
+                .Include(p => p.photographer)
+                .Include(p => p.PhotographyType)
+                .Include(p => p.PhotographerPricing)
+                .Where(p => p.photographer_id == iduser); // أضف العبارة WHERE هنا
+            return View(photo_sessions.ToList());
+
+        }
+
         // GET: photo_sessions1/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,14 +98,35 @@ namespace sight.Controllers
         }
 
         // GET: photo_sessions1/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
 
-       
-            ViewBag.city_id = new SelectList(db.cities, "id", "cityName");
+            int photographerId = (int)id;
+            var photographyTypes = db.PhotographerTypes.Include(p => p.PhotographyType)
+                .Where(p => p.PhotographerID == photographerId)
+                .Select(p => p.PhotographyType)
+                .ToList();
+
+            ViewBag.TypeID = new SelectList(photographyTypes, "TypeID", "TypeName");
+
+
+
+
+            var photographyCity = db.photographer_cities.Include(p => p.city)
+              .Where(p => p.photographer_id == photographerId)
+              .Select(p => p.city)
+              .ToList();
+
+            ViewBag.city_id = new SelectList(photographyCity, "id", "cityName");
+
+
+
+
+
+            //ViewBag.city_id = new SelectList(db.cities, "id", "cityName");
             ViewBag.client_id = new SelectList(db.clients, "id", "user_id");
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id");
-            ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName");
+            //ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName");
             ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyType");
             return View();
         }
@@ -57,7 +138,7 @@ namespace sight.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,photographer_id,client_id,city_id,TypeID,session_date,session_time,status,created_at,howMany,theDescription,pricing_id")] photo_sessions photo_sessions, int?id)
         {
-           
+
             if (ModelState.IsValid)
             {
                 var x = User.Identity.GetUserId();
@@ -71,13 +152,32 @@ namespace sight.Controllers
 
                 db.photo_sessions.Add(photo_sessions);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("CreateFenish");
+
+                //return RedirectToAction("Edit", "clients", new { id = iduser });
             }
 
-            ViewBag.city_id = new SelectList(db.cities, "id", "cityName", photo_sessions.city_id);
+            int photographerId = (int)id;
+            var photographyTypes = db.PhotographerTypes.Include(p => p.PhotographyType)
+                .Where(p => p.PhotographerID == photographerId)
+                .Select(p => p.PhotographyType)
+                .ToList();
+
+            ViewBag.TypeID = new SelectList(photographyTypes, "TypeID", "TypeName");
+
+
+            var photographyCity = db.photographer_cities.Include(p => p.city)
+                .Where(p => p.photographer_id == photographerId)
+                .Select(p => p.city)
+                .ToList();
+
+            ViewBag.city_id = new SelectList(photographyCity, "id", "cityName");
+
+
+            //ViewBag.city_id = new SelectList(db.cities, "id", "cityName", photo_sessions.city_id);
             ViewBag.client_id = new SelectList(db.clients, "id", "user_id", photo_sessions.client_id);
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", photo_sessions.photographer_id);
-            ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo_sessions.TypeID);
+            //ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo_sessions.TypeID);
             ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyType", photo_sessions.pricing_id);
             return View(photo_sessions);
         }
@@ -126,6 +226,7 @@ namespace sight.Controllers
         // GET: photo_sessions1/Delete/5
         public ActionResult Delete(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

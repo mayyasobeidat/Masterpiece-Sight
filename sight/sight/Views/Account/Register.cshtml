@@ -173,7 +173,7 @@
                 color: #478bfb;
             }
 
-    label {
+    .label1 {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -186,11 +186,24 @@
         cursor: pointer;
     }
 
-        label .fas {
-            font-size: 60px;
-            color: #2c2c51;
-            width: 50%;
-        }
+    .label2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        height: 80%;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        cursor: pointer;
+        justify-content: flex-start
+    }
+    label .fas {
+        font-size: 60px;
+        color: #2c2c51;
+        width: 50%;
+    }
 
     input[type="radio"]:checked + label .fas {
         animation: grow 0.5s;
@@ -231,12 +244,28 @@
         input[type="radio"]:after {
             font-size: 15px;
         }
+        #typeSubscriptions {
+            flex-wrap:nowrap;
+        }
     }
 
     @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
         body {
         }
     }
+
+    #typeSubscriptions {
+        display: none;
+    }
+
+
+    .tile2 {
+        height: 270px;
+        width: 150px;
+        position: relative;
+    }
+
+
 </style>
 
 
@@ -252,26 +281,48 @@
         @Html.AntiForgeryToken()
         <h1>Sign Up</h1>
         <h5 style="color: #fff; text-align: center;">Choose Account Type</h5>
-        <section>
+
+
+        <section id="typeAccount">
             <div class="tile">
-            <input type="radio" name="Account" id="Photographer" value="Photographer" required>
-            <label for="Photographer">
-                <div class="fas"><img src="~/assetsUser/img/1.png" style="width:100%"></div>
-                <h6 style="color: #fff; text-align: center;">Photographer</h6>
-            </label>
-        </div>
-        <div class="tile">
-            <input type="radio" name="Account" id="Client" value="Client">
-            <label for="Client">
-                <div class="fas"><img src="~/assetsUser/img/2.png" style="width:100%"></div>
-                <h6 style="color: #fff; text-align: center;">Client</h6>
-            </label>
-        </div>
-
-       
-
-
+                <input type="radio" name="Account" id="Photographer" value="Photographer" required>
+                <label for="Photographer" class="label1">
+                    <div class="fas"><img src="~/assetsUser/img/1.png" style="width:100%"></div>
+                    <h6 style="color: #fff; text-align: center;">Photographer</h6>
+                </label>
+            </div>
+            <div class="tile">
+                <input type="radio" name="Account" id="Client" value="Client">
+                <label for="Client" class="label1">
+                    <div class="fas"><img src="~/assetsUser/img/2.png" style="width:100%"></div>
+                    <h6 style="color: #fff; text-align: center;">User</h6>
+                </label>
+            </div>
         </section>
+
+        @*<section id="typeSubscriptions">
+            <div class="tile2">
+                <input type="radio" name="Subscriptions" id="oneMonth" value="oneMonth" required>
+                <label for="oneMonth" class="label2">
+                    <div class="fas"><img src="~/assetsUser/img/free.png" style="width:100%"></div>
+                    <h4 style="color: #fff; text-align: center;">1 Month</h4>
+                    <h6 style="color: #fff; text-align: center;"><b>75 JD</b><br /> every month</h6>
+
+                </label>
+            </div>
+            <div class="tile2">
+                <input type="radio" name="Subscriptions" id="threeMonth" value="threeMonth">
+                <label for="threeMonth" class="label2">
+                    <div class="fas"><img src="~/assetsUser/img/free.png" style="width:100%"></div>
+                    <h4 style="color: #fff; text-align: center;">3 Month</h4>
+                    <h6 style="color: #fff; text-align: center;"><b>200 JD</b><br /> every three month</h6>
+                </label>
+            </div>
+        </section>*@
+
+
+
+
         @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "form-control" })
         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Password" })
@@ -283,21 +334,33 @@
     }
 </div>
 
+@*<script>
+    const photographerRadio = document.getElementById('Photographer');
+    photographerRadio.addEventListener('change', setVisibility);
+
+    function setVisibility() {
+        const typeAccount = document.getElementById('typeAccount');
+        const typeSubscriptions = document.getElementById('typeSubscriptions');
+        const login = document.getElementsByClassName('login').item(0);
+        const mqMobile = window.matchMedia("(max-width: 480px)");
 
 
 
+        if (photographerRadio.checked) {
+            typeAccount.style.display = 'none';
+            typeSubscriptions.style.display = 'flex';
+            if (mqMobile.matches) {
+                login.style.top = '75%';
+            }
 
-@*<div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <label class="radio-inline">
-                @Html.RadioButtonFor(m => m.AspNetUserRoles, "Client", new { @checked = "checked" })
-                Client
-            </label>
-            <label class="radio-inline">
-                @Html.RadioButtonFor(m => m.AspNetUserRoles, "Photographer")
-                Photographer
-            </label>
-        </div>
-    </div>*@
+        } else {
+            typeAccount.style.display = 'flex';
+            typeSubscriptions.style.display = 'none';
+        }
+    }
+
+
+</script>*@
+
 
 

@@ -84,8 +84,9 @@
 
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <p><strong>Booking Request Details</strong></p>
 
-                            <p>الحجوزات</p>
+                            @Html.Action("BookingUser", "photo_sessions")
                         </div>
                     </div>
                 </div>
@@ -96,10 +97,6 @@
                         <div class="card-body pt-3">
                             @*Bordered Tabs*@
                             <ul class="nav nav-tabs nav-tabs-bordered">
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                                </li>
 
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
@@ -121,25 +118,6 @@
 
                             <div class="tab-content pt-2">
 
-                                <div class="tab-pane fade profile-overview" id="profile-overview">
-                          
-                                    <h5 class="card-title">Profile Details</h5>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                        <div class="col-lg-9 col-md-8">@Model.fullName</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Phone</div>
-                                        <div class="col-lg-9 col-md-8">@Model.PhoneNumber</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">@Model.AspNetUser.Email</div>
-                                    </div>
-                                </div>
 
                                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
@@ -163,14 +141,49 @@
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile">
+                                                <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile" id="myImage">
                                                 <div class="pt-2">
-                                                    <input type="file" name="photo" class="custom-file-input" accept="image/*">
+                                                    <input type="file" name="photo" class="custom-file-input" accept="image/*" id="myFileInput">
                                                     @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
 
                                                 </div>
                                             </div>
                                         </div>
+
+
+
+
+
+                                        <script>
+                                            const fileInput = document.getElementById('myFileInput');
+                                            const imagePreview = document.getElementById('myImage');
+
+                                            fileInput.addEventListener('change', function () {
+                                                const file = this.files[0];
+
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.addEventListener('load', function () {
+                                                        imagePreview.src = URL.createObjectURL(file);
+                                                    });
+                                                    reader.readAsDataURL(file);
+                                                } else {
+                                                    imagePreview.src = 'default-image-source.jpg';
+                                                }
+                                            });
+
+                                        </script>
+
+
+
+
+
+
+
+
+
+
+
 
                                         <div class="row mb-3">
 
@@ -193,8 +206,8 @@
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 @*@Html.EditorFor(model => model.AspNetUser.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @value = Model.AspNetUser.Email, @readonly = "readonly" } })
-                                                  @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
-                                                <label>@Html.DisplayFor(model => model.AspNetUser.Email)</label>
+                    @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
+                                                <label>@User.Identity.Name</label>
                                             </div>
                                         </div>
 
@@ -294,7 +307,13 @@
                                         <div class="row mb-3">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <table class="table-bordered table table-hover table-responsive">
+
+                                                @*@Html.Action("BookingsUser", "photo_sessions")*@
+
+                                                @Html.Action("BookingUser", "photo_sessions")
+
+
+                                                @*<table class="table-bordered table table-hover table-responsive">
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Comment</th>
@@ -307,7 +326,11 @@
                                                         <td><a href="#">view</a></td>
 
                                                     </tr>
-                                                </table>
+                                                </table>*@
+
+
+
+
                                             </div>
                                         </div>
 

@@ -33,5 +33,6 @@ namespace sight.Models
         public virtual ICollection<PhotographerType> PhotographerTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<photosAdmin> photosAdmins { get; set; }
+        public virtual PhotographerPricing PhotographerPricing { get; set; }
     }
 }

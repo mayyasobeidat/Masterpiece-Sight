@@ -132,7 +132,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PhotographerID" Type="int" />
-    <Property Name="PhotographyType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhotographyTypeID" Type="int" Nullable="false" />
     <Property Name="PriceOneHour" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="PriceOneAndHalfHour" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="PriceTwoHours" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -484,6 +484,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PhotographerPricing_PhotographyTypes">
+    <End Role="PhotographyTypes" Type="Self.PhotographyTypes" Multiplicity="1" />
+    <End Role="PhotographerPricing" Type="Self.PhotographerPricing" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PhotographyTypes">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="PhotographerPricing">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_photographers_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="photographers" Type="Self.photographers" Multiplicity="*" />
@@ -624,6 +636,10 @@
     <AssociationSet Name="FK_photo_sessions_PhotographerPricing" Association="Self.FK_photo_sessions_PhotographerPricing">
       <End Role="PhotographerPricing" EntitySet="PhotographerPricing" />
       <End Role="photo_sessions" EntitySet="photo_sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhotographerPricing_PhotographyTypes" Association="Self.FK_PhotographerPricing_PhotographyTypes">
+      <End Role="PhotographyTypes" EntitySet="PhotographyTypes" />
+      <End Role="PhotographerPricing" EntitySet="PhotographerPricing" />
     </AssociationSet>
     <AssociationSet Name="FK_photographers_AspNetUsers" Association="Self.FK_photographers_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

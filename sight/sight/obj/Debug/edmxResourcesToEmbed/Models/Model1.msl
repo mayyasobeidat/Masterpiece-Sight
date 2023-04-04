@@ -127,18 +127,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PhotographerPricings">
-      <EntityTypeMapping TypeName="sightModel.PhotographerPricing">
-        <MappingFragment StoreEntitySet="PhotographerPricing">
-          <ScalarProperty Name="PriceTwoHours" ColumnName="PriceTwoHours" />
-          <ScalarProperty Name="PriceOneAndHalfHour" ColumnName="PriceOneAndHalfHour" />
-          <ScalarProperty Name="PriceOneHour" ColumnName="PriceOneHour" />
-          <ScalarProperty Name="PhotographyType" ColumnName="PhotographyType" />
-          <ScalarProperty Name="PhotographerID" ColumnName="PhotographerID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="photographers">
       <EntityTypeMapping TypeName="sightModel.photographer">
         <MappingFragment StoreEntitySet="photographers">
@@ -240,5 +228,17 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="PhotographerPricings">
+      <EntityTypeMapping TypeName="sightModel.PhotographerPricing">
+        <MappingFragment StoreEntitySet="PhotographerPricing">
+          <ScalarProperty Name="PriceTwoHours" ColumnName="PriceTwoHours" />
+          <ScalarProperty Name="PriceOneAndHalfHour" ColumnName="PriceOneAndHalfHour" />
+          <ScalarProperty Name="PriceOneHour" ColumnName="PriceOneHour" />
+          <ScalarProperty Name="PhotographyTypeID" ColumnName="PhotographyTypeID" />
+          <ScalarProperty Name="PhotographerID" ColumnName="PhotographerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

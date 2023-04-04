@@ -1,0 +1,117 @@
+﻿@model IEnumerable<sight.Models.photo_sessions>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutBooking.cshtml";
+}
+
+<style>
+    .details {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+    .bbb {
+        background-image: url("conn.png");
+        background-size: cover;
+    }
+
+    .bookCard {
+        width: 60%;
+        padding: 4.5%;
+    }
+
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+</style>
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+    <div class="container">
+
+
+        <section class="section profile">
+
+
+
+            <div class="row d-flex align-items-center justify-content-center">
+
+                <div class="card bookCard">
+
+
+
+                    <div id="form3">
+
+
+
+
+
+
+
+
+
+
+
+                        <h2>Your booking request is sent!</h2>
+                        <br />
+                        <h5>You will be notified when a photographer responds. Responses typically take 24 - 48 hours.</h5>
+                        <br>
+                        <h5>You can view the details of the order from the personal page, and you can also cancel it</h5>
+                        <br />
+                        <br />
+                        <div class="mb-3" style="padding: 5%; border: solid;">
+                            <p><strong>Booking Request Details</strong></p>
+                            <p><strong>Date:</strong></p>
+                            <p><strong>Time of day:</strong>Morning</p>
+                            <p><strong>Number of participants:</strong>2</p>
+                            <p><strong>Requested photographer:</strong>Baraa</p>
+                            <p><strong>Type of Photo shoot:</strong>Portrait</p>
+                            <p><strong>Package:</strong>90 minute booking</p>
+                        </div>
+
+
+                        <div class="mb-3 text-center link-success text-decoration-underline">
+                            <a href="#" style="color:green"><p>If you pay in advance, you will get a 10% discount. (Soon)</p></a>
+                        </div>
+
+
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="col-md-3 col-sm-6">
+
+                                <a href="/Clients/Edit" class="btn btn-warning" id="submitButton" style="width: 100%;">Go To profile</a>
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+<!-- End #main -->

@@ -22,7 +22,7 @@ namespace sight.Models
     
         public int ID { get; set; }
         public Nullable<int> PhotographerID { get; set; }
-        public string PhotographyType { get; set; }
+        public int PhotographyTypeID { get; set; }
         public decimal PriceOneHour { get; set; }
         public decimal PriceOneAndHalfHour { get; set; }
         public decimal PriceTwoHours { get; set; }
@@ -30,5 +30,6 @@ namespace sight.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<photo_sessions> photo_sessions { get; set; }
         public virtual photographer photographer { get; set; }
+        public virtual PhotographyType PhotographyType { get; set; }
     }
 }

@@ -229,7 +229,6 @@ namespace sight.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -248,6 +247,14 @@ namespace sight.Controllers
                         photographers.profilePhoto = "photographerProfile.png";
                         photographers.coverPhoto = "newPhotographer.jpg";
                         photographers.FullName = "Sight Photographer";
+                        photographers.accept = false;
+                        photographers.is_hidden = true;
+                        photographers.facebook ="//facebook.com/#";
+                        photographers.instagram = "//instagram.com/#";
+                        photographers.twitter = "//twitter.com/#";
+                        photographers.linkedin = "//linkedin.com/in/#";
+
+
                         photographers.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
                         Subscription subscription = new Subscription();
                         subscription.PhotographerId = photographers.id;
@@ -258,9 +265,10 @@ namespace sight.Controllers
                         db.photographers.Add(photographers);
                         db.Subscriptions.Add(subscription);
                         db.SaveChanges();
-                        db.SaveChanges();
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                         var userId = User.Identity.GetUserId();
-                        return RedirectToAction("Edit", "photographers", new { id = userId });
+                        return RedirectToAction("Edit", "photographersProfile", new { id = userId });
                     }
                     else if (Account == "Client")
                     {
@@ -274,6 +282,8 @@ namespace sight.Controllers
                         clients.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
                         db.clients.Add(clients);
                         db.SaveChanges();
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                         var userId = User.Identity.GetUserId();
                         return RedirectToAction("Edit", "clients", new { id = userId });
                         //return RedirectToAction("Index", "Home");

@@ -84,6 +84,10 @@ namespace sight.Controllers
             {
                 return HttpNotFound();
             }
+            subscription.endDate = subscription.startDate?.AddMonths(1) ?? DateTime.Now.AddMonths(1);
+            subscription.Price = 100;
+            subscription.status = false;
+            ViewBag.prices = subscription.Price;
             ViewBag.PhotographerId = new SelectList(db.photographers, "id", "user_id", subscription.PhotographerId);
             return View(subscription);
         }
@@ -101,6 +105,7 @@ namespace sight.Controllers
                 subscription.endDate = subscription.startDate?.AddMonths(1) ?? DateTime.Now.AddMonths(1);
                 subscription.Price = 100;
                 subscription.status = false;
+                ViewBag.prices = subscription.Price;
 
                 //if (subscription.endDate.HasValue && subscription.startDate.HasValue && (subscription.endDate.Value - subscription.startDate.Value).Days == 0)
                 //{
@@ -141,7 +146,7 @@ namespace sight.Controllers
 
                 db.Entry(subscription).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit", "Photographers");
+                return RedirectToAction("Edit", "photographersProfile");
             }
             ViewBag.PhotographerId = new SelectList(db.photographers, "id", "user_id", subscription.PhotographerId);
             return View(subscription);
