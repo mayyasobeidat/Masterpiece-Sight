@@ -183,6 +183,7 @@
     <Compile Include="Controllers\adminsController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\clientsController.cs" />
+    <Compile Include="Controllers\commentsHomesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PhotographerPricingsController.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Controllers\photographersProfileController.cs" />
     <Compile Include="Controllers\PhotographerTypesController.cs" />
     <Compile Include="Controllers\PhotographyTypesController.cs" />
+    <Compile Include="Controllers\photosAdmins1Controller.cs" />
     <Compile Include="Controllers\photosAdminsController.cs" />
     <Compile Include="Controllers\photo_sessionsController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
@@ -843,6 +845,16 @@
     <Content Include="Views\PhotographerPricings\Edit.cshtml" />
     <Content Include="Views\PhotographerPricings\Index.cshtml" />
     <Content Include="Views\photo_sessions\CreateFenish.cshtml" />
+    <Content Include="Views\photosAdmins1\Create.cshtml" />
+    <Content Include="Views\photosAdmins1\Delete.cshtml" />
+    <Content Include="Views\photosAdmins1\Details.cshtml" />
+    <Content Include="Views\photosAdmins1\Edit.cshtml" />
+    <Content Include="Views\photosAdmins1\Index.cshtml" />
+    <Content Include="Views\commentsHomes\Create.cshtml" />
+    <Content Include="Views\commentsHomes\Delete.cshtml" />
+    <Content Include="Views\commentsHomes\Details.cshtml" />
+    <Content Include="Views\commentsHomes\Edit.cshtml" />
+    <Content Include="Views\commentsHomes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

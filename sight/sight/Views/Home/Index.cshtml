@@ -353,135 +353,123 @@
 
     <!-- End Portfolio Section -->
     <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials">
-        <div class="container" data-aos="zoom-in">
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Photographer"))
+        {
+            <section style="background:#00000073" id="comments">
+                <p style="text-align: center; color: #9E9E9E;">
+                    We care what you think dear photographer<br />
+                    You can add your comment here to have it appear on our website<br />
+                    @Html.ActionLink("Give Us Your Feedback", "Create", "commentsHomes")
+                </p>
+            </section>
+        }
+    }
 
-            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                <div class="swiper-wrapper">
-                    @Html.Action("commentsHome")
+        <section id="testimonials" class="testimonials">
 
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+            <div class="container" data-aos="zoom-in">
 
-        </div>
-    </section>
-    <!-- End Testimonials Section -->
-    <!-- ======= Team Section ======= -->
-    <section id="team" class="team">
+                <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                    <div class="swiper-wrapper">
 
-        <div class="container">
+                        @Html.Action("commentsHome")
 
-            <div class="section-title">
-                <h2>Team</h2>
-                <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">T</span>eam</p>
-            </div>
-
-
-            <div class="ourTeamPhotographer">
-
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/mayyas.jpg" alt="" />
-                    <div class="profile-details">
-                        <h3>Mayyas Obeidat</h3>
-                        <p>Photographer and founder of this site</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-
-
-
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/sedrh.png" alt="" />
-                    <div class="profile-details">
-                        <h3>Sedrh Al-shathily</h3>
-                        <p>Portrait Photographer</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/baraa.png" alt="" />
-                    <div class="profile-details">
-                        <h3>Baraa Mohammad</h3>
-                        <p>Product Photographer</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/mayar.png" alt="" />
-                    <div class="profile-details">
-                        <h3>Mayar Karter</h3>
-                        <p>Food Photographer</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
 
             </div>
-        </div>
+        </section>
+        <!-- End Testimonials Section -->
+        <!-- ======= Team Section ======= -->
+        <section id="team" class="team">
+
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Team</h2>
+                    <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">T</span>eam</p>
+                </div>
 
 
-    </section>
+                <div class="ourTeamPhotographer">
 
-    <!-- End Team Section -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    <div class="profile-card">
+                        <img src="~/assetsUser/img/mayyas.jpg" alt="" />
+                        <div class="profile-details">
+                            <h3>Mayyas Obeidat</h3>
+                            <p>Photographer and founder of this site</p>
+                            <div class="social-media-list">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
 
 
 
+                    <div class="profile-card">
+                        <img src="~/assetsUser/img/sedrh.png" alt="" />
+                        <div class="profile-details">
+                            <h3>Sedrh Al-shathily</h3>
+                            <p>Portrait Photographer</p>
+                            <div class="social-media-list">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="profile-card">
+                        <img src="~/assetsUser/img/baraa.png" alt="" />
+                        <div class="profile-details">
+                            <h3>Baraa Mohammad</h3>
+                            <p>Product Photographer</p>
+                            <div class="social-media-list">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="profile-card">
+                        <img src="~/assetsUser/img/mayar.png" alt="" />
+                        <div class="profile-details">
+                            <h3>Mayar Karter</h3>
+                            <p>Food Photographer</p>
+                            <div class="social-media-list">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- End Team Section -->
 
 
 
@@ -492,4 +480,32 @@
 
 
 
-</main><!-- End #main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </main><!-- End #main -->

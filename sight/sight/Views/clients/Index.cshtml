@@ -41,12 +41,14 @@
                 </thead>
                 <tbody>
 
-
+                    @{
+                        var i = 1;
+                    }
 
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <th scope="row">@Html.DisplayFor(modelItem => item.id)</th>
+                            <th scope="row">@i</th>
                             <td>@Html.DisplayFor(modelItem => item.fullName)</td>
                             <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
                             <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
@@ -55,11 +57,14 @@
                                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                                 @Html.ActionLink("Delete", "Delete", new { id = item.id })
                                 @*<a class="btn btn-primary">Edit</a>
-                                    <a class="btn btn-primary">Details</a>
-                                     <a class="btn btn-primary">Delete</a>*@
+                    <a class="btn btn-primary">Details</a>
+                     <a class="btn btn-primary">Delete</a>*@
 
                             </td>
                         </tr>
+                        {
+                            i++;
+                        }
                     }
 
 

@@ -39,7 +39,7 @@
                         <th scope="col">Full Name</th>
                         <th scope="col">E-mail</th>
                         <th scope="col">Phone</th>
-                        <th scope="col">Profile Photo</th>
+                        <th scope="col">Photo</th>
                         <th scope="col">Create at</th>
                         <th scope="col">Accept</th>
                         <th scope="col">Active</th>
@@ -48,32 +48,31 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @{
+                        var i = 1;
+                    }
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <th scope="row">@Html.DisplayFor(modelItem => item.id)</th>
+                            <th scope="row">@i</th>
                             <td>@Html.DisplayFor(modelItem => item.FullName)</td>
                             <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
                             <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                             <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
-                            <td>@Html.DisplayFor(modelItem => item.created_at)</td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
                             <td>@Html.DisplayFor(modelItem => item.accept)</td>
                             <td>@Html.DisplayFor(modelItem => item.is_hidden)</td>
-
-
                             <td>
                                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                                 @Html.ActionLink("Delete", "Delete", new { id = item.id })
-
-                                @*<a class="btn btn-primary">Edit</a>
-            <a class="btn btn-primary">Details</a>
-            <a class="btn btn-primary">Delete</a>*@
-
                             </td>
                         </tr>
+                        {
+                            i++;
+                        }
                     }
-                    </tbody>
+                </tbody>
+
             </table>
         </div>
     </div>

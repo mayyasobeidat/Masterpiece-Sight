@@ -1,0 +1,71 @@
+﻿@model sight.Models.commentsHome
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+}
+
+<main id="main">
+
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact" style="padding-top:150px ; padding-bottom: 10px !important;">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Feedback</h2>
+                <p style="color: #ddd;"><span style="color: #F2C511;">F</span>eedback</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="container">
+
+                        <div class="text-light"><br />
+                            <h1>We care what you think dear photographer</h1>
+                            <h5>You can add your comment here to have it appear on our website  </h5>
+                            You can give us your constructive criticism to improve our services, as we always strive to achieve the best
+                        </div>
+                    </div>
+
+                </div>
+                    <div class="col-md-6">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <br />
+                                <div class="form-group">
+                                    <div class="container">
+                                        <div class="col-md-12">
+                                            @Html.TextAreaFor(model => model.comment, new { @class = "form-control", @placeholder = "Write your comment here", @style = "height: 250px;" })
+                                            @Html.ValidationMessageFor(model => model.comment, "", new { @class = "text-danger" })
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Create" class="btn btn-warning" />
+                                            @*@Html.ActionLink("Back", "Index", "Home", new { @class = "btn btn-dark" })*@
+                                        <a class="btn btn-dark" href="/Home/Index/#comments">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+        </div>
+    </section>
+    <!-- End Contact Section -->
+
+
+
+
+
+</main><!-- End #main -->

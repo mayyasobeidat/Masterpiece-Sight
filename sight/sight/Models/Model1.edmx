@@ -195,7 +195,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="photographerProfile" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="photographerProfile" Type="varchar" MaxLength="255" />
           <Property Name="photo" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="photographyType" Type="int" Nullable="false" />
@@ -993,7 +993,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="photographerProfile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="photographerProfile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="photo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="photographyType" Type="Int32" Nullable="false" />

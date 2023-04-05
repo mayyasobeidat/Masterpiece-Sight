@@ -11,7 +11,7 @@
     <table class="table-bordered table table-hover table-responsive">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.session_date)
+                Date:
             </th>
             <td>
                 @String.Format("{0:MM/dd/yyyy}", item.session_date)
@@ -19,36 +19,22 @@
         </tr>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.session_time)
+                Time of day:
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.session_time)
             </td>
         </tr>
+        
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.city.cityName)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.city.cityName)
-            </td>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.photographer.FullName)
+                Requested photographer:
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.photographer.FullName)
             </td>
         </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
-            </td>
-        </tr>
+        
         <tr>
             <td colspan="2">
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |

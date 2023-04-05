@@ -39,34 +39,40 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Type Name</th>
-                        <th scope="col">Profile Link</th>
+                        <th scope="col">Photographer</th>
+                        <th scope="col">Type</th>
                         <th scope="col">Photo</th>
                         <th scope="col"></th>
 
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        var i = 1;
+                    }
 
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <th scope="row">@Html.DisplayFor(modelItem => item.id)</th>
+                            <th scope="row">@i</th>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographerID)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a></td>
                             <td>@Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)</td>
-                            <td><a href="@Html.DisplayFor(modelItem => item.photographerProfile)">@Html.DisplayFor(modelItem => item.photographerName)</a></td>
                             <td><img src="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo)" width="100px" class="myIMG" /></td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                @*@Html.ActionLink("Details", "Details", new { id = item.id }) |*@
                                 @Html.ActionLink("Delete", "Delete", new { id = item.id })
                                 @*<a class="btn btn-primary">Edit</a>
-                                <a class="btn btn-primary">Details</a>
-                                <a class="btn btn-primary">Delete</a>*@
+            <a class="btn btn-primary">Details</a>
+            <a class="btn btn-primary">Delete</a>*@
 
                             </td>
                         </tr>
+                        {
+                            i++;
+                        }
                     }
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
