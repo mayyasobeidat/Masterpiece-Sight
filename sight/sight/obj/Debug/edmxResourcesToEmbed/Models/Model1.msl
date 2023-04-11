@@ -77,18 +77,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="comments">
-      <EntityTypeMapping TypeName="sightModel.comment">
-        <MappingFragment StoreEntitySet="comments">
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="is_approved" ColumnName="is_approved" />
-          <ScalarProperty Name="comment1" ColumnName="comment" />
-          <ScalarProperty Name="client_id" ColumnName="client_id" />
-          <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="commentsHomes">
       <EntityTypeMapping TypeName="sightModel.commentsHome">
         <MappingFragment StoreEntitySet="commentsHome">
@@ -168,16 +156,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="photos">
-      <EntityTypeMapping TypeName="sightModel.photo">
-        <MappingFragment StoreEntitySet="photos">
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="photo_url" ColumnName="photo_url" />
-          <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="photosAdmins">
       <EntityTypeMapping TypeName="sightModel.photosAdmin">
         <MappingFragment StoreEntitySet="photosAdmin">
@@ -237,6 +215,30 @@
           <ScalarProperty Name="PhotographyTypeID" ColumnName="PhotographyTypeID" />
           <ScalarProperty Name="PhotographerID" ColumnName="PhotographerID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="photos">
+      <EntityTypeMapping TypeName="sightModel.photo">
+        <MappingFragment StoreEntitySet="photos">
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="photographyType" ColumnName="photographyType" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+          <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="comments">
+      <EntityTypeMapping TypeName="sightModel.comment">
+        <MappingFragment StoreEntitySet="comments">
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="is_approved" ColumnName="is_approved" />
+          <ScalarProperty Name="comment1" ColumnName="comment" />
+          <ScalarProperty Name="client_id" ColumnName="client_id" />
+          <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

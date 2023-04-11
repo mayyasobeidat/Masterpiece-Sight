@@ -10,34 +10,31 @@
 <div>
     <h4>PhotographyType</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TypeName)
-        </dt>
+    <div class="row">
+        <dl class="col-md-6 col-sm-12">
 
-        <dd>
-            @Html.DisplayFor(model => model.TypeName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
+            <dt><b style="color: #d9d9d9;">Photography Type:</b></dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TypeName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dt><b style="color: #d9d9d9;">Description:</b></dt>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TypeID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+        </dl>
+        <div class="col-md-6 col-sm-12">
+            <img src="~/assetsUser/img/@Model.ImageUrl" name="photo" alt="photo" id="myImage" class="img-fluid">
+
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TypeID }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink("Back", "Index")
+    </p>

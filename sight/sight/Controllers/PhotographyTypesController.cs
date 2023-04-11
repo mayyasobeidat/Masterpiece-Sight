@@ -77,11 +77,14 @@ namespace sight.Controllers
         // GET: PhotographyTypes/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             PhotographyType photographyType = db.PhotographyTypes.Find(id);
+            Session["ImageUrl"] = photographyType.ImageUrl;
+
             if (photographyType == null)
             {
                 return HttpNotFound();
@@ -94,16 +97,29 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TypeID,TypeName,ImageUrl,Description")] PhotographyType photographyType)
+        public ActionResult Edit([Bind(Include = "TypeID,TypeName,ImageUrl,Description")] PhotographyType photographyType, HttpPostedFileBase ImageUrl)
         {
+            photographyType.ImageUrl = Session["ImageUrl"].ToString();
+
             if (ModelState.IsValid)
             {
+                string imgPath = "";
+                if (ImageUrl != null)
+                {
+                    imgPath = Path.GetFileName(ImageUrl.FileName);
+                    ImageUrl.SaveAs(Path.Combine(Server.MapPath("~/assetsUser/img/") + ImageUrl.FileName));
+                    photographyType.ImageUrl = imgPath;
+
+                }
+
+
                 db.Entry(photographyType).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(photographyType);
         }
+
 
         // GET: PhotographyTypes/Delete/5
         public ActionResult Delete(int? id)

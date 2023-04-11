@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
 <h2>Delete</h2>
@@ -11,47 +11,50 @@
 <div>
     <h4>client</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.photo)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.photo)
-        </dd>
+    <div class="row">
+        <dl class="col-md-6 col-sm-12">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.created_at)
-        </dt>
+            <dt><b style="color: #d9d9d9;">Date:</b></dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.created_at)
-        </dd>
+            <dd>
+                @String.Format("{0:MM/dd/yyyy}", Model.created_at)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.fullName)
-        </dt>
+            <dt><b style="color: #d9d9d9;">Full Name:</b></dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.fullName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.fullName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.AspNetUser.Email)
-        </dd>
+            <dt><b style="color: #d9d9d9;">Email:</b></dt>
 
-    </dl>
 
-    @using (Html.BeginForm()) {
+            <dd>
+                @Html.DisplayFor(model => model.AspNetUser.Email)
+            </dd>
+
+
+        </dl>
+        <div class="col-md-6 col-sm-12">
+            <img src="~/assetsUser/img/@Model.photo" name="photo" alt="photo" width="50%" class="img-fluid">
+
+        </div>
+    </div>
+
+
+
+
+
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back", "Index")
         </div>
     }
 </div>

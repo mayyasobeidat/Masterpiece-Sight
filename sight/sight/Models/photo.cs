@@ -18,7 +18,10 @@ namespace sight.Models
         public int photographer_id { get; set; }
         public string photo_url { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
+        public Nullable<int> photographyType { get; set; }
+        public string title { get; set; }
     
         public virtual photographer photographer { get; set; }
+        public virtual PhotographyType PhotographyType1 { get; set; }
     }
 }

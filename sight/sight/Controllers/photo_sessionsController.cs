@@ -121,13 +121,44 @@ namespace sight.Controllers
 
 
 
+            var pricing_id = db.PhotographerPricings
+              .Where(p => p.PhotographerID == photographerId)
+              .Select(p => new { p.PriceOneHour, p.PriceOneAndHalfHour, p.PriceTwoHours })
+              .FirstOrDefault();
+
+            ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyTypeID");
+
+            var test = db.PhotographerPricings.Include(m => m.PhotographyType).Where(p => p.PhotographerID == photographerId).ToList();
+            ViewBag.ddata = test;
+
+
+
+
+            var photographerID = photographerId;
+            var photographyTypeID =2;
+            var pricings = db.PhotographerPricings
+                .Where(p => p.PhotographerID == photographerID && p.PhotographyTypeID == photographyTypeID)
+                .FirstOrDefault();
+
+            ViewBag.PriceOneHour = pricings.PriceOneHour;
+            ViewBag.PriceOneAndHalfHour = pricings.PriceOneAndHalfHour;
+            ViewBag.PriceTwoHours = pricings.PriceTwoHours;
+
+
+
+
+
+
+
+
+
 
 
             //ViewBag.city_id = new SelectList(db.cities, "id", "cityName");
             ViewBag.client_id = new SelectList(db.clients, "id", "user_id");
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id");
             //ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName");
-            ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyType");
+            //ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyTypeID");
             return View();
         }
 
@@ -162,6 +193,8 @@ namespace sight.Controllers
                 .Where(p => p.PhotographerID == photographerId)
                 .Select(p => p.PhotographyType)
                 .ToList();
+            ViewBag.photographerrr = (int)id;
+
 
             ViewBag.TypeID = new SelectList(photographyTypes, "TypeID", "TypeName");
 

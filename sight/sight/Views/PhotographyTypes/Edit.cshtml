@@ -7,48 +7,105 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
+<style>
+    /*custom inpu file*/
+    .custom-file-input {
+        color: transparent;
+    }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: "▲ Upload Photo";
+            color: #fff;
+            display: inline-block;
+            background: #ffc107;
+            padding: 10px 22px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
+
+        .custom-file-input:focus {
+            outline: none !important;
+        }
+
+        .custom-file-input:active::before {
+            transform: scale(.9) translate(0px, 2px);
+            box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.20);
+        }
+</style>
+
+@using (Html.BeginForm("Edit", "PhotographyTypes", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PhotographyType</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TypeID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
+    <div class="row g-4">
+        <h6 class="mb-4">Create Service</h6>
+        <div class="col-sm-12 col-xl-6">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.TypeID)
+
+            <div class="bg-secondary rounded h-100 p-4">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Service Name</label>
+                    @*<input type="text" class="form-control">*@
+                    @Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Description</label>
+                    @*<textarea class="form-control" placeholder="Describe this service" style="height: 150px;"></textarea>*@
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Describe this service", @style = "height: 300px;" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+
+                </div>
+                <input type="submit" value="Create" class="btn btn-primary" />
+
+                @*<button type="submit" class="btn btn-primary">Save</button>*@
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-sm-12 col-xl-6">
+            <input type="file" name="ImageUrl" class="custom-file-input" accept="image/*" id="myFileInput">
+            <img src="~/assetsUser/img/@Model.ImageUrl" name="ImageUrl" alt="photo" id="myImage" style=" padding:20px 0" width="100%">
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+
+
+
+<script>
+    const fileInput = document.getElementById('myFileInput');
+    const imagePreview = document.getElementById('myImage');
+
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.addEventListener('load', function () {
+                imagePreview.src = URL.createObjectURL(file);
+            });
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.src = 'default-image-source.jpg';
+        }
+    });
+
+</script>

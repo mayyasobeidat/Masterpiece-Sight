@@ -77,7 +77,37 @@
                     <img src="~/assetsUser/img/@Html.DisplayFor(model => model.profilePhoto)" alt="" class="img-fluid rounded-circle mm">
 
                 </div>
-                <h1 class="text-light"><a href="index.html">@Html.DisplayFor(model => model.FullName)</a></h1>
+                <h1 class="text-light">
+                    @Html.DisplayFor(model => model.FullName)
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Photographer"))
+                        {
+                            <a href="#" class="warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"><i class="fas fa-plus-square"></i></a>
+
+                        }
+                        else if (User.IsInRole("Client"))
+                        {
+                            <a href="@Url.Action("Create", "photo_sessions", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
+                                <i class="fas fa-plus-square"></i>
+                            </a>
+
+                        }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <a href="#" class="warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"><i class="fas fa-plus-square"></i></a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Login", "Account", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
+                            <i class="fas fa-plus-square"></i>
+                        </a>
+                    }
+
+                </h1>
+               
                 <div class="social-links mt-3 text-center">
 
 
@@ -88,9 +118,11 @@
 
                 </div>
             </div>
+         
 
             <nav id="navbar" class="nav-menu navbar">
                 <ul>
+
                     <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Profile</span></a></li>
                     <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
                     <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Gallery</span></a></li>

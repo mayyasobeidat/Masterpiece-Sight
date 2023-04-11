@@ -54,8 +54,8 @@
                             <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                             <td><img src="~/assetsUser/img/@item.photo" width="30px" class="myIMG" /></td>
                             <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                @*@Html.ActionLink("Details", "Details", new { id = item.id }) |*@
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
                                 @*<a class="btn btn-primary">Edit</a>
                     <a class="btn btn-primary">Details</a>
                      <a class="btn btn-primary">Delete</a>*@

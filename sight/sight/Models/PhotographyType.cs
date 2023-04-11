@@ -20,6 +20,8 @@ namespace sight.Models
             this.photo_sessions = new HashSet<photo_sessions>();
             this.PhotographerTypes = new HashSet<PhotographerType>();
             this.photosAdmins = new HashSet<photosAdmin>();
+            this.PhotographerPricings = new HashSet<PhotographerPricing>();
+            this.photos = new HashSet<photo>();
         }
     
         public int TypeID { get; set; }
@@ -33,6 +35,9 @@ namespace sight.Models
         public virtual ICollection<PhotographerType> PhotographerTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<photosAdmin> photosAdmins { get; set; }
-        public virtual PhotographerPricing PhotographerPricing { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhotographerPricing> PhotographerPricings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<photo> photos { get; set; }
     }
 }

@@ -5,48 +5,119 @@
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.comment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.is_approved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created_at)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.photographer.user_id)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.comment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.is_approved)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.photographer.user_id)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
 
-</table>
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h4>Unapproved Feedback</h4>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Photographer</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var j = 1;
+                    }
+
+                    @foreach (var item in Model.Where(x => !x.is_approved))
+                    {
+                        <tr>
+                            <th scope="row">@j</th>
+                            <td>@item.comment</td>
+                            <td>@item.created_at</td>
+                            <td><a href="/photographers/PhotographerProfile/@item.photographer_id">@Html.DisplayFor(modelItem => item.photographer.FullName)</a></td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                            </td>
+
+                            <td>
+
+                                @if (!item.is_approved)
+                                {
+                                    @Html.ActionLink("Accept", "Accept", new { id = item.id }, new { @class = "btn btn-success" })
+                                }
+                            </td>
+                        </tr>
+                        {
+                            j++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<br />
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h4>Approved Feedback</h4>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Photographer</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                    }
+
+                    @foreach (var item in Model.Where(x => x.is_approved))
+                    {
+                        <tr class="">
+                            <th scope="row">@i</th>
+                            <td>@item.comment</td>
+                            <td>@item.created_at</td>
+                            <td><a href="/photographers/PhotographerProfile/@item.photographer_id">@Html.DisplayFor(modelItem => item.photographer.FullName)</a></td>
+                            <td>
+                                @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |*@
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                            </td>
+
+                            <td>
+
+                                @if (item.is_approved)
+                                {
+                                    @Html.ActionLink("Hide", "Hide", new { id = item.id }, new { @class = "btn btn-light" })
+                                }
+                            </td>
+                        </tr>
+                        {
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

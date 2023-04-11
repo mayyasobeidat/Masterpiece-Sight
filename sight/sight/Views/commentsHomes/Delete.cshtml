@@ -12,46 +12,22 @@
     <h4>commentsHome</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.comment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.comment)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.is_approved)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.is_approved)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.created_at)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.created_at)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.photographer.user_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.photographer.user_id)
-        </dd>
-
+        <dt><b style="color: #d9d9d9;">Photographer:</b></dt>
+        <td><a href="/photographers/PhotographerProfile/@Model.photographer_id">@Html.DisplayFor(modelItem => Model.photographer.FullName)</a></td>
+        <dt><b style="color: #d9d9d9;">Date:</b></dt>
+        <dd>@Html.DisplayFor(model => model.created_at)</dd>
+        <dt><b style="color: #d9d9d9;">Comment:</b></dt>
+        <dd>@Html.DisplayFor(model => model.comment)</dd>
     </dl>
 
-    @using (Html.BeginForm()) {
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back", "Index")
         </div>
     }
 </div>

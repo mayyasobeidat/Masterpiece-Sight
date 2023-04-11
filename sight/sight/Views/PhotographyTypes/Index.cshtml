@@ -43,10 +43,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        var i = 1;
+                    }
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <th scope="row">@Html.DisplayFor(modelItem => item.TypeID)</th>
+                            <th scope="row">@i</th>
                             <td>@Html.DisplayFor(modelItem => item.TypeName)</td>
                             <td>@Html.DisplayFor(modelItem => item.Description)</td>
                             <td><img src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)" width="100px" class="myIMG" /></td>
@@ -55,11 +58,14 @@
                                 @Html.ActionLink("Details", "Details", new { id = item.TypeID }) |
                                 @Html.ActionLink("Delete", "Delete", new { id = item.TypeID })
                                 @*<a class="btn btn-primary">Edit</a>
-                                    <a class="btn btn-primary">Details</a>
-                                    <a class="btn btn-primary">Delete</a>*@
+            <a class="btn btn-primary">Details</a>
+            <a class="btn btn-primary">Delete</a>*@
 
                             </td>
                         </tr>
+                        {
+                            i++;
+                        }
                     }
                 </tbody>
             </table>

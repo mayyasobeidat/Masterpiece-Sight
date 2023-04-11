@@ -81,6 +81,8 @@ namespace sight.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             photosAdmin photosAdmin = db.photosAdmins.Find(id);
+            Session["photo"] = photosAdmin.photo;
+
             if (photosAdmin == null)
             {
                 return HttpNotFound();
@@ -106,9 +108,10 @@ namespace sight.Controllers
                 {
                     imgPath = Path.GetFileName(photo.FileName);
                     photo.SaveAs(Path.Combine(Server.MapPath("~/assetsUser/img/portfolio/") + photo.FileName));
+                    photosAdmin.photo = imgPath;
+
                 }
 
-                photosAdmin.photo = imgPath;
                 db.Entry(photosAdmin).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

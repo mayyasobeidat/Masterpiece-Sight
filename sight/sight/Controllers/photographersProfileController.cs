@@ -141,7 +141,17 @@ namespace sight.Controllers
                     PhotographerID = photographerID,
                     TypeID = id
                 };
+                var photographerPricings = new PhotographerPricing()
+                {
+                    PhotographerID = photographerID,
+                    PhotographyTypeID = id,
+                    PriceOneHour = 50,
+                    PriceOneAndHalfHour = 60,
+                    PriceTwoHours =  70,
 
+                };
+
+                db.PhotographerPricings.Add(photographerPricings);
                 db.PhotographerTypes.Add(photographerType);
                 db.SaveChanges();
 
@@ -169,13 +179,14 @@ namespace sight.Controllers
             var userId = User.Identity.GetUserId();
             var photographer = db.photographers.FirstOrDefault(a => a.user_id == userId);
             var photographerType = db.PhotographerTypes.FirstOrDefault(pt => pt.PhotographerID == photographer.id && pt.TypeID == id);
-
+            var photographerPricings = db.PhotographerPricings.FirstOrDefault(pt => pt.PhotographerID == photographer.id && pt.PhotographyTypeID == id);
             if (photographerType == null)
             {
                 ModelState.AddModelError(string.Empty, "Type not found!");
                 return RedirectToAction("Edit", "photographersProfile");
             }
 
+            db.PhotographerPricings.Remove(photographerPricings);
             db.PhotographerTypes.Remove(photographerType);
             db.SaveChanges();
 

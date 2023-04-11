@@ -40,6 +40,11 @@
                                 <div class="form-group">
                                     <div class="container">
                                         <div class="col-md-12">
+                                            @if (TempData["SuccessMessage"] != null)
+                                            {
+                                                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                                            }
+
                                             @Html.TextAreaFor(model => model.comment, new { @class = "form-control", @placeholder = "Write your comment here", @style = "height: 250px;" })
                                             @Html.ValidationMessageFor(model => model.comment, "", new { @class = "text-danger" })
                                         </div>

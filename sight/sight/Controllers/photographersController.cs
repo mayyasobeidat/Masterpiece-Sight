@@ -27,6 +27,48 @@ namespace sight.Controllers
             return View();
         }
 
+        public ActionResult Creates(int? id)
+        {
+            int photographerId = (int)id;
+
+            ViewBag.client_id = new SelectList(db.clients, "id", "user_id");
+            ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id");
+            return View();
+        }
+
+        // POST: comments/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Creates([Bind(Include = "id,photographer_id,client_id,comment1,is_approved,created_at")] comment comment, int? id)
+        {
+            if (ModelState.IsValid)
+            {
+                var x = User.Identity.GetUserId();
+                int iduser = db.clients.FirstOrDefault(a => a.user_id == x).id;
+                ViewBag.clientid = iduser;
+
+                comment.client_id = iduser;
+                comment.photographer_id = (int)id;
+                comment.created_at = DateTime.Now;
+
+                db.comments.Add(comment);
+                db.SaveChanges();
+            }
+            int photographerId = (int)id;
+
+
+            ViewBag.client_id = new SelectList(db.clients, "id", "user_id", comment.client_id);
+            ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", comment.photographer_id);
+            return View(comment);
+        }
+
+        public ActionResult gallery()
+        {
+            var photos = db.photos;
+            return View(photos.ToList());
+        }
         public ActionResult photographers()
         {
             var photographers = db.photographers.Include(p => p.AspNetUser);

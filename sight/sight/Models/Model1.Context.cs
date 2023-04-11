@@ -32,17 +32,17 @@ namespace sight.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<city> cities { get; set; }
         public virtual DbSet<client> clients { get; set; }
-        public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<commentsHome> commentsHomes { get; set; }
         public virtual DbSet<photo_sessions> photo_sessions { get; set; }
         public virtual DbSet<photographer_cities> photographer_cities { get; set; }
         public virtual DbSet<photographer> photographers { get; set; }
         public virtual DbSet<PhotographerType> PhotographerTypes { get; set; }
         public virtual DbSet<PhotographyType> PhotographyTypes { get; set; }
-        public virtual DbSet<photo> photos { get; set; }
         public virtual DbSet<photosAdmin> photosAdmins { get; set; }
         public virtual DbSet<Subscription> Subscriptions { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<PhotographerPricing> PhotographerPricings { get; set; }
+        public virtual DbSet<photo> photos { get; set; }
+        public virtual DbSet<comment> comments { get; set; }
     }
 }

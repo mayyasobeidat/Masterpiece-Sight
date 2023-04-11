@@ -701,9 +701,9 @@ section {
 }
 
 .clients .swiper-slide img {
-  opacity: 0.5;
+  opacity: 0.9;
   transition: 0.3s;
-  filter: grayscale(100);
+  filter: grayscale(10);
 }
 
 .clients .swiper-slide img:hover {
@@ -728,6 +728,12 @@ section {
   background-color: #F2C511;
 }
 
+    .clients .icon-box {
+        text-align: center;
+        border: 1px solid #ebebeb;
+        transition: all ease-in-out 0.3s;
+        background: #fff;
+    }
 /*--------------------------------------------------------------
 # Features
 --------------------------------------------------------------*/

@@ -183,6 +183,7 @@
     <Compile Include="Controllers\adminsController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\clientsController.cs" />
+    <Compile Include="Controllers\commentsController.cs" />
     <Compile Include="Controllers\commentsHomesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -191,7 +192,6 @@
     <Compile Include="Controllers\photographersProfileController.cs" />
     <Compile Include="Controllers\PhotographerTypesController.cs" />
     <Compile Include="Controllers\PhotographyTypesController.cs" />
-    <Compile Include="Controllers\photosAdmins1Controller.cs" />
     <Compile Include="Controllers\photosAdminsController.cs" />
     <Compile Include="Controllers\photo_sessionsController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
@@ -855,6 +855,12 @@
     <Content Include="Views\commentsHomes\Details.cshtml" />
     <Content Include="Views\commentsHomes\Edit.cshtml" />
     <Content Include="Views\commentsHomes\Index.cshtml" />
+    <Content Include="Views\photographers\gallery.cshtml" />
+    <Content Include="Views\comments\Create.cshtml" />
+    <Content Include="Views\comments\Delete.cshtml" />
+    <Content Include="Views\comments\Details.cshtml" />
+    <Content Include="Views\comments\Edit.cshtml" />
+    <Content Include="Views\comments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

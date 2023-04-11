@@ -22,6 +22,32 @@ namespace sight.Controllers
             return View(commentsHomes.ToList());
         }
 
+        public ActionResult Accept(int? id)
+        {
+            var comment = db.commentsHomes.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            comment.is_approved = true;
+            db.Entry(comment).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+        public ActionResult Hide(int? id)
+        {
+            var comment = db.commentsHomes.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            comment.is_approved = false;
+            db.Entry(comment).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
         // GET: commentsHomes/Details/5
         public ActionResult Details(int? id)
         {
@@ -69,7 +95,9 @@ namespace sight.Controllers
                 commentsHome.is_approved = false;
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["SuccessMessage"] = "Your comment has been submitted successfully.";
+
+                return View();
             }
 
             //ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", commentsHome.photographer_id);
