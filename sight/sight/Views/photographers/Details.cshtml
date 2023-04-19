@@ -11,7 +11,7 @@
     <h4>photographer</h4>
     <hr />
     <div class="row">
-        <dl class="col-md-6 col-sm-12">
+        <dl class="col-md-4 col-sm-12">
 
 
 
@@ -59,6 +59,12 @@
             </dd>
 
 
+        </dl>
+
+        <dl class="col-md-4 col-sm-12">
+
+
+
             <dt><b style="color: #d9d9d9;">Facebook:</b></dt>
 
 
@@ -88,17 +94,32 @@
 
             <dt><b style="color: #d9d9d9;">Active:</b></dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.is_hidden)
-            </dd>
+
+            @if (Model.accept)
+            {
+                <dd style="color:limegreen">Accepted</dd>
+            }
+            else
+            {
+                <dd style="color:red">Not Accepted</dd>
+
+            }
 
             <dt><b style="color: #d9d9d9;">Status:</b></dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.accept)
-            </dd>
+            @if (Model.is_hidden)
+            {
+                <dd style="color:red">Deactivated</dd>
+            }
+            else
+            {
+                <dd style="color:limegreen">Activated</dd>
+
+            }
         </dl>
-        <div class="col-md-6 col-sm-12">
+
+
+        <div class="col-md-4 col-sm-12">
             <img src="~/assetsUser/img/@Model.profilePhoto" name="photo" alt="photo" width="50%" class="img-fluid"><br /><br />
             <img src="~/assetsUser/img/@Model.coverPhoto" name="photo" alt="photo" width="50%" class="img-fluid">
 
@@ -106,6 +127,26 @@
     </div>
 
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-warning" })|
+        @if (!Model.accept)
+        {
+            @Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" })
+
+        }
+        else
+        {
+            @Html.ActionLink("Reject", "Reject", new { id = Model.id }, new { @class = "btn btn-danger" })
+
+        } |
+        @if (Model.is_hidden)
+        {
+            @Html.ActionLink("Activate", "Activate", new { id = Model.id }, new { @class = "btn btn-success" })
+
+        }
+        else
+        {
+            @Html.ActionLink("Deactivate", "Deactivate", new { id = Model.id }, new { @class = "btn btn-light" })
+
+        } |
         @Html.ActionLink("Back", "Index")
     </p>
+</div>

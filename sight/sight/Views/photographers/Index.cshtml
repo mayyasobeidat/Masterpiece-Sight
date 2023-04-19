@@ -24,8 +24,157 @@
         .myIMG:hover {
             transform: scale(4);
         }
-
 </style>
+
+
+<div class="row g-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-line fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Indexx" class="btn btn-warning">All Photographers</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Index" class="btn btn-warning">Availability</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-area fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Indexxx" class="btn btn-warning">New Photographers</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-pie fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Indexx" class="btn btn-warning">All Photographers</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+
+
+<!-- Table Start -->
+<div class="row g-4">
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Deactivate accounts</h6>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    @foreach (var item in Model.Where(x => x.is_hidden && x.accept))
+                    {
+                        <tr>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                            </td>
+                            <td>
+                                @if (item.is_hidden)
+                                {
+                                    @Html.ActionLink("Activate", "Activate", new { id = item.id }, new { @class = "btn btn-success" })
+
+                                }
+                            </td>
+                        </tr>
+                 
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Active accounts</h6>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    @foreach (var item in Model.Where(x => !x.is_hidden && x.accept))
+                    {
+                        <tr>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                            </td>
+                            <td>
+                                @if (!item.is_hidden)
+                                {
+                                    @Html.ActionLink("Deactivate", "Deactivate", new { id = item.id }, new { @class = "btn btn-light" })
+
+                                }
+                            </td>
+                        </tr>
+                 
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- Table End -->
+<br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="col-12">
@@ -42,8 +191,88 @@
                         <th scope="col">Photo</th>
                         <th scope="col">Create at</th>
                         <th scope="col">Accept</th>
-                        <th scope="col">Active</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var j = 1;
+                    }
+                    @foreach (var item in Model.Where(x => x.is_hidden))
+                    {
+                        <tr>
+                            <th scope="row">@j</th>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                            @if (item.accept)
+                            {
+                                <td style="color:limegreen">Accepted</td>
+                            }
+                            else
+                            {
+                                <td style="color:red">Not Accepted</td>
+
+                            }
+                            @if (item.is_hidden)
+                            {
+                                <td style="color:red">Deactivated</td>
+                            }
+                            else
+                            {
+                                <td style="color:limegreen">Activated</td>
+
+                            }
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                        </td>
+                            <td>
+                                @if (item.is_hidden)
+                                {
+                                    @Html.ActionLink("Activate", "Activate", new { id = item.id }, new { @class = "btn btn-success" })
+
+                                }
+                            </td>
+                        </tr>
+                        {
+                            j++;
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        @*<h4 class="mb-4">  @Html.ActionLink("Add New Photographer", "Create")</h4>*@
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col">Accept</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
 
                     </tr>
                 </thead>
@@ -51,20 +280,43 @@
                     @{
                         var i = 1;
                     }
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Where(x => !x.is_hidden))
                     {
                         <tr>
                             <th scope="row">@i</th>
-                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
                             <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
                             <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                             <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
                             <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
-                            <td>@Html.DisplayFor(modelItem => item.accept)</td>
-                            <td>@Html.DisplayFor(modelItem => item.is_hidden)</td>
+                            @if (item.accept)
+                            {
+                                <td style="color:limegreen">Accepted</td>
+                            }
+                            else
+                            {
+                                <td style="color:red">Not Accepted</td>
+
+                            }
+                            @if (item.is_hidden)
+                            {
+                                <td style="color:red">Deactivated</td>
+                            }
+                            else
+                            {
+                                <td style="color:limegreen">Activated</td>
+
+                            }
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                        </td>
                             <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                @if (!item.is_hidden)
+                                {
+                                    @Html.ActionLink("Deactivate", "Deactivate", new { id = item.id }, new { @class = "btn btn-light" })
+
+                                }
                             </td>
                         </tr>
                         {
@@ -81,10 +333,7 @@
 
 
 
-
-
-
-
+<br />
 
 
 
@@ -111,113 +360,113 @@
 
 @*<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table table-responsive-xxl">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.subscription_type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.profilePhoto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.coverPhoto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.bio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.accept)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.is_hidden)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created_at)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.age)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.instagram)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.facebook)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.twitter)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.linkedin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table table-responsive-xxl">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.subscription_type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.profilePhoto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.coverPhoto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.bio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.accept)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.is_hidden)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.created_at)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.instagram)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.facebook)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.twitter)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.linkedin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subscription_type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.profilePhoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.coverPhoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.accept)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.is_hidden)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.created_at)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.instagram)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.facebook)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.twitter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.linkedin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subscription_type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.profilePhoto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.coverPhoto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accept)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.is_hidden)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.created_at)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.instagram)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.facebook)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.twitter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.linkedin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>*@

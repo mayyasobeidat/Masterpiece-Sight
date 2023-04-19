@@ -22,9 +22,101 @@ namespace sight.Controllers
             var photographers = db.photographers.Include(p => p.AspNetUser);
             return View(photographers.ToList());
         }
+        public ActionResult Indexx()
+        {
+            var photographers = db.photographers.Include(p => p.AspNetUser);
+            return View(photographers.ToList());
+        }
+
+        public ActionResult Indexxx()
+        {
+            var photographers = db.photographers.Include(p => p.AspNetUser);
+            return View(photographers.ToList());
+        }
+        public ActionResult Search(string search, string searchBut)
+        {
+            if (searchBut == "FullName")
+            {
+                return View("Indexx", db.photographers.Where(p => p.FullName.Contains(search)).ToList());
+            }
+            else if (searchBut == "PhoneNumber")
+            {
+                return View("Indexx", db.photographers.Where(p => p.PhoneNumber.Contains(search)).ToList());
+            }
+            else if (searchBut == "All")
+            {
+                return View("Indexx", db.photographers
+                    .Where(p => p.FullName.ToLower().Contains(search.ToLower())
+                            || p.PhoneNumber.ToLower().Contains(search.ToLower())
+                            || p.AspNetUser.Email.ToLower().Contains(search.ToLower()))
+                    .Include(p => p.AspNetUser)
+                    .ToList());
+            }
+            else if (searchBut == "Email")
+            {
+                return View("Indexx", db.photographers.Include(p => p.AspNetUser).Where(p => p.AspNetUser.Email.Contains(search)).ToList());
+            }
+            else
+            {
+                return View("Indexx");
+            }
+        }
+
         public ActionResult Pays()
         {
             return View();
+        }
+
+        public ActionResult Accept(int? id)
+        {
+            var photographer = db.photographers.Find(id);
+            if (photographer == null)
+            {
+                return HttpNotFound();
+            }
+            photographer.accept = true;
+            db.Entry(photographer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Indexxx", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+        public ActionResult Reject(int? id)
+        {
+            var photographer = db.photographers.Find(id);
+            if (photographer == null)
+            {
+                return HttpNotFound();
+            }
+            photographer.accept = false;
+            db.Entry(photographer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Indexxx", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+        public ActionResult Deactivate(int? id)
+        {
+            var photographer = db.photographers.Find(id);
+            if (photographer == null)
+            {
+                return HttpNotFound();
+            }
+            photographer.is_hidden = true;
+            db.Entry(photographer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+        public ActionResult Activate(int? id)
+        {
+            var photographer = db.photographers.Find(id);
+            if (photographer == null)
+            {
+                return HttpNotFound();
+            }
+            photographer.is_hidden = false;
+            db.Entry(photographer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
         }
 
         public ActionResult Creates(int? id)
@@ -64,23 +156,19 @@ namespace sight.Controllers
             return View(comment);
         }
 
-        public ActionResult gallery()
-        {
-            var photos = db.photos;
-            return View(photos.ToList());
-        }
+
         public ActionResult photographers()
         {
             var photographers = db.photographers.Include(p => p.AspNetUser);
             return View(photographers.ToList());
         }
         public ActionResult photographersInCity()
-        {
+        {          
             var photographers = db.photographers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersInIrbid()
@@ -89,7 +177,7 @@ namespace sight.Controllers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersInAmman()
@@ -98,16 +186,16 @@ namespace sight.Controllers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Amman"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
-         public ActionResult photographersInJarash()
+        public ActionResult photographersInJarash()
         {
             var photographers = db.photographers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Jarash"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
 
@@ -117,7 +205,7 @@ namespace sight.Controllers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Portrait"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersProduct()
@@ -126,7 +214,7 @@ namespace sight.Controllers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Product"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersNewborn()
@@ -135,7 +223,7 @@ namespace sight.Controllers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Newborn"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersFood()
@@ -144,7 +232,7 @@ namespace sight.Controllers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Food"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersOccasions()
@@ -153,7 +241,7 @@ namespace sight.Controllers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Occasions"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersLandscape()
@@ -162,7 +250,7 @@ namespace sight.Controllers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Landscape"))
                                 .ToList();
-            return View(photographers);
+            return View("photographersInCity", photographers);
         }
 
 

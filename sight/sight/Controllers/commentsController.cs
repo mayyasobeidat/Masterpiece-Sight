@@ -21,7 +21,20 @@ namespace sight.Controllers
             var comments = db.comments.Include(c => c.client).Include(c => c.photographer);
             return View(comments.ToList());
         }
+        public ActionResult feedback()
+        {
 
+            var userId = User.Identity.GetUserId(); // 
+            int iduser = db.clients.FirstOrDefault(a => a.user_id == userId).id;
+
+            var comments = db.comments
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Where(p => p.client_id == iduser);
+
+            return View(comments.ToList());
+
+        }
         // GET: comments/Details/5
         public ActionResult Details(int? id)
         {

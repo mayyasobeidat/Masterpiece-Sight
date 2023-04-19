@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Statisticssss";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+<h2>Statisticssss</h2>
+<p>
+    @ViewBag.IrbidCount,
+    @ViewBag.AmmanCount,
+    @ViewBag.JarashCount,
+    @ViewBag.AjlounCount,
+    @ViewBag.AqabaCount
+</p>
+<script src="//cdn.jsdelivr.net/npm/chart.js"></script>
+
+<canvas id="pie-chart"></canvas>
+
+<script>
+    var ctx5 = $("#pie-chart").get(0).getContext("2d");
+    var myChart5 = new Chart(ctx5, {
+        type: "pie",
+        data: {
+            labels: ["Irbid", "Amman", "Jarash", "Ajloun", "Al-aqaba"],
+            datasets: [{
+                backgroundColor: [
+                    "rgb(243, 198, 18, .7)",
+                    "rgb(243, 198, 18, .6)",
+                    "rgb(243, 198, 18, .5)",
+                    "rgb(243, 198, 18, .4)",
+                    "rgb(243, 198, 18, .3)"
+                ],
+                data: [
+                    @ViewBag.IrbidCount,
+                    @ViewBag.AmmanCount,
+                    @ViewBag.JarashCount,
+                    @ViewBag.AjlounCount,
+                    @ViewBag.AqabaCount
+                ]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>

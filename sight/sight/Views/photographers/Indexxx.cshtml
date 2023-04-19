@@ -1,0 +1,157 @@
+﻿@model IEnumerable<sight.Models.photographer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+
+
+<style>
+
+
+    .myIMG {
+        top: -50px;
+        left: -35px;
+        display: block;
+        z-index: 999;
+        cursor: pointer;
+        -webkit-transition-property: all;
+        -webkit-transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease;
+    }
+
+        .myIMG:hover {
+            transform: scale(4);
+        }
+</style>
+
+<div class="row g-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-line fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Indexx" class="btn btn-warning">All Photographers</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Index" class="btn btn-warning">Availability</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-area fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Indexxx" class="btn btn-warning">New Photographers</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-chart-pie fa-3x text-primary"></i>
+            <div class="ms-3">
+                <a href="~/photographers/Indexx" class="btn btn-warning">All Photographers</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<!-- Table Start -->
+<div class="row g-4">
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">New Photographers</h6>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Where(x => !x.accept))
+                    {
+                        <tr>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                            </td>
+                            <td>
+                                @if (!item.accept)
+                                {
+                                    @Html.ActionLink("Accept", "Accept", new { id = item.id }, new { @class = "btn btn-success" })
+
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Certified Photographers</h6>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Where(x => x.accept))
+                    {
+                        <tr>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                            </td>
+                            <td>
+                                @if (item.accept)
+                                {
+                                    @Html.ActionLink("Reject", "Reject", new { id = item.id }, new { @class = "btn btn-danger" })
+
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- Table End -->
+@*//////////////////////////////////////////////////////////////////*@
+
+
+
+

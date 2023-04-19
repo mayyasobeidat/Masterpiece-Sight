@@ -121,6 +121,8 @@
           <Property Name="howMany" Type="int" Nullable="false" />
           <Property Name="pricing_id" Type="int" />
           <Property Name="theDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="session_minutes" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="photographer_cities">
           <Key>
@@ -920,6 +922,8 @@
           <NavigationProperty Name="photographer" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photo_sessions" ToRole="photographer" />
           <NavigationProperty Name="PhotographyType" Relationship="sightModel.FK__photo_ses__TypeI__42E1EEFE" FromRole="photo_sessions" ToRole="PhotographyType" />
           <NavigationProperty Name="PhotographerPricing" Relationship="sightModel.FK_photo_sessions_PhotographerPricing" FromRole="photo_sessions" ToRole="PhotographerPricing" />
+          <Property Name="session_minutes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="photographer_cities">
           <Key>
@@ -1462,6 +1466,8 @@
           <EntitySetMapping Name="photo_sessions">
             <EntityTypeMapping TypeName="sightModel.photo_sessions">
               <MappingFragment StoreEntitySet="photo_sessions">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="session_minutes" ColumnName="session_minutes" />
                 <ScalarProperty Name="theDescription" ColumnName="theDescription" />
                 <ScalarProperty Name="pricing_id" ColumnName="pricing_id" />
                 <ScalarProperty Name="howMany" ColumnName="howMany" />

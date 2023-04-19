@@ -193,6 +193,7 @@
     <Compile Include="Controllers\PhotographerTypesController.cs" />
     <Compile Include="Controllers\PhotographyTypesController.cs" />
     <Compile Include="Controllers\photosAdminsController.cs" />
+    <Compile Include="Controllers\photosController.cs" />
     <Compile Include="Controllers\photo_sessionsController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -526,6 +527,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -794,8 +796,6 @@
     <Content Include="Views\PhotographyTypes\Details.cshtml" />
     <Content Include="Views\PhotographyTypes\Edit.cshtml" />
     <Content Include="Views\PhotographyTypes\Index.cshtml" />
-    <Content Include="Views\AdminDashboard\photographersCount.cshtml" />
-    <Content Include="Views\AdminDashboard\clientsCount.cshtml" />
     <Content Include="Views\photographers\Pays.cshtml" />
     <Content Include="Views\admins\Create.cshtml" />
     <Content Include="Views\admins\Delete.cshtml" />
@@ -807,16 +807,6 @@
     <Content Include="Views\Subscriptions\Details.cshtml" />
     <Content Include="Views\Subscriptions\Edit.cshtml" />
     <Content Include="Views\Subscriptions\Index.cshtml" />
-    <Content Include="Views\photographers\photographersInCity.cshtml" />
-    <Content Include="Views\photographers\photographersInIrbid.cshtml" />
-    <Content Include="Views\photographers\photographersInAmman.cshtml" />
-    <Content Include="Views\photographers\photographersInJarash.cshtml" />
-    <Content Include="Views\photographers\photographersPortrait.cshtml" />
-    <Content Include="Views\photographers\photographersProduct.cshtml" />
-    <Content Include="Views\photographers\photographersNewborn.cshtml" />
-    <Content Include="Views\photographers\photographersFood.cshtml" />
-    <Content Include="Views\photographers\photographersOccasions.cshtml" />
-    <Content Include="Views\photographers\photographersLandscape.cshtml" />
     <Content Include="Views\photo_sessions\Create.cshtml" />
     <Content Include="Views\photo_sessions\Delete.cshtml" />
     <Content Include="Views\photo_sessions\Details.cshtml" />
@@ -839,28 +829,35 @@
     <Content Include="Views\PhotographerTypes\Details.cshtml" />
     <Content Include="Views\PhotographerTypes\Edit.cshtml" />
     <Content Include="Views\PhotographerTypes\Index.cshtml" />
-    <Content Include="Views\PhotographerPricings\Create.cshtml" />
-    <Content Include="Views\PhotographerPricings\Delete.cshtml" />
-    <Content Include="Views\PhotographerPricings\Details.cshtml" />
-    <Content Include="Views\PhotographerPricings\Edit.cshtml" />
-    <Content Include="Views\PhotographerPricings\Index.cshtml" />
     <Content Include="Views\photo_sessions\CreateFenish.cshtml" />
-    <Content Include="Views\photosAdmins1\Create.cshtml" />
-    <Content Include="Views\photosAdmins1\Delete.cshtml" />
-    <Content Include="Views\photosAdmins1\Details.cshtml" />
-    <Content Include="Views\photosAdmins1\Edit.cshtml" />
-    <Content Include="Views\photosAdmins1\Index.cshtml" />
     <Content Include="Views\commentsHomes\Create.cshtml" />
     <Content Include="Views\commentsHomes\Delete.cshtml" />
     <Content Include="Views\commentsHomes\Details.cshtml" />
     <Content Include="Views\commentsHomes\Edit.cshtml" />
     <Content Include="Views\commentsHomes\Index.cshtml" />
-    <Content Include="Views\photographers\gallery.cshtml" />
     <Content Include="Views\comments\Create.cshtml" />
     <Content Include="Views\comments\Delete.cshtml" />
     <Content Include="Views\comments\Details.cshtml" />
     <Content Include="Views\comments\Edit.cshtml" />
     <Content Include="Views\comments\Index.cshtml" />
+    <Content Include="Views\PhotographerPricings\Create.cshtml" />
+    <Content Include="Views\PhotographerPricings\Delete.cshtml" />
+    <Content Include="Views\PhotographerPricings\Details.cshtml" />
+    <Content Include="Views\PhotographerPricings\Edit.cshtml" />
+    <Content Include="Views\PhotographerPricings\Index.cshtml" />
+    <Content Include="Views\photographers\Indexx.cshtml" />
+    <Content Include="Views\photographers\Indexxx.cshtml" />
+    <Content Include="Views\photos\Create.cshtml" />
+    <Content Include="Views\photos\Delete.cshtml" />
+    <Content Include="Views\photos\Details.cshtml" />
+    <Content Include="Views\photos\Edit.cshtml" />
+    <Content Include="Views\photos\Index.cshtml" />
+    <Content Include="Views\photographers\photographersInCity.cshtml" />
+    <Content Include="Views\AdminDashboard\Statisticssss.cshtml" />
+    <Content Include="Views\photo_sessions\pastBookingUser.cshtml" />
+    <Content Include="Views\comments\feedback.cshtml" />
+    <Content Include="Views\photo_sessions\BookingPhotographerInProfile.cshtml" />
+    <Content Include="Views\photo_sessions\PastBookingPhotographerInProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

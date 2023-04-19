@@ -99,15 +99,12 @@
                                         <label for="newFields">People</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                            <label class="form-label d-block">Choose your package *</label>
-                                            <div class="form-floating mb-3 row-cols-lg-3">
-                                                <select class="form-select" id="newField3" aria-label="New Field 3">
-                                                    <option value="1">60 minutes - 50JD</option>
-                                                    <option value="2">90 minutes - 70JD</option>
-                                                    <option value="3">120 minutes - 90JD</option>
-                                                </select>
-                                                <label for="newField3">Price</label>
-                                            </div>
+                                        @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", type = "phone", data_sb_validations = "required", @id = "newField3", @value = ViewBag.phone } })*@
+                                        @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @value = Model.client.PhoneNumber } })*@
+                                        <input class="form-control" data-sb-validations="required" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" />
+                                        @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+
+                                        <label for="newField3">Your Phone</label>
                                     </div>
                                 </div>
 
@@ -129,60 +126,8 @@
                                         3) any must-have shots, such as solo shots or photos of only certain participants
                                     </p>
                                 </div>
-
-
-
-
-                              
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.pricing_id, "pricing_id", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-
-
-
-
-
-                                        @{
-                                            List<SelectListItem> items = new List<SelectListItem>();
-                                            foreach (var item in ViewBag.ddata)
-                                            {
-                                                string test1 = item.PhotographyType.TypeName;
-                                                string test2 = Convert.ToString(item.PriceOneHour);
-                                                string final = test1 + " " + test2;
-                                                items.Add(new SelectListItem { Text = final, Value = item.ID.ToString() });
-                                            }
-                                        }
-                                        @Html.DropDownListFor(m => m.pricing_id, items, "Select Somthing", new { @class = "form-control" })
-                                        @*  @Html.DropDownList("Class_id", null, htmlAttributes: new { @class = "form-control" })*@
-                                        @Html.ValidationMessageFor(model => model.pricing_id, "", new { @class = "text-danger" })
-
-
-
-
-
-                                        @Html.DropDownList("pricing_id", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.pricing_id, "", new { @class = "text-danger" })
-
-
-
-
-
-
-
-
-
-                                        <label for="hours">Select hours:</label>
-                                        <select id="hours" name="hours">
-                                            <option value="1">1 Hour - $@ViewBag.PriceOneHour</option>
-                                            <option value="1.5">1.5 Hours - $@ViewBag.PriceOneAndHalfHour</option>
-                                            <option value="2">2 Hours - $@ViewBag.PriceTwoHours</option>
-                                        </select>
-
-                                    </div>
-                                </div>
                             </div>
-                            </div>
+                        </div>
 
 
                         <div class="mb-3">

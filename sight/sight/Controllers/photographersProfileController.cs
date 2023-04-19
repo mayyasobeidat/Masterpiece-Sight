@@ -159,7 +159,7 @@ namespace sight.Controllers
             }
             catch (DbUpdateException ex)
             {
-                // يتم إلقاء استثناء عند تكرار مفتاح أساسي
+                // 
                 if (ex.InnerException?.InnerException is System.Data.SqlClient.SqlException sqlEx && sqlEx.Number == 2627)
                 {
                     ModelState.AddModelError(string.Empty, "This type is already added!");

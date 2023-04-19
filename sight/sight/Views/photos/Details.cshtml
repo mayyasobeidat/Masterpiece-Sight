@@ -1,0 +1,59 @@
+﻿@model sight.Models.photo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>photo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.photo_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.photo_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.created_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.created_at)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photographer.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.photographer.user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyType1.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyType1.TypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

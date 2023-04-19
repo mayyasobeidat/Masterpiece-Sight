@@ -26,6 +26,8 @@ namespace sight.Models
         public int howMany { get; set; }
         public Nullable<int> pricing_id { get; set; }
         public string theDescription { get; set; }
+        public string session_minutes { get; set; }
+        public string phone { get; set; }
     
         public virtual city city { get; set; }
         public virtual client client { get; set; }

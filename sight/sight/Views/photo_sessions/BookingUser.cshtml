@@ -10,6 +10,23 @@
     <hr />
     <table class="table-bordered table table-hover table-responsive">
         <tr>
+            @if (item.status)
+            {
+                <th style="background-color:limegreen">
+                    Status:
+                </th>
+                <td style="background-color:limegreen">Accepted</td>
+            }
+            else
+            {
+                <th style="background-color: gold">
+                    Status:
+                </th>
+                <td style="background-color: gold">Waiting</td>
+
+            }
+        </tr>
+        <tr>
             <th>
                 Date:
             </th>
@@ -25,20 +42,27 @@
                 @Html.DisplayFor(modelItem => item.session_time)
             </td>
         </tr>
-        
+
         <tr>
             <th>
                 Requested photographer:
             </th>
             <td>
-                @Html.DisplayFor(modelItem => item.photographer.FullName)
+                <a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographer.id)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a>
             </td>
+
         </tr>
-        
+
+
+
+
+
+
         <tr>
             <td colspan="2">
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.id })
+
             </td>
         </tr>
     </table>

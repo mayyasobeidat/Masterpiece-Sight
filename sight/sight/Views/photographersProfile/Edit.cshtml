@@ -71,6 +71,28 @@
         <section class="section profile">
             <div class="row">
                 <div class="col-xl-4">
+
+                    @{
+                        sight.Models.sightEntities dbb = new sight.Models.sightEntities();
+                        sight.Models.photo_sessions sessions = new sight.Models.photo_sessions();
+
+                        int PhoID = @ViewBag.phoID;
+
+                        int newBookingCount = dbb.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.session_date >= DateTime.Today).Count();
+                    }
+
+                    @if (newBookingCount > 0)
+                    {
+
+                        <div class="card">
+                            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                               <span>You Have a New Bookings @Html.ActionLink( ""+ newBookingCount +"" , "BookingPhotographer", "photo_sessions", null, new { @class = "btn btn-primary" }) </span>
+
+                            </div>
+                        </div>
+                        <br>
+                    }
+
                     <div class="card profiless">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center mmm">
 
@@ -85,20 +107,6 @@
 
                         </div>
                     </div>
-                    @*<br>
-
-                    <div class="card">
-                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <div>
-                                <h4 style="text-align:center">
-                                    We have chosen hypothetical prices for your photo sessions in line with the current market<br />
-                                    You can adjust these prices as desired.
-                                </h4>
-                            </div>
-                            @Html.ActionLink("Go", "Index", "PhotographerPricings")
-                        </div>
-                    </div>*@
-
 
                     <br>
 
@@ -114,7 +122,6 @@
 
                         </div>
                     </div>
-
 
 
 
@@ -157,7 +164,9 @@
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
                                 </li>
-
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking-Past">Previous Booking</button>
+                                </li>
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
                                 </li>
@@ -307,29 +316,29 @@
                                             var dev = db.cities.ToList();
 
 
-                                <div class="row mb-3">
-                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
-                                    <div class="col-md-4 col-lg-4">
+                                            <div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
+                                                <div class="col-md-4 col-lg-4">
 
-                                        @foreach (var item in dev)
-                                        {
-                                            <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
+                                                    @foreach (var item in dev)
+                                                    {
+                                                        <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
 
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 col-lg-4">
+
+                                                    @foreach (var item in Model.photographer_cities)
+                                                    {
+                                                        <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
+
+                                                    }
+                                                </div>
+
+                                            </div>
                                         }
-                                    </div>
-                                    <div class="col-md-4 col-lg-4">
 
-                                        @foreach (var item in Model.photographer_cities)
-                                        {
-                                            <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
 
-                                        }
-                                    </div>
-
-                                </div>
-                                        }
-
-                                            
 
 
 
@@ -368,48 +377,48 @@
                                             var dev = db.PhotographyTypes.ToList();
 
 
-                                <div class="row mb-3">
-                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
-                                    <div class="col-md-4 col-lg-4">
+                                            <div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                                <div class="col-md-4 col-lg-4">
 
-                                        @foreach (var item in dev)
-                                        {
-                                            <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
+                                                    @foreach (var item in dev)
+                                                    {
+                                                        <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
+
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 col-lg-4">
+
+                                                    @foreach (var item in Model.PhotographerTypes)
+                                                    {
+                                                        <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
+
+                                                    }
+                                                </div>
+
+
+                                            </div>
+
+
+
 
                                         }
-                                    </div>
-                                    <div class="col-md-4 col-lg-4">
-
-                                        @foreach (var item in Model.PhotographerTypes)
-                                        {
-                                            <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
-
-                                        }
-                                    </div>
-
-
-                                </div>
 
 
 
 
-                                        }
-
-
-
-                                     
 
                                         @*<div class="row mb-3">
-                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
-                <div class="col-md-8 col-lg-9">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                    <div class="col-md-8 col-lg-9">
 
-                    @foreach (var item in Model.PhotographerTypes)
-                    {
-                        @item.PhotographyType.TypeName <span>&nbsp;</span>
+                        @foreach (var item in Model.PhotographerTypes)
+                        {
+                            @item.PhotographyType.TypeName <span>&nbsp;</span>
 
-                    }
-                </div>
-            </div>*@
+                        }
+                    </div>
+                </div>*@
 
 
 
@@ -457,114 +466,95 @@
 
                                 </div>
 
-                                        <div class="tab-pane fade pt-3" id="profile-booking">
-
-                                            Settings Form
-                                            <form>
-
-                                                <div class="row mb-3">
-                                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Booking</label>
-                                                    <div class="col-md-8 col-lg-9">
-                                                        <div class="mb-3" style="padding: 5%; border: solid;">
-                                                            <p><strong>Booking Request Details</strong></p>
-                                                            <p><strong>Date:</strong> March 10, 2023</p>
-                                                            <p><strong>Time of day:</strong>Morning</p>
-                                                            <p><strong>Number of participants:</strong>2</p>
-                                                            <p><strong>Requested photographer:</strong>Baraa</p>
-                                                            <p><strong>Type of Photo shoot:</strong>Portrait</p>
-                                                            <p><strong>Package:</strong>90 minute booking</p>
-                                                            <div class="text-center">
-                                                                <button type="submit" class="btn btn-warning">Connect</button>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                <div class="tab-pane fade pt-3" id="profile-booking">
 
 
-                                            </form>
-                                            @*End settings Form*@
+                                    @Html.Action("BookingPhotographerInProfile", "photo_sessions")
+                                </div>
 
+                                <div class="tab-pane fade pt-3" id="profile-booking-Past">
+
+
+                                    @Html.Action("PastBookingPhotographerInProfile", "photo_sessions")
+                                </div>
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-feedback">
+
+                                    @*feedback Form*@
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <table class="table-bordered table table-hover table-responsive">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Comment</th>
+                                                        <th></th>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ahmad</td>
+                                                        <td>Hi</td>
+                                                        <td><a href="#">view</a></td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
 
 
+                                    </form>
+                                    End feedback
+
+                                </div>
 
 
 
 
-                                        <div class="tab-pane fade pt-3" id="profile-feedback">
-
-                                            @*feedback Form*@
-                                            <form>
-
-                                                <div class="row mb-3">
-                                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
-                                                    <div class="col-md-8 col-lg-9">
-                                                        <table class="table-bordered table table-hover table-responsive">
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Comment</th>
-                                                                <th></th>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Ahmad</td>
-                                                                <td>Hi</td>
-                                                                <td><a href="#">view</a></td>
-
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
 
 
-                                            </form>
-                                            End feedback
 
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    Change Password Form
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control" id="currentPassword">
+                                            </div>
                                         </div>
 
-
-
-
-
-
-
-
-
-
-                                        <div class="tab-pane fade pt-3" id="profile-change-password">
-                                            Change Password Form
-                                            <form>
-
-                                                <div class="row mb-3">
-                                                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                                    <div class="col-md-8 col-lg-9">
-                                                        <input name="password" type="password" class="form-control" id="currentPassword">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                                    <div class="col-md-8 col-lg-9">
-                                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                                    <div class="col-md-8 col-lg-9">
-                                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                                    </div>
-                                                </div>
-
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-warning">Change Password</button>
-                                                </div>
-                                            </form> End Change Password Form
-
+                                        <div class="row mb-3">
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                            </div>
                                         </div>
 
-                                    </div>
+                                        <div class="row mb-3">
+                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-warning">Change Password</button>
+                                        </div>
+                                    </form> End Change Password Form
+
+                                </div>
+
+                            </div>
 
                             @*End Bordered Tabs*@
 

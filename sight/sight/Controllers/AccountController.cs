@@ -96,6 +96,11 @@ namespace sight.Controllers
                     {
                         return RedirectToAction("Dashboard", "AdminDashboard");
                     }
+                    else if (await UserManager.IsInRoleAsync(user.Id, "Photographer"))
+                    {
+                        return RedirectToAction("Edit", "photographersProfile");
+
+                    }
                     return RedirectToLocal(returnUrl);
 
     
@@ -216,20 +221,14 @@ namespace sight.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, string Account)
+        public async Task<ActionResult> Register(RegisterViewModel model, string Account , string Subscriptions)
         {
-
-          
-
-
             if (ModelState.IsValid)
             {
-
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -239,7 +238,7 @@ namespace sight.Controllers
                     //Session["photographerID"] = user.Id;
                     if (Account == "Photographer")
                     {
-                        // تعيين الدور للمستخدم
+                        // role
                         await UserManager.AddToRoleAsync(user.Id, "Photographer");
                         //  Photographer
                         photographer photographers = new photographer();
@@ -249,59 +248,72 @@ namespace sight.Controllers
                         photographers.FullName = "Sight Photographer";
                         photographers.accept = false;
                         photographers.is_hidden = true;
-                        photographers.facebook ="//facebook.com/#";
+                        photographers.facebook = "//facebook.com/#";
                         photographers.instagram = "//instagram.com/#";
                         photographers.twitter = "//twitter.com/#";
                         photographers.linkedin = "//linkedin.com/in/#";
+                        photographers.created_at = DateTime.Now; //date
 
+                        // Save the photographer to the database first
+                        db.photographers.Add(photographers);
+                        db.SaveChanges();
 
-                        photographers.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
                         Subscription subscription = new Subscription();
                         subscription.PhotographerId = photographers.id;
-                        subscription.Price = 100;
 
+                        if (Subscriptions == "oneMonth")
+                        {
+                            subscription.startDate = DateTime.Now.AddDays(14);
+                            subscription.endDate = subscription.startDate.Value.AddMonths(1);
+                            subscription.Price = 75;
+                            db.Subscriptions.Add(subscription);
+                            db.SaveChanges();
+                        }
+                        else if (Subscriptions == "threeMonth")
+                        {
+                            subscription.startDate = DateTime.Now.AddDays(14);
+                            subscription.endDate = subscription.startDate.Value.AddMonths(3);
 
+                            subscription.Price = 200;
+                            db.Subscriptions.Add(subscription);
+                            db.SaveChanges();
+                        }
 
-                        db.photographers.Add(photographers);
-                        db.Subscriptions.Add(subscription);
-                        db.SaveChanges();
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         var userId = User.Identity.GetUserId();
                         return RedirectToAction("Edit", "photographersProfile", new { id = userId });
                     }
+
                     else if (Account == "Client")
                     {
-                        // تعيين الدور للمستخدم
+                        // role
                         await UserManager.AddToRoleAsync(user.Id, "Client");
                         //  Client
                         client clients = new client();
                         clients.user_id = user.Id;
                         clients.photo = "cliantProfile.png";
                         clients.fullName = "Sight User";
-                        clients.created_at = DateTime.Now; // تعيين تاريخ التسجيل الحالي
+                        clients.created_at = DateTime.Now; //date
                         db.clients.Add(clients);
                         db.SaveChanges();
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
                         var userId = User.Identity.GetUserId();
                         return RedirectToAction("Edit", "clients", new { id = userId });
                         //return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        // 
                         ModelState.AddModelError("", "Please choose account type.");
                         return View(model);
                     }
                 }
                 AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+     
 
 
 

@@ -15,7 +15,7 @@ namespace sight.Controllers
     {
         private sightEntities db = new sightEntities();
 
-        // GET: PhotographerPricings
+        // GET: PhotographerPricings1
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
@@ -23,11 +23,10 @@ namespace sight.Controllers
                 .Include(p => p.PhotographyType)
                 .Where(p => p.photographer.user_id == userId)
                 .ToList();
-            return View(PhotographerPricings);
-
+            return View(PhotographerPricings.ToList());
         }
 
-        // GET: PhotographerPricings/Details/5
+        // GET: PhotographerPricings1/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,15 +41,15 @@ namespace sight.Controllers
             return View(photographerPricing);
         }
 
-        // GET: PhotographerPricings/Create
+        // GET: PhotographerPricings1/Create
         public ActionResult Create()
         {
-            ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id");
+            ViewBag.PhotographerID = new SelectList(db.photographers, "id", "FullName");
             ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName");
             return View();
         }
 
-        // POST: PhotographerPricings/Create
+        // POST: PhotographerPricings1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -64,67 +63,54 @@ namespace sight.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id", photographerPricing.PhotographerID);
-            ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.ID);
+            ViewBag.PhotographerID = new SelectList(db.photographers, "id", "FullName", photographerPricing.PhotographerID);
+            ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.PhotographyTypeID);
             return View(photographerPricing);
         }
 
-        // GET: PhotographerPricings/Edit/5
+        // GET: PhotographerPricings1/Edit/5
         public ActionResult Edit(int? id)
         {
+         
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             PhotographerPricing photographerPricing = db.PhotographerPricings.Find(id);
+            Session["photographer"] = photographerPricing.PhotographerID;
+            Session["type"] = photographerPricing.PhotographyTypeID;
             if (photographerPricing == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id", photographerPricing.PhotographerID);
-            ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.ID);
+            //ViewBag.PhotographerID = new SelectList(db.photographers, "id", "FullName", photographerPricing.PhotographerID);
+            //ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.PhotographyTypeID);
             return View(photographerPricing);
         }
 
-        //public ActionResult Edit()
-        //{
-        //    var x = User.Identity.GetUserId();
-        //    int id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
-        //    int idPrice = db.PhotographerPricings.FirstOrDefault(p => p.PhotographerID == id)?.ID ?? 0;
-
-        //    if (idPrice == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    PhotographerPricing photographerPricing = db.PhotographerPricings.Find(idPrice);
-        //    if (photographerPricing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id", photographerPricing.PhotographerID);
-        //    ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.ID);
-        //    return View(photographerPricing);
-        //}
-
-        // POST: PhotographerPricings/Edit/5
+        // POST: PhotographerPricings1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,PhotographerID,PhotographyTypeID,PriceOneHour,PriceOneAndHalfHour,PriceTwoHours")] PhotographerPricing photographerPricing)
         {
+
             if (ModelState.IsValid)
             {
+                photographerPricing.PhotographerID = (int)Session["photographer"];
+                photographerPricing.PhotographyTypeID = (int)Session["type"];
                 db.Entry(photographerPricing).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "photographersProfile");
             }
-            ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id", photographerPricing.PhotographerID);
-            ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.ID);
+            //ViewBag.PhotographerID = new SelectList(db.photographers, "id", "FullName", photographerPricing.PhotographerID);
+            //ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.PhotographyTypeID);
             return View(photographerPricing);
         }
 
-        // GET: PhotographerPricings/Delete/5
+        // GET: PhotographerPricings1/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -139,7 +125,7 @@ namespace sight.Controllers
             return View(photographerPricing);
         }
 
-        // POST: PhotographerPricings/Delete/5
+        // POST: PhotographerPricings1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -158,50 +144,5 @@ namespace sight.Controllers
             }
             base.Dispose(disposing);
         }
-
-
-        //public ActionResult Edit()
-        //{
-        //    var x = User.Identity.GetUserId();
-        //    int id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
-        //    ViewBag.photographerid = id;
-
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-
-        //    var subID = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == id).ID;
-
-        //    PhotographerPricing photographerPricing = db.PhotographerPricings.Find(subID);
-        //    if (photographerPricing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id", photographerPricing.PhotographerID);
-        //    ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.PhotographyTypeID);
-        //    return View(photographerPricing);
-        //}
-
-        //// POST: PhotographerPricings/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "ID,PhotographerID,PhotographyTypeID,PriceOneHour,PriceOneAndHalfHour,PriceTwoHours")] PhotographerPricing photographerPricing)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(photographerPricing).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.PhotographerID = new SelectList(db.photographers, "id", "user_id", photographerPricing.PhotographerID);
-        //    ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.PhotographyTypeID);
-        //    return View(photographerPricing);
-        //}
-
-
     }
 }

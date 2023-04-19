@@ -376,14 +376,10 @@
         <a class="aCity" href="/photographers/photographersInAmman">Amman</a>
         <a class="aCity" href="/photographers/photographersInIrbid">Irbid</a>
         <a class="aCity" href="/photographers/photographersInJarash">Jarash</a>
-        @*<a href="#">Dropdown Link </a>
-        <input class="dropdown-sub" type="checkbox" id="dropdown-sub" name="dropdown-sub" />
-        <label class="for-dropdown-sub" for="dropdown-sub">Dropdown Sub </label>
-        <div class="section-dropdown-sub">
-            <a href="#">Dropdown Link </a>
-            <a href="#">Dropdown Link </a>
-        </div>
-        <a href="#">Dropdown Link </a>
-        <a href="#">Dropdown Link </a>*@
+        @*@foreach (var item in Model)
+        {
+            <a class="aCity" href="/photographers/photographersInAmman">@item.cityName</a>
+
+        }*@
     </div>
 </div>

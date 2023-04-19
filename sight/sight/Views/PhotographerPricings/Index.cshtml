@@ -5,46 +5,27 @@
     Layout = null;
 }
 
-@*<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
 <table class="table-bordered table table-hover table-responsive">
     <tr>
-        <!--<th>-->
-        @*@Html.DisplayNameFor(model => model.PhotographyTypeID)*@
-        <!--#
-    </th>-->
         <th>
-            @*@Html.DisplayNameFor(model => model.PhotographyType.TypeName)*@
             Photography
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.PriceOneHour)*@
-            1h
+            60
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.PriceOneAndHalfHour)*@
-            1.5h
+            90
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.PriceTwoHours)*@
-            2h
+            120
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.photographer.user_id)
-        </th>*@
-
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.PhotographyTypeID)
-        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
             </td>
@@ -57,13 +38,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PriceTwoHours)
             </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.photographer.user_id)
-        </td>*@
 
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) @*|
-                @Html.ActionLink("Details", "Details", new { id = item.ID })*@ @*|
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
             </td>
         </tr>

@@ -116,6 +116,8 @@
     <Property Name="howMany" Type="int" Nullable="false" />
     <Property Name="pricing_id" Type="int" />
     <Property Name="theDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="session_minutes" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>

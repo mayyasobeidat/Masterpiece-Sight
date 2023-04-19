@@ -239,6 +239,8 @@
     <NavigationProperty Name="photographer" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photo_sessions" ToRole="photographer" />
     <NavigationProperty Name="PhotographyType" Relationship="sightModel.FK__photo_ses__TypeI__42E1EEFE" FromRole="photo_sessions" ToRole="PhotographyType" />
     <NavigationProperty Name="PhotographerPricing" Relationship="sightModel.FK_photo_sessions_PhotographerPricing" FromRole="photo_sessions" ToRole="PhotographerPricing" />
+    <Property Name="session_minutes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>

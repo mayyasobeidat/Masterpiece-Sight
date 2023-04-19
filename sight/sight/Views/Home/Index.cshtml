@@ -257,8 +257,8 @@
     </section>
     <!-- End About Section -->
     <!-- ======= Clients Section ======= -->
-    <section id="clients" class="clients">
-        <div class="container" data-aos="zoom-in">
+    @*<section id="clients" class="clients">
+        <div class="container">
 
             <div class="clients-slider swiper">
                 <div class="swiper-wrapper align-items-center">
@@ -277,7 +277,7 @@
             </div>
 
         </div>
-    </section>
+    </section>*@
     <!-- End Clients Section -->
     <!-- ======= Services Section ======= -->
 
@@ -468,73 +468,47 @@
 
             <div class="ourTeamPhotographer">
 
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/mayyas.jpg" alt="" />
-                    <div class="profile-details">
-                        <h3>Mayyas Obeidat</h3>
-                        <p>Photographer and founder of this site</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
+                @{
+                    sight.Models.sightEntities db = new sight.Models.sightEntities();
+                    sight.Models.photographer Type = new sight.Models.photographer();
+
+                    DateTime today = DateTime.Today;
+                    DateTime monthAgo = today.AddMonths(-1);
+
+                    var topPhotographers = db.photo_sessions
+                                              .Where(p => p.session_date >= monthAgo && p.status == true)
+                                              .GroupBy(p => p.photographer_id)
+                                              .Select(g => new { PhotographerId = g.Key, BookingsCount = g.Count() })
+                                              .OrderByDescending(p => p.BookingsCount)
+                                              .Take(4)
+                                              .ToList();
 
 
+                    foreach (var photographer in topPhotographers)
+                    {
+                        var photographerData = db.photographers.FirstOrDefault(p => p.id == photographer.PhotographerId);
+                        if (photographerData != null)
+                        {
+                            var photographerBookings = db.photo_sessions
+                                .Where(p => p.photographer_id == photographer.PhotographerId && p.status && p.created_at >= monthAgo)
+                                .Count();
 
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/sedrh.png" alt="" />
-                    <div class="profile-details">
-                        <h3>Sedrh Al-shathily</h3>
-                        <p>Portrait Photographer</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/baraa.png" alt="" />
-                    <div class="profile-details">
-                        <h3>Baraa Mohammad</h3>
-                        <p>Product Photographer</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="profile-card">
-                    <img src="~/assetsUser/img/mayar.png" alt="" />
-                    <div class="profile-details">
-                        <h3>Mayar Karter</h3>
-                        <p>Food Photographer</p>
-                        <div class="social-media-list">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
+                            <div class="profile-card">
+                                <img src="~/assetsUser/img/@photographerData.profilePhoto" alt="" />
+                                <div class="profile-details">
+                                    <h3>@photographerData.FullName</h3>
+                                    <p>This month it received @photographerBookings bookings</p>
+                                    <div class="social-media-list">
+                                        <a href="@photographerData.facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                                        <a href="@photographerData.instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                                        <a href="@photographerData.linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                                        <a href="@photographerData.twitter" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }       
             </div>
         </div>
 
@@ -542,41 +516,6 @@
     </section>
 
     <!-- End Team Section -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

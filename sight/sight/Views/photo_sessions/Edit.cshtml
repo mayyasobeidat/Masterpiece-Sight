@@ -1,96 +1,116 @@
 ﻿@model sight.Models.photo_sessions
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutBooking.cshtml";
 }
 
-<h2>Edit</h2>
+<style>
+    .details {
+        font-size: 10px;
+        color: #9c9898;
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>photo_sessions</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.photographer_id, "photographer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("photographer_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.photographer_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    .bbb {
+        background-image: url("conn.png");
+        background-size: cover;
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.client_id, "client_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("client_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.client_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    .bookCard {
+        width: 65%;
+        padding: 5%;
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.city_id, "city_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("city_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.city_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    .firstForm {
+        display: flex;
+        gap: 10px;
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TypeID, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+        .bookCard {
+            width: 90%;
+            padding: 5%;
+        }
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.session_date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.session_date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.session_date, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.session_time, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.session_time, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.session_time, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        .bookCard {
+            width: 90%;
+            padding: 5%;
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.status)
-                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+        .firstForm {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+    <div class="container">
+
+
+        <section class="section profile">
+
+            @using (Html.BeginForm("Edit", "photo_sessions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+                <div class="row d-flex align-items-center justify-content-center">
+
+                    <div class="card bookCard row d-flex flex-row">
+                        <div class="text-center mb-3">
+                            <h2>You are requesting to book a shoot.</h2>
+                            <h5>We just need a few more details to complete your request so your photographer can get back to you within 24 - 48 hours to confirm your booking.</h5>
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <div id="form1">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.id)
+
+
+                                <div class="mb-3">
+                                    <label class="form-label d-block">Choose the duration of the photo session that you want to book with the photographer, and based on the duration of the session, you will see the price required of you for the session.*</label>
+
+                                    <div class="form-floating mb-3 row-cols-lg-3">
+
+                                        <select id="minutes" name="minutes" class="form-control">
+                                            <option value="60 minutes">60 minutes - @ViewBag.PriceOneHour JD</option>
+                                            <option value="90 minutes">90 minutes - @ViewBag.PriceOneAndHalfHour JD</option>
+                                            <option value="120 minutes">120 minutes - @ViewBag.PriceTwoHours JD</option>
+                                        </select>
+                                        <label for="minutes">Select hours:</label>
+
+
+
+
+                                    </div>         
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <p style="    border: solid; background: gainsboro; padding: 10px;">
+                                When your photographer responds to confirm their availability for your date and time slot, they will also send the start time they are available for your shoot.
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-end justify-content-between">
+                            <input type="submit" value="Submit" id="nextBtn2" class="btn btn-warning" style="width: 100%;" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                                            }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.created_at, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.created_at, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.created_at, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        </section>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
+</main>
+<!-- End #main -->
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

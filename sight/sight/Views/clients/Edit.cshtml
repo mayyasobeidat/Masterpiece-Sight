@@ -103,7 +103,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Previous Booking</button>
                                 </li>
 
                                 <li class="nav-item">
@@ -266,77 +266,14 @@
 
                                 <div class="tab-pane fade pt-3" id="profile-booking">
 
-                                    Settings Form
-                                    <form>
-
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Booking</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <div class="mb-3" style="padding: 5%; border: solid;">
-                                                    <p><strong>Booking Request Details</strong></p>
-                                                    <p><strong>Date:</strong> March 10, 2023</p>
-                                                    <p><strong>Time of day:</strong>Morning</p>
-                                                    <p><strong>Number of participants:</strong>2</p>
-                                                    <p><strong>Requested photographer:</strong>Baraa</p>
-                                                    <p><strong>Type of Photo shoot:</strong>Portrait</p>
-                                                    <p><strong>Package:</strong>90 minute booking</p>
-                                                    <div class="text-center">
-                                                        <button type="submit" class="btn btn-warning">Connect</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-
-                                    </form>
-                                    @*End settings Form*@
+                                    @Html.Action("pastBookingUser", "photo_sessions")
 
                                 </div>
 
 
+                                <div class="tab-pane fade pt-3" id="profile-feedback">             
 
-
-
-
-                                <div class="tab-pane fade pt-3" id="profile-feedback">
-
-                                    @*feedback Form*@
-                                    <form>
-
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
-                                            <div class="col-md-8 col-lg-9">
-
-                                                @*@Html.Action("BookingsUser", "photo_sessions")*@
-
-                                                @Html.Action("BookingUser", "photo_sessions")
-
-
-                                                @*<table class="table-bordered table table-hover table-responsive">
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Comment</th>
-                                                        <th></th>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Ahmad</td>
-                                                        <td>Hi</td>
-                                                        <td><a href="#">view</a></td>
-
-                                                    </tr>
-                                                </table>*@
-
-
-
-
-                                            </div>
-                                        </div>
-
-
-                                    </form>
-                                    End feedback
+                                     @Html.Action("feedback", "comments")
 
                                 </div>
 

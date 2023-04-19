@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using sight.Models;
+using static System.Collections.Specialized.BitVector32;
 
 namespace sight.Controllers
 {
@@ -30,19 +31,95 @@ namespace sight.Controllers
 
         public ActionResult BookingUser()
         {
-          
-            var userId = User.Identity.GetUserId(); // افترض أنه يتم استخدام ASP.NET Identity
 
+            var userId = User.Identity.GetUserId(); // 
             int iduser = db.clients.FirstOrDefault(a => a.user_id == userId).id;
-
+            var today = DateTime.Today;
             var photo_sessions = db.photo_sessions
-                .Include(p => p.city)
-                .Include(p => p.client)
-                .Include(p => p.photographer)
-                .Include(p => p.PhotographyType)
-                .Include(p => p.PhotographerPricing)
-                .Where(p => p.client_id == iduser); // أضف العبارة WHERE هنا
+                            .Include(p => p.city)
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Include(p => p.PhotographyType)
+                            .Include(p => p.PhotographerPricing)
+                            .Where(p => p.client_id == iduser && p.session_date >= today);
+
             return View(photo_sessions.ToList());
+
+
+        }
+
+        public ActionResult pastBookingUser()
+        {
+
+            var userId = User.Identity.GetUserId(); // 
+            int iduser = db.clients.FirstOrDefault(a => a.user_id == userId).id;
+            var today = DateTime.Today;
+            var photo_sessions = db.photo_sessions
+                            .Include(p => p.city)
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Include(p => p.PhotographyType)
+                            .Include(p => p.PhotographerPricing)
+                            .Where(p => p.client_id == iduser && p.session_date <= today);
+
+            return View(photo_sessions.ToList());
+
+        }
+
+        public ActionResult BookingPhotographer()
+        {
+
+            var userId = User.Identity.GetUserId(); // 
+            int idPho = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
+            var today = DateTime.Today;
+            var photo_sessions = db.photo_sessions
+                            .Include(p => p.city)
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Include(p => p.PhotographyType)
+                            .Include(p => p.PhotographerPricing)
+                            .Where(p => p.photographer_id == idPho && p.status == false && p.session_date >= today);
+
+            return View(photo_sessions.ToList());
+
+
+        }
+
+        public ActionResult BookingPhotographerInProfile()
+        {
+
+            var userId = User.Identity.GetUserId(); // 
+            int idPho = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
+            var today = DateTime.Today;
+            var photo_sessions = db.photo_sessions
+                            .Include(p => p.city)
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Include(p => p.PhotographyType)
+                            .Include(p => p.PhotographerPricing)
+                            .Where(p => p.photographer_id == idPho && p.status == true && p.session_date >= today);
+
+            return View(photo_sessions.ToList());
+
+
+        }
+
+        public ActionResult PastBookingPhotographerInProfile()
+        {
+
+            var userId = User.Identity.GetUserId(); // 
+            int idPho = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
+            var today = DateTime.Today;
+            var photo_sessions = db.photo_sessions
+                            .Include(p => p.city)
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Include(p => p.PhotographyType)
+                            .Include(p => p.PhotographerPricing)
+                            .Where(p => p.photographer_id == idPho && p.status == true && p.session_date <= today);
+
+            return View(photo_sessions.ToList());
+
 
         }
 
@@ -65,22 +142,7 @@ namespace sight.Controllers
 
         }
 
-        public ActionResult BookingPhotographer()
-        {
-
-            var userId = User.Identity.GetUserId(); // افترض أنه يتم استخدام ASP.NET Identity
-            int iduser = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
-
-            var photo_sessions = db.photo_sessions
-                .Include(p => p.city)
-                .Include(p => p.client)
-                .Include(p => p.photographer)
-                .Include(p => p.PhotographyType)
-                .Include(p => p.PhotographerPricing)
-                .Where(p => p.photographer_id == iduser); // أضف العبارة WHERE هنا
-            return View(photo_sessions.ToList());
-
-        }
+ 
 
         // GET: photo_sessions1/Details/5
         public ActionResult Details(int? id)
@@ -100,6 +162,12 @@ namespace sight.Controllers
         // GET: photo_sessions1/Create
         public ActionResult Create(int? id)
         {
+            var x = User.Identity.GetUserId();
+            int iduser = db.clients.FirstOrDefault(a => a.user_id == x).id;
+            ViewBag.clientid = iduser;
+            var phoneUser = db.clients.FirstOrDefault(p => p.user_id == x).PhoneNumber;
+            ViewBag.phone = phoneUser;
+
 
             int photographerId = (int)id;
             var photographyTypes = db.PhotographerTypes.Include(p => p.PhotographyType)
@@ -118,42 +186,7 @@ namespace sight.Controllers
               .ToList();
 
             ViewBag.city_id = new SelectList(photographyCity, "id", "cityName");
-
-
-
-            var pricing_id = db.PhotographerPricings
-              .Where(p => p.PhotographerID == photographerId)
-              .Select(p => new { p.PriceOneHour, p.PriceOneAndHalfHour, p.PriceTwoHours })
-              .FirstOrDefault();
-
-            ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyTypeID");
-
-            var test = db.PhotographerPricings.Include(m => m.PhotographyType).Where(p => p.PhotographerID == photographerId).ToList();
-            ViewBag.ddata = test;
-
-
-
-
-            var photographerID = photographerId;
-            var photographyTypeID =2;
-            var pricings = db.PhotographerPricings
-                .Where(p => p.PhotographerID == photographerID && p.PhotographyTypeID == photographyTypeID)
-                .FirstOrDefault();
-
-            ViewBag.PriceOneHour = pricings.PriceOneHour;
-            ViewBag.PriceOneAndHalfHour = pricings.PriceOneAndHalfHour;
-            ViewBag.PriceTwoHours = pricings.PriceTwoHours;
-
-
-
-
-
-
-
-
-
-
-
+  
             //ViewBag.city_id = new SelectList(db.cities, "id", "cityName");
             ViewBag.client_id = new SelectList(db.clients, "id", "user_id");
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id");
@@ -167,7 +200,7 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,photographer_id,client_id,city_id,TypeID,session_date,session_time,status,created_at,howMany,theDescription,pricing_id")] photo_sessions photo_sessions, int?id)
+        public ActionResult Create([Bind(Include = "id,photographer_id,client_id,city_id,TypeID,session_date,session_time,status,created_at,howMany,pricing_id,theDescription,session_minutes,phone")] photo_sessions photo_sessions, int? id)
         {
 
             if (ModelState.IsValid)
@@ -180,10 +213,24 @@ namespace sight.Controllers
                 photo_sessions.photographer_id = (int)id;
                 photo_sessions.created_at = DateTime.Now;
 
-
-                db.photo_sessions.Add(photo_sessions);
+               db.photo_sessions.Add(photo_sessions);
                 db.SaveChanges();
-                return RedirectToAction("CreateFenish");
+                int photoSessionsID = db.photo_sessions.OrderByDescending(a => a.id).FirstOrDefault(s => s.client_id == iduser).id;
+                Session["type"] = photo_sessions.TypeID;
+                Session["PhotographerID"] = (int)id;
+                Session["City"] = photo_sessions.city_id;
+                Session["Time"] = photo_sessions.session_time;
+                Session["date"] = photo_sessions.session_date;
+                Session["user"] = photo_sessions.client_id;
+                Session["phone"] = photo_sessions.phone;
+
+                Session["theDescription"] = photo_sessions.theDescription;
+                Session["howMany"] = photo_sessions.howMany;
+                Session["created_at"] = photo_sessions.created_at;
+                Session["status"] = photo_sessions.status;
+
+
+                return RedirectToAction("Edit", new { id = (int)photoSessionsID });
 
                 //return RedirectToAction("Edit", "clients", new { id = iduser });
             }
@@ -214,24 +261,44 @@ namespace sight.Controllers
             ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyType", photo_sessions.pricing_id);
             return View(photo_sessions);
         }
+     
+  
 
         // GET: photo_sessions1/Edit/5
         public ActionResult Edit(int? id)
         {
+            var x = User.Identity.GetUserId();
+            int iduser = db.clients.FirstOrDefault(a => a.user_id == x).id;
+            ViewBag.clientid = iduser;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //int photoSessionsID = db.photo_sessions.OrderByDescending(a=>a.id).FirstOrDefault(s => s.client_id == iduser).id;
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
+
             if (photo_sessions == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.city_id = new SelectList(db.cities, "id", "cityName", photo_sessions.city_id);
-            ViewBag.client_id = new SelectList(db.clients, "id", "user_id", photo_sessions.client_id);
-            ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", photo_sessions.photographer_id);
-            ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo_sessions.TypeID);
-            ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyType", photo_sessions.pricing_id);
+
+            int photographerId = (int)Session["PhotographerID"];
+            var photographyTypeID = (int)Session["type"];
+            var photographyCityID = (int)Session["City"];
+
+            var pricings = db.PhotographerPricings
+                .FirstOrDefault(p => p.PhotographerID == photographerId && p.PhotographyTypeID == photographyTypeID);
+
+            ViewBag.PriceOneHour = pricings.PriceOneHour;
+            ViewBag.PriceOneAndHalfHour = pricings.PriceOneAndHalfHour;
+            ViewBag.PriceTwoHours = pricings.PriceTwoHours;
+
+
+            var pricingList = new List<PhotographerPricing> { pricings };
+            ViewBag.pricing_id = new SelectList(pricingList, "ID", "PriceOneHour", photo_sessions.pricing_id);
+
+        
             return View(photo_sessions);
         }
 
@@ -240,19 +307,32 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,photographer_id,client_id,city_id,TypeID,session_date,session_time,status,created_at,howMany,theDescription,pricing_id")] photo_sessions photo_sessions)
+        public ActionResult Edit([Bind(Include = "id,photographer_id,client_id,city_id,TypeID,session_date,session_time,status,created_at,howMany,theDescription,pricing_id,session_minutes")] photo_sessions photo_sessions, int? id, string minutes)
         {
+
+
             if (ModelState.IsValid)
             {
+                photo_sessions.session_minutes = minutes;
+                photo_sessions.photographer_id = (int)Session["PhotographerID"];
+                photo_sessions.city_id = (int)Session["City"];
+                photo_sessions.TypeID = (int)Session["type"];
+
+                photo_sessions.session_time = (TimeSpan)Session["Time"];
+                photo_sessions.session_date = (DateTime)Session["date"];
+                photo_sessions.client_id = (int)Session["user"];
+                photo_sessions.phone = Session["phone"].ToString();
+
+                photo_sessions.theDescription = Session["theDescription"].ToString();
+                photo_sessions.howMany = (int)Session["howMany"];
+                photo_sessions.created_at = (DateTime)Session["created_at"] ;
+                photo_sessions.status = (bool)Session["status"];
+
                 db.Entry(photo_sessions).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Clients");
             }
-            ViewBag.city_id = new SelectList(db.cities, "id", "cityName", photo_sessions.city_id);
-            ViewBag.client_id = new SelectList(db.clients, "id", "user_id", photo_sessions.client_id);
-            ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", photo_sessions.photographer_id);
-            ViewBag.TypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo_sessions.TypeID);
-            ViewBag.pricing_id = new SelectList(db.PhotographerPricings, "ID", "PhotographyType", photo_sessions.pricing_id);
+         
             return View(photo_sessions);
         }
 

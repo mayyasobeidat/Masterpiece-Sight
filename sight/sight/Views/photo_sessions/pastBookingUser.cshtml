@@ -1,0 +1,44 @@
+﻿@model IEnumerable<sight.Models.photo_sessions>
+
+@{
+    Layout = null;
+}
+
+
+@foreach (var item in Model)
+{
+    <hr />
+    <table class="table-bordered table table-hover table-responsive">
+        <tr>
+            <th>
+                Date:
+            </th>
+            <td>
+                @String.Format("{0:MM/dd/yyyy}", item.session_date)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Time of day:
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.session_time)
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Requested photographer:
+            </th>
+            <td>
+                <a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographer.id)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                @Html.ActionLink("Details", "Details", new { id = item.id })
+            </td>
+        </tr>
+    </table>
+}
