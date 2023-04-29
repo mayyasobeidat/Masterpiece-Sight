@@ -73,10 +73,10 @@ namespace sight.Controllers
         // GET: photographersProfile/Edit/5
         public ActionResult Edit(int? id)
         {
-
             var x = User.Identity.GetUserId();
-            id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+            id = db.photographers.FirstOrDefault(a => a.user_id == x)?.id;
             ViewBag.phoID = id;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -85,13 +85,30 @@ namespace sight.Controllers
             photographer photographer = db.photographers.Find(id);
             Session["coverPhoto"] = photographer.coverPhoto;
             Session["profilePhoto"] = photographer.profilePhoto;
+            Session["create"] = photographer.created_at;
+            Session["is_hidden"] = photographer.is_hidden;
             if (photographer == null)
             {
                 return HttpNotFound();
             }
+
+            // Add the values you want to display to ViewBag
+            var subscription = db.Subscriptions
+                .Where(s => s.PhotographerId == id)
+                .OrderByDescending(s => s.ID)
+                .FirstOrDefault();
+            if (subscription != null)
+            {
+                ViewBag.SubscriptionStartDate = subscription.startDate;
+                ViewBag.SubscriptionEndDate = subscription.endDate;
+                ViewBag.DaysRemaining = (subscription.endDate - DateTime.Now)?.Days;
+            }
+
             ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", photographer.user_id);
+
             return View(photographer);
         }
+
 
         // POST: photographersProfile/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -103,6 +120,9 @@ namespace sight.Controllers
 
             photographer.profilePhoto = Session["profilePhoto"].ToString();
             photographer.coverPhoto = Session["coverPhoto"].ToString();
+            photographer.created_at = (DateTime)Session["create"];
+            photographer.is_hidden = (bool)Session["is_hidden"];
+
             if (ModelState.IsValid)
             {
                 string imgPath = "";
@@ -154,6 +174,7 @@ namespace sight.Controllers
                 db.PhotographerPricings.Add(photographerPricings);
                 db.PhotographerTypes.Add(photographerType);
                 db.SaveChanges();
+                TempData["alertMessageSubscription"] = "We have chosen hypothetical prices for your photo sessions in line with the current market\r\nYou can adjust these prices as desired.\r\n";
 
                 return RedirectToAction("Edit", "photographersProfile");
             }

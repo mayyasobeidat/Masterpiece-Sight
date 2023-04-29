@@ -35,6 +35,48 @@ namespace sight.Controllers
             return View(comments.ToList());
 
         }
+        public ActionResult Accept(int? id)
+        {
+            var comment = db.comments.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            comment.is_approved = true;
+            db.Entry(comment).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Edit", "photographersProfile"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+        public ActionResult Hide(int? id)
+        {
+            var comment = db.comments.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            comment.is_approved = false;
+            db.Entry(comment).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Edit", "photographersProfile"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+        
+
+        public ActionResult feedbackPhot()
+        {
+
+            var userId = User.Identity.GetUserId(); // 
+            int iduser = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
+
+            var comments = db.comments
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Where(p => p.photographer_id == iduser);
+
+            return View(comments.ToList());
+
+        }
+
         // GET: comments/Details/5
         public ActionResult Details(int? id)
         {

@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
+using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using sight.Models;
 using static System.Collections.Specialized.BitVector32;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace sight.Controllers
 {
@@ -16,12 +21,28 @@ namespace sight.Controllers
     {
         private sightEntities db = new sightEntities();
 
-        // GET: photo_sessions1
+        // GET: photo_sessions
         public ActionResult Index()
         {
             var photo_sessions = db.photo_sessions.Include(p => p.city).Include(p => p.client).Include(p => p.photographer).Include(p => p.PhotographyType).Include(p => p.PhotographerPricing);
             return View(photo_sessions.ToList());
         }
+
+
+        public ActionResult Notification(int? id)
+        {
+            var x = User.Identity.GetUserId();
+            id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+            ViewBag.phoID = id;
+
+            int PhoID = @ViewBag.phoID;
+
+            int newBookingCount = db.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.session_date >= DateTime.Today).Count();
+            ViewBag.newBookingCount = newBookingCount;
+            return View();
+
+        }
+
 
         public ActionResult CreateFenish()
         {
@@ -67,6 +88,25 @@ namespace sight.Controllers
         }
 
         public ActionResult BookingPhotographer()
+        {
+
+            var userId = User.Identity.GetUserId(); // 
+            int idPho = db.photographers.FirstOrDefault(a => a.user_id == userId).id;
+            var today = DateTime.Today;
+            var photo_sessions = db.photo_sessions
+                            .Include(p => p.city)
+                            .Include(p => p.client)
+                            .Include(p => p.photographer)
+                            .Include(p => p.PhotographyType)
+                            .Include(p => p.PhotographerPricing)
+                            .Where(p => p.photographer_id == idPho && p.status == false && p.session_date >= today);
+
+            return View(photo_sessions.ToList());
+
+
+        }
+
+        public ActionResult BookingPhotographerNoti()
         {
 
             var userId = User.Identity.GetUserId(); // 

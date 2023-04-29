@@ -1,0 +1,96 @@
+﻿@model IEnumerable<sight.Models.photo_sessions>
+
+@{
+    ViewBag.Title = "Notification";
+    Layout = null;
+}
+
+<style>
+    .button {
+        display: inline-block;
+        color: hsl(40, 100%, 20%);
+        text-decoration: none;
+        padding: 5px 10px;
+    }
+
+    [data-notifications] {
+        position: relative;
+    }
+
+        [data-notifications]:after {
+            content: attr(data-notifications);
+            position: absolute;
+            background: red;
+            font-size: 13px;
+            border-radius: 50%;
+            display: inline-block;
+            padding: 0.3em;
+            color: #f2f2f2;
+            padding: 0 7px;
+            right: -15px;
+            top: -15px;
+            /*  right: -5px;
+            top: -10px;*/
+        }
+
+    .fa-bell {
+        color: white;
+        font-size: 20px;
+    }
+
+    .tt a i, .navbar a:focus i {
+        font-size: 20px;
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:991px) {
+        .ttt ul {
+            display: block !important
+        }
+
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:481px) {
+        .ttt .dropdown ul {
+            left: -87px;
+        }
+    }
+</style>
+
+@*@if (@ViewBag.newBookingCount > 0)
+    {
+
+        <a style=" background-color: none !important; " href="/photo_sessions/BookingPhotographer" class="button" data-notifications="@ViewBag.newBookingCount"><i class="fa-solid fa-bell"></i></a>
+
+    }
+    else
+    {
+        <a style=" background-color: none !important; " href="/photo_sessions/BookingPhotographer"><i class="fa-solid fa-bell"></i></a>
+
+    }*@
+
+
+
+<nav class="navbar tt ttt" style="display:block !important">
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown py-3">
+            @if (@ViewBag.newBookingCount > 0)
+            {
+
+                <a style=" background-color: none !important; " href="/photo_sessions/BookingPhotographer" class="button" data-notifications="@ViewBag.newBookingCount"><i class="fa-solid fa-bell"></i></a>
+
+            }
+            else
+            {
+                <a style=" background-color: none !important; " href="/photo_sessions/BookingPhotographer"><i class="fa-solid fa-bell"></i></a>
+
+            }
+            <ul>
+
+                @Html.Action("BookingPhotographerNoti")
+
+
+            </ul>
+        </li>
+    </ul>
+
+</nav>

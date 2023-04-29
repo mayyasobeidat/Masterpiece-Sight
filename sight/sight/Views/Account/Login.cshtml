@@ -69,7 +69,7 @@ h1{
             }
 
                /* Switch Default */
-        .switch {
+/*        .switch {
             position: relative;
             display: inline-block;
             width: 30px;
@@ -119,7 +119,7 @@ h1{
             -ms-transform: translateX(13px);
             transform: translateX(13px);
         }
-
+*/
 
         .social-icon{
     background-color: white;
@@ -203,12 +203,13 @@ input[type="text"], input[type="password"], input[type="email"],button[type="sub
 
             <!-- Switch Default -->
             <div style="display: flex; align-items: center;">
+                @Html.ActionLink("Forgot Yore Password?", "ForgotPassword")
                 &nbsp;
-                <label class="switch">
+                @*<label class="switch">
                     @Html.CheckBoxFor(m => m.RememberMe, new { id = "rememberMeToggle" })
                     <span class="slider"></span>
                 </label> &nbsp;
-                <span style="color: #ccc;"> Remember me</span>
+                <span style="color: #ccc;"> Remember me</span>*@
             </div>
 
 

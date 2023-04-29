@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -32,6 +34,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet" />
+    <style>
+        @@media only screen and (min-device-width: 0px) and (max-device-width:991px) {
+
+            .profiles {
+                display:block!important;
+            }
+        }
+    </style>
 
 </head>
 <body>
@@ -46,6 +56,13 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
+                    <li class="dropdown profiles" style=" display: none;">
+                        <a href="#"><span>@User.Identity.GetUserName().Split('@')[0]</span> <i class="bi bi-chevron-down" style="font-size:10px"></i></a>
+                        <ul>
+                            <li>@Html.ActionLink("Dashboard", "Index", "AdminDashboard", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })</li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log Out</a></li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link scrollto active" })</li>
                     <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link scrollto" })</li>
                     <li><a class="nav-link scrollto" href="/Home/Index#services">Services</a></li>
@@ -79,7 +96,8 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link scrollto" })</li>
                 </ul>
 
-                <i class="bi bi-list mobile-nav-toggle"></i>
+                &nbsp; &nbsp; &nbsp;   &nbsp;<i class="bi bi-list mobile-nav-toggle"></i>
+
             </nav><!-- .navbar -->
             @Html.Partial("_LoginPartial")
 

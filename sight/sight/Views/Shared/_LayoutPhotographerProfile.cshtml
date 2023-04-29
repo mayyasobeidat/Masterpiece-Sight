@@ -82,22 +82,15 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        if (User.IsInRole("Photographer"))
-                        {
-                            <a href="#" class="warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"><i class="fas fa-plus-square"></i></a>
-
-                        }
-                        else if (User.IsInRole("Client"))
+               
+                       if (User.IsInRole("Client"))
                         {
                             <a href="@Url.Action("Create", "photo_sessions", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
                                 <i class="fas fa-plus-square"></i>
                             </a>
 
                         }
-                        else if (User.IsInRole("Admin"))
-                        {
-                            <a href="#" class="warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"><i class="fas fa-plus-square"></i></a>
-                        }
+               
                     }
                     else
                     {
@@ -126,8 +119,8 @@
                     <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Profile</span></a></li>
                     <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
                     <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Gallery</span></a></li>
-                    <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Reviews</span></a></li>
-                    <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+                    <li><a href="#comment" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+                    <li><a href="#testimonials" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Reviews</span></a></li>
                 </ul>
             </nav><!-- .nav-menu -->
         </div>

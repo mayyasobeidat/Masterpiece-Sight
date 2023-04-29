@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using sight.Models;
 
 namespace sight.Controllers
@@ -17,7 +19,11 @@ namespace sight.Controllers
         // GET: photos
         public ActionResult Index()
         {
-            var photos = db.photos.Include(p => p.photographer).Include(p => p.PhotographyType1);
+            var x = User.Identity.GetUserId();
+            int iduser = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+            ViewBag.photographersID = iduser;
+
+            var photos = db.photos.Include(p => p.photographer).Include(p => p.PhotographyType1).Where(p => p.photographer_id == iduser);
             return View(photos.ToList());
         }
 
@@ -37,9 +43,15 @@ namespace sight.Controllers
         }
 
         // GET: photos/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id");
+            var x = User.Identity.GetUserId();
+            int iduser = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+            ViewBag.photographersID = iduser;
+
+
+
+            ViewBag.photographerID = new SelectList(db.photographers, "id", "FullName");
             ViewBag.photographyType = new SelectList(db.PhotographyTypes, "TypeID", "TypeName");
             return View();
         }
@@ -49,16 +61,34 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,photographer_id,photo_url,created_at,photographyType,title")] photo photo)
+        public ActionResult Create([Bind(Include = "id,photographer_id,photo_url,created_at,photographyType,title")] photo photo, HttpPostedFileBase photo_url, int? id)
         {
             if (ModelState.IsValid)
             {
+                var x = User.Identity.GetUserId();
+                int iduser = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+                ViewBag.photographersID = iduser;
+
+                photo.photographer_id = iduser;
+                photo.created_at = DateTime.Now;
+
+
+                string imgPath = "";
+                if (photo_url != null)
+                {
+               
+                    imgPath = Path.GetFileName(photo_url.FileName);
+                    photo_url.SaveAs(Path.Combine(Server.MapPath("~/assetsUser/img/portfolio/") + photo_url.FileName));
+                }
+
+                photo.photo_url = imgPath;
+
                 db.photos.Add(photo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", photo.photographer_id);
+            ViewBag.photographerID = new SelectList(db.photographers, "id", "FullName", photo.photographer_id);
             ViewBag.photographyType = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo.photographyType);
             return View(photo);
         }

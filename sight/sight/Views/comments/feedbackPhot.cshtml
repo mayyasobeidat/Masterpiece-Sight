@@ -1,0 +1,59 @@
+﻿@model IEnumerable<sight.Models.comment>
+
+@{
+    Layout = null;
+}
+
+
+@foreach (var item in Model)
+{
+    <hr />
+    <table class="table-bordered table table-hover table-responsive">
+
+        <tr>
+            <th>
+                Comment:
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.comment1)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Created at:
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Photographer:
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.client.fullName)
+            </td>
+
+        </tr>
+
+
+        <tr>
+            <td colspan="2">
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+
+                @if (!item.is_approved)
+                {
+                    @Html.ActionLink("Accept", "Accept", new { id = item.id }, new { @class = "btn btn-success" })
+
+                }
+                else if (item.is_approved)
+                {
+                   @Html.ActionLink("Hide", "Hide", new { id = item.id }, new { @class = "btn btn-light" }) 
+
+                }
+
+            </td>
+        </tr>
+    </table>
+}

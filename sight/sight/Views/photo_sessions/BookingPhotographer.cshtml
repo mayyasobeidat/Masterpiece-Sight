@@ -1,59 +1,135 @@
 ﻿@model IEnumerable<sight.Models.photo_sessions>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
 
-@foreach (var item in Model)
-{
-    <hr />
-    <table class="table-bordered table table-hover table-responsive">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.session_date)
-            </th>
-            <td>
-                @String.Format("{0:MM/dd/yyyy}", item.session_date)
-            </td>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.session_time)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.session_time)
-            </td>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.city.cityName)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.city.cityName)
-            </td>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.client.fullName)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.client.fullName)
-            </td>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
-        </tr>
-    </table>
-}
+
+<style>
+    .details {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+    .bbb {
+        background-image: url("conn.png");
+        background-size: cover;
+    }
+
+    .bookCard {
+        width: 60%;
+        padding: 4.5%;
+    }
+
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+</style>
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+    <div class="container">
+
+
+        <section class="section profile">
+
+
+
+            <div class="row d-flex align-items-center justify-content-center">
+
+                <div class="card bookCard">
+
+
+
+                    <div id="form3">
+
+                        <h2>New Bookings</h2>
+
+
+                        
+
+
+                        @foreach (var item in Model)
+                        {
+                            <hr />
+                            <table class="table-bordered table table-hover table-responsive">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.session_date)
+                                    </th>
+                                    <td>
+                                        @String.Format("{0:MM/dd/yyyy}", item.session_date)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.session_time)
+                                    </th>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.session_time)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.city.cityName)
+                                    </th>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.city.cityName)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.client.fullName)
+                                    </th>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.client.fullName)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
+                                    </th>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+<!-- End #main -->
+
+

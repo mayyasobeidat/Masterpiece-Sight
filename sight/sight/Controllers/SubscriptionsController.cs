@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -69,10 +70,7 @@ namespace sight.Controllers
             int id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
             ViewBag.photographerid = id;
 
-            //int userId = ViewBag.photographerid ; 
-            //var Subscriptions = db.Subscriptions
-            //    .Where(p => p.PhotographerId == userId)
-            //    .FirstOrDefault(a => a.PhotographerId == userId).ID;
+        
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,11 +81,7 @@ namespace sight.Controllers
             if (subscription == null)
             {
                 return HttpNotFound();
-            }
-            subscription.endDate = subscription.startDate?.AddMonths(1) ?? DateTime.Now.AddMonths(1);
-            subscription.Price = 100;
-            subscription.status = false;
-            ViewBag.prices = subscription.Price;
+            }      
             ViewBag.PhotographerId = new SelectList(db.photographers, "id", "user_id", subscription.PhotographerId);
             return View(subscription);
         }
@@ -97,54 +91,30 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,PhotographerId,startDate,endDate,Price,theCounter,status,cardNumber,cvv,cardExpiry,cardName")] Subscription subscription)
+        public ActionResult Edit([Bind(Include = "ID,PhotographerId,startDate,endDate,Price,theCounter,status,cardNumber,cvv,cardExpiry,cardName")] Subscription subscription,string Sub)
         {
             if (ModelState.IsValid)
             {
-                //subscription.startDate = DateTime.Now;
-                subscription.endDate = subscription.startDate?.AddMonths(1) ?? DateTime.Now.AddMonths(1);
-                subscription.Price = 100;
-                subscription.status = false;
-                ViewBag.prices = subscription.Price;
+                // تحديث حالة المصور بعد الدفع
+                var photographer = db.photographers.Find(subscription.PhotographerId);
+                photographer.is_hidden = false;
+                db.Entry(photographer).State = EntityState.Modified;
 
-                //if (subscription.endDate.HasValue && subscription.startDate.HasValue && (subscription.endDate.Value - subscription.startDate.Value).Days == 0)
-                //{
-                //    subscription.status = false;
-                //    ViewBag.DivDisplayStyle = "";
 
-                //}
-                //else
-                //{
-                //    subscription.status = true;
-                //    ViewBag.DivDisplayStyle = "display:none;";
-
-                //}
-
-                //if (subscription.status == false)
-                //{
-                //    ViewBag.DivDisplayStyle = "";
-
-                //}
-                //else if (subscription.status == true)
-                //{
-                //    ViewBag.DivDisplayStyle = "display:none;";
-
-                //}
-                if (subscription.endDate < DateTime.Now)
-                {
-                    subscription.status = false;
+                
+                if (Sub == "one")
+                { 
+                    subscription.Price = 50;
+                    subscription.endDate = subscription.startDate?.AddMonths(1) ?? DateTime.Now.AddMonths(1);
                 }
-                if (subscription.startDate >= DateTime.Now && subscription.endDate >= DateTime.Now)
-                {
-                    subscription.status = true;
-                }
-                if (subscription.startDate >= DateTime.Now)
-                {
-                    subscription.status = false;
+                else if (Sub == "three")
+                { 
+                    subscription.Price = 125;
+                    subscription.endDate = subscription.startDate?.AddMonths(3) ?? DateTime.Now.AddMonths(3);
                 }
 
 
-                db.Entry(subscription).State = EntityState.Modified;
+                db.Entry(subscription).State = EntityState.Added;
                 db.SaveChanges();
                 return RedirectToAction("Edit", "photographersProfile");
             }

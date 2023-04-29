@@ -60,8 +60,8 @@ namespace sight
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "769357665794-5tda7cfahdm7l50q05mad8htn6pkr8jg.apps.googleusercontent.com",
-                ClientSecret = "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"
+                ClientId = "740540648192-mi5st3e2uh38tehsimdboiidob3p285k.apps.googleusercontent.com",
+                ClientSecret = "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"
             });
         }
     }

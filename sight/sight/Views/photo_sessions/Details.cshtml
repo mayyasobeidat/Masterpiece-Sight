@@ -5,79 +5,169 @@
     Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>photo_sessions</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.session_date)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.session_date)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.session_time)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.session_time)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.status)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.status)
-        </dd>
+<style>
+    .details {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.created_at)
-        </dt>
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-        <dd>
-            @Html.DisplayFor(model => model.created_at)
-        </dd>
+    .bbb {
+        background-image: url("conn.png");
+        background-size: cover;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.city.cityName)
-        </dt>
+    .bookCard {
+        width: 60%;
+        padding: 4.5%;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.city.cityName)
-        </dd>
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.client.user_id)
-        </dt>
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.client.user_id)
-        </dd>
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.photographer.user_id)
-        </dt>
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+</style>
 
-        <dd>
-            @Html.DisplayFor(model => model.photographer.user_id)
-        </dd>
+<main id="main" class="main" style="padding-top: 60px;">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
-        </dt>
+    <div class="container">
 
-        <dd>
-            @Html.DisplayFor(model => model.PhotographyType.TypeName)
-        </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <section class="section profile">
+
+
+
+            <div class="row d-flex align-items-center justify-content-center">
+
+                <div class="card bookCard">
+
+
+
+                    <div id="form3">
+
+                        <h2>New Booking</h2>
+
+
+
+
+                        <div>
+                            <hr />
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.session_date)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.session_date)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.session_time)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.session_time)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.status)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.status)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.created_at)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.created_at)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.city.cityName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.city.cityName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.client.user_id)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.client.user_id)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.photographer.user_id)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.photographer.user_id)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.PhotographyType.TypeName)
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+<!-- End #main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -106,12 +106,53 @@
         </div>
     </section>
 
+    <style>
+        .boxx {
+            background: rgba(0, 0, 0, 0.16);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5.7px);
+            -webkit-backdrop-filter: blur(5.7px);
+        }
+    </style>
+
+    <div class="container">
+        <div class="rounded-top p-4 boxx">
+            @using (Html.BeginForm("SearchUser", "photographers"))
+            {
+                <div class="row g-4 d-flex align-items-center">
+
+
+
+                    <div class="col-sm-6 col-xl-6">
+
+                        @Html.TextBox("search", "", new { @class = "form-control visible-lg-inline-block bg-black border-0  text-light", type = "search", placeholder = "Search" })
+
+                    </div>
+
+                    <div class="col-sm-6 col-xl-6 d-flex flex-sm-row flex-column">
+
+                        <label>Search by : &nbsp; &nbsp;</label>
+                        <span> @Html.RadioButton("searchBut", "All", true, new { @class = "form-check-input bg-black" }) All &nbsp; &nbsp; </span>
+
+                        <span> @Html.RadioButton("searchBut", "FullName", new { @class = "form-check-input bg-black" }) Full Name &nbsp; &nbsp; </span>
+                        <span>
+                            @Html.RadioButton("searchBut", "PhoneNumber", new { @class = "form-check-input bg-black" })  Phone &nbsp; &nbsp;
+                        </span>
+                        <span>  @Html.RadioButton("searchBut", "Email", new { @class = "form-check-input bg-black" })  E-mail &nbsp; &nbsp;</span>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
     <div class="container">
         <div class="row pt-5 m-auto">
 
 
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Where(p => p.accept && !p.is_hidden))
             {
 
 
@@ -166,8 +207,8 @@
 
 
                             @*<a href="#" class="btn btn-warning">
-            Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
-        </a>*@
+                            Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
+                        </a>*@
                             @*<a href="#" class="btn btn-outline-warning">View Photos and Reviews</a>*@
                             @Html.ActionLink("View Photos and Reviews", "PhotographerProfile", new { id = item.id }, new { @class = "btn btn-outline-warning" })
 

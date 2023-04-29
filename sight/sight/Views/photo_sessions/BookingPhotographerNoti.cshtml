@@ -1,0 +1,24 @@
+﻿@model IEnumerable<sight.Models.photo_sessions>
+
+@{
+    Layout = null;
+}
+
+
+
+
+@foreach (var item in Model.OrderBy(x => x.created_at))
+{
+
+    <li>
+
+        @Html.ActionLink(
+     $"{Html.DisplayFor(modelItem => item.client.fullName)} - {string.Format("{0:MM/dd/yyyy}", item.session_date)}",
+     "Details",
+     new { id = item.id })
+
+
+
+    </li>
+}
+

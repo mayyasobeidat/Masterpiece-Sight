@@ -74,16 +74,16 @@
                             <div class="col-lg-4 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up">
                                 <div class="count-box">
                                     <i class="bi bi-emoji-smile"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-                                    <p><strong>Happy Clients</strong> consequuntur quae</p>
+                                    <span data-purecounter-start="0" data-purecounter-end="@ViewBag.clientsCount" data-purecounter-duration="1" class="purecounter"></span>
+                                    <p><strong>Happy Clients</strong> @*consequuntur quae*@</p>
                                 </div>
                             </div>
 
                             <div class="col-lg-4 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="100">
                                 <div class="count-box">
                                     <i class="bi bi-journal-richtext"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-                                    <p><strong>Projects</strong> adipisci atque cum quia aut</p>
+                                    <span data-purecounter-start="0" data-purecounter-end="@ViewBag.sessionsCount" data-purecounter-duration="1" class="purecounter"></span>
+                                    <p><strong>Photo sessions</strong> @*adipisci atque cum quia aut*@</p>
                                 </div>
                             </div>
 
@@ -153,31 +153,9 @@
 
 <!-- End Portfolio Section -->
 <!-- End Portfolio Section -->
-<!-- ======= Services Section ======= -->
-<section id="services" class="services">
-    <div class="container">
-
-        <div class="section-title">
-            <h2>Reviews</h2>
-            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-            <div class="container px-5 my-5" id="">
-
-
-                @Html.Action("Create", "comments")
-
-
-            </div>
-
-        </div>
-
-    </div>
-</section>
-<!-- End Services Section -->
 <!-- ======= Testimonials Section ======= -->
-<section id="testimonials" class="testimonials section-bg">
+<section id="comment" class="services">
+
     <div class="container">
 
         <div class="section-title">
@@ -187,7 +165,7 @@
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
             <div class="swiper-wrapper">
-                @foreach (var item in Model.comments)
+                @foreach (var item in Model.comments.Where(x => x.is_approved))
                 {
 
 
@@ -211,40 +189,65 @@
         </div>
 
     </div>
-</section><!-- End Testimonials Section -->
-<!-- ======= Contact Section ======= -->
-<section id="contact" class="contact">
+</section>
+<!-- End Testimonials Section -->
+<!-- ======= Services Section ======= -->
+<section id="testimonials" class="testimonials section-bg">
+
     <div class="container">
 
         <div class="section-title">
-            <h2>Contact</h2>
+            <h2>Add Review</h2>
             <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
 
-        <div class="row" data-aos="fade-in">
+        <div class="row">
+            <div class="container px-5 my-5" id="">
 
-            <div class="col-lg-5 d-flex align-items-stretch">
-                <div class="info">
-                    <div class="address">
-                        <i class="bi bi-geo-alt"></i>
-                        <h4>Location:</h4>
-                        <p>A108 Adam Street, New York, NY 535022</p>
-                    </div>
 
-                    <div class="email">
-                        <i class="bi bi-envelope"></i>
-                        <h4>Email:</h4>
-                        <p>info@example.com</p>
-                    </div>
+                @Html.Action("Create", "comments")
 
-                    <div class="phone">
-                        <i class="bi bi-phone"></i>
-                        <h4>Call:</h4>
-                        <p>+1 5589 55488 55s</p>
-                    </div>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1197.9730516335017!2d35.84455985797861!3d32.62632756995495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzLCsDM3JzM0LjciTiAzNcKwNTAnNDAuMyJF!5e0!3m2!1sen!2sus!4v1675959632268!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
-                    @*<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>*@
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- End Services Section -->
+<!-- ======= Contact Section ======= -->
+<!--<section id="contact" class="contact">
+<div class="container">
+
+    <div class="section-title">
+        <h2>Contact</h2>
+        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+    </div>
+
+    <div class="row" data-aos="fade-in">
+
+        <div class="col-lg-5 d-flex align-items-stretch">
+            <div class="info">
+                <div class="address">
+                    <i class="bi bi-geo-alt"></i>
+                    <h4>Location:</h4>
+                    <p>A108 Adam Street, New York, NY 535022</p>
                 </div>
+
+                <div class="email">
+                    <i class="bi bi-envelope"></i>
+                    <h4>Email:</h4>
+                    <p>info@example.com</p>
+                </div>
+
+                <div class="phone">
+                    <i class="bi bi-phone"></i>
+                    <h4>Call:</h4>
+                    <p>+1 5589 55488 55s</p>
+                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1197.9730516335017!2d35.84455985797861!3d32.62632756995495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzLCsDM3JzM0LjciTiAzNcKwNTAnNDAuMyJF!5e0!3m2!1sen!2sus!4v1675959632268!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>-->
+@*<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>*@
+<!--</div>
 
             </div>
 
@@ -280,4 +283,5 @@
         </div>
 
     </div>
-</section><!-- End Contact Section -->
+</section>-->
+<!-- End Contact Section -->

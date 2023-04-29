@@ -60,59 +60,60 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.subscription_type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.profilePhoto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.coverPhoto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.bio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.accept)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.is_hidden)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.age)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.instagram)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.facebook)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.twitter)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.linkedin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subscription_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.profilePhoto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.coverPhoto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.accept)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_hidden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.instagram)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.facebook)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.twitter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.linkedin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
 
 </table>

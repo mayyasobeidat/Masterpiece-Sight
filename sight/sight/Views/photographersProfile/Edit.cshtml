@@ -69,499 +69,550 @@
 
     <div class="container">
         <section class="section profile">
+        
             <div class="row">
                 <div class="col-xl-4">
 
-                    @{
-                        sight.Models.sightEntities dbb = new sight.Models.sightEntities();
-                        sight.Models.photo_sessions sessions = new sight.Models.photo_sessions();
 
-                        int PhoID = @ViewBag.phoID;
 
-                        int newBookingCount = dbb.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.session_date >= DateTime.Today).Count();
-                    }
 
-                    @if (newBookingCount > 0)
+
+                    <style>
+                        .active-status {
+                            color: #6ABF67; /* green */
+                        }
+
+                        .inactive-status {
+                            color: red; /* red */
+                        }
+
+                        .statuss-active {
+                            border: solid 5px #6abf67
+                        }
+
+                        .statuss-inactive {
+                            border: solid 5px red; /* red */
+                        }
+                    </style>
+
+
+
+
+
+
+                    @if (ViewBag.SubscriptionStartDate != null && ViewBag.SubscriptionEndDate != null && ViewBag.DaysRemaining != null && ViewBag.DaysRemaining >= 0)
                     {
 
-                        <div class="card">
-                            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                               <span>You Have a New Bookings @Html.ActionLink( ""+ newBookingCount +"" , "BookingPhotographer", "photo_sessions", null, new { @class = "btn btn-primary" }) </span>
+
+                        <div class="card profiless statuss-active">
+                            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center mmm">
+                                <p><b>Active</b> <i class="bi bi-circle-fill active-status"></i></p>
+
+                                <img src="~/assetsUser/img/@Model.profilePhoto" alt="Profile" class="rounded-circle mm">
+                                <a href="/photographers/PhotographerProfile/@Model.id"><h2>@Model.FullName</h2></a>
+                                <div class="social-links mt-2 m-3">
+                                    <a href="@Model.twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                                    <a href="@Model.facebook" class="facebook"><i class="bi bi-facebook"></i></a>
+                                    <a href="@Model.instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                                    <a href="@Model.linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                </div>
+                                <p>Days Remaining: <span data-purecounter-start="0" data-purecounter-end="@ViewBag.DaysRemaining" data-purecounter-duration="1" class="purecounter"></span></p>
 
                             </div>
                         </div>
-                        <br>
+
                     }
 
-                    <div class="card profiless">
-                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center mmm">
 
-                            <img src="~/assetsUser/img/@Model.profilePhoto" alt="Profile" class="rounded-circle mm">
-                            <a href="/photographers/PhotographerProfile/@Model.id"><h2>@Model.FullName</h2></a>
-                            <div class="social-links mt-2">
-                                <a href="@Model.twitter" class="twitter"><i class="bi bi-twitter"></i></a>
-                                <a href="@Model.facebook" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="@Model.instagram" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="@Model.linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    else
+                    {
+
+
+                        <div class="card profiless statuss-inactive">
+                            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center mmm ">
+                                <p><b>Inactive</b> <i class="bi bi-circle-fill inactive-status"></i></p>
+
+                                <img src="~/assetsUser/img/@Model.profilePhoto" alt="Profile" class="rounded-circle mm">
+                                <a href="/photographers/PhotographerProfile/@Model.id"><h2>@Model.FullName</h2></a>
+                                <div class="social-links mt-2">
+                                    <a href="@Model.twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                                    <a href="@Model.facebook" class="facebook"><i class="bi bi-facebook"></i></a>
+                                    <a href="@Model.instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                                    <a href="@Model.linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
+
+                    }
+
+
+
+
 
                     <br>
 
-                    <div class="card">
-                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <div>
-                                <h4 style="text-align:center">
-                                    We have chosen hypothetical prices for your photo sessions in line with the current market<br />
-                                    You can adjust these prices as desired.
-                                </h4>
+                    @if (ViewBag.SubscriptionStartDate != null && ViewBag.SubscriptionEndDate != null && ViewBag.DaysRemaining != null && ViewBag.DaysRemaining > 0)
+                    {
+                        <span></span>
+                    }
+
+                    else
+                    {
+                        <div class="card">
+                            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                                <div>
+                                    <h4 style="text-align:center">
+                                        Your status is now <span style="color:red">not visible </span>on our website because you have not paid the monthly subscription fee<br /><br />
+                                        Hurry up to show your customers
+                                    </h4>
+                                </div>
+                                @Html.Action("Pays")
                             </div>
+                        </div>
+                    }
+
+
+
+
+
+                    <br />
+
+
+
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 table-responsive">
+
+                            @if (TempData["alertMessageSubscription"] != null)
+                            {
+                                <div class="alert alert-success">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Added successfully!</strong> ..  @TempData["alertMessageSubscription"]
+                                </div>
+                            }
                             @Html.Action("Index", "PhotographerPricings")
 
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
                     <br>
-
                     <div class="card">
-                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <div>
-                                <h4 style="text-align:center">
-                                    Your status is now <span style="color:red">not visible </span>on our website because you have not paid the monthly subscription fee<br /><br />
-                                    Hurry up to show your customers
-                                </h4>
-                            </div>
-                            @Html.Action("Pays")
+                        <div class="card-body profile-card pt-4 table-responsive text-center">
+
+                            <b>Add Photos To Your Gallery</b>
+                            <p>
+                                @Html.ActionLink("Go", "Create", "photos", null, new { @class = "btn btn-warning" })
+                            </p>
+
                         </div>
                     </div>
+
+
+
                     <br>
                 </div>
 
-                <div class="col-xl-8">
 
-                    <div class="card">
-                        <div class="card-body pt-3">
-                            @*Bordered Tabs*@
-                            <ul class="nav nav-tabs nav-tabs-bordered">
 
-                                <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                                </li>
 
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking-Past">Previous Booking</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
-                                </li>
 
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content pt-2">
-
-
-                                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
-
-
-
-                                    @using (Html.BeginForm("Edit", "photographersProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        @Html.HiddenFor(model => model.id)
-
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control", style = "display:none;" })
-                                                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        //Profile Edit Form
-                                        <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <img src="~/assetsUser/img/@Model.profilePhoto" name="profilePhoto" alt="Profile" id="myImage">
-                                                <div class="pt-2">
-                                                    <input type="file" name="profilePhoto" class="custom-file-input" accept="image/*" id="myFileInput">
-                                                    @Html.ValidationMessageFor(model => model.profilePhoto, "", new { @class = "text-danger" })
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <script>
-                                            const fileInput = document.getElementById('myFileInput');
-                                            const imagePreview = document.getElementById('myImage');
-
-                                            fileInput.addEventListener('change', function () {
-                                                const file = this.files[0];
-
-                                                if (file) {
-                                                    const reader = new FileReader();
-                                                    reader.addEventListener('load', function () {
-                                                        imagePreview.src = URL.createObjectURL(file);
-                                                    });
-                                                    reader.readAsDataURL(file);
-                                                } else {
-                                                    imagePreview.src = 'default-image-source.jpg';
-                                                }
-                                            });
-
-                                        </script>
-
-
-
-
-
-
-
-
-
-                                        <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Cover Photo</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <img src="~/assetsUser/img/@Model.coverPhoto" alt="cover" id="myImageCover">
-                                                <div class="pt-2">
-                                                    <input type="file" name="coverPhoto" class="custom-file-input" accept="image/*" id="myFileInputCover">
-                                                    @Html.ValidationMessageFor(model => model.coverPhoto, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <script>
-                                            const fileInputC = document.getElementById('myFileInputCover');
-                                            const imagePreviewC = document.getElementById('myImageCover');
-
-                                            fileInputC.addEventListener('change', function () {
-                                                const file = this.files[0];
-
-                                                if (file) {
-                                                    const reader = new FileReader();
-                                                    reader.addEventListener('load', function () {
-                                                        imagePreviewC.src = URL.createObjectURL(file);
-                                                    });
-                                                    reader.readAsDataURL(file);
-                                                } else {
-                                                    imagePreview.src = 'default-image-source.jpg';
-                                                }
-                                            });
-
-                                        </script>
-
-
-
-
-
-
-
-
-
-
-
-
-                                        <div class="row mb-3">
-
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @value = Model.FullName } })
-                                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                @Html.TextAreaFor(model => model.bio, new { @class = "form-control", @rows = "5", @style = "height:100px;", @value = Model.bio })
-                                                @Html.ValidationMessageFor(model => model.bio, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control", @type = "number", @value = Model.age, @min = 0, @max = 100 } })
-                                                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
-
-                                            </div>
-                                        </div>
-
-
-
-
-                                        {
-                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
-                                            sight.Models.city Type = new sight.Models.city();
-                                            var dev = db.cities.ToList();
-
-
-                                            <div class="row mb-3">
-                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
-                                                <div class="col-md-4 col-lg-4">
-
-                                                    @foreach (var item in dev)
-                                                    {
-                                                        <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
-
-                                                    }
-                                                </div>
-                                                <div class="col-md-4 col-lg-4">
-
-                                                    @foreach (var item in Model.photographer_cities)
-                                                    {
-                                                        <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
-
-                                                    }
-                                                </div>
-
-                                            </div>
-                                        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                        <div class="row mb-3">
-                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })
-                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <label class="form-control">@User.Identity.Name</label>
-                                            </div>
-                                        </div>
-
-
-
-                                        {
-                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
-                                            sight.Models.PhotographyType Type = new sight.Models.PhotographyType();
-                                            var dev = db.PhotographyTypes.ToList();
-
-
-                                            <div class="row mb-3">
-                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
-                                                <div class="col-md-4 col-lg-4">
-
-                                                    @foreach (var item in dev)
-                                                    {
-                                                        <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
-
-                                                    }
-                                                </div>
-                                                <div class="col-md-4 col-lg-4">
-
-                                                    @foreach (var item in Model.PhotographerTypes)
-                                                    {
-                                                        <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
-
-                                                    }
-                                                </div>
-
-
-                                            </div>
-
-
-
-
-                                        }
-
-
-
-
-
-                                        @*<div class="row mb-3">
-                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
-                    <div class="col-md-8 col-lg-9">
-
-                        @foreach (var item in Model.PhotographerTypes)
+                    <div class="col-xl-8">
+                        @if (TempData["alertMessage"] != null)
                         {
-                            @item.PhotographyType.TypeName <span>&nbsp;</span>
-
+                            <div class="alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Success!</strong> @TempData["alertMessage"]
+                            </div>
                         }
-                    </div>
-                </div>*@
+                        <div class="card">
+                            <div class="card-body pt-3">
+                                @*Bordered Tabs*@
+                                <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                    <li class="nav-item">
+                                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking-Past">Previous Booking</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                    </li>
+
+                                </ul>
+
+                                <div class="tab-content pt-2">
+
+
+                                    <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
 
 
+                                        @using (Html.BeginForm("Edit", "photographersProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
 
-                                        <div class="row mb-3">
-                                            <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="@Model.twitter">
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            @Html.HiddenFor(model => model.id)
+
+                                            <div class="form-group">
+                                                <div class="col-md-10">
+                                                    @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control", style = "display:none;" })
+                                                    @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
-                                        </div>
+                                            //Profile Edit Form
+                                            <div class="row mb-3">
+                                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="~/assetsUser/img/@Model.profilePhoto" name="profilePhoto" alt="Profile" id="myImage">
+                                                    <div class="pt-2">
+                                                        <input type="file" name="profilePhoto" class="custom-file-input" accept="image/*" id="myFileInput">
+                                                        @Html.ValidationMessageFor(model => model.profilePhoto, "", new { @class = "text-danger" })
 
-                                        <div class="row mb-3">
-                                            <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="@Model.facebook">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row mb-3">
-                                            <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="@Model.instagram">
+
+                                            <script>
+                                                const fileInput = document.getElementById('myFileInput');
+                                                const imagePreview = document.getElementById('myImage');
+
+                                                fileInput.addEventListener('change', function () {
+                                                    const file = this.files[0];
+
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.addEventListener('load', function () {
+                                                            imagePreview.src = URL.createObjectURL(file);
+                                                        });
+                                                        reader.readAsDataURL(file);
+                                                    } else {
+                                                        imagePreview.src = 'default-image-source.jpg';
+                                                    }
+                                                });
+
+                                            </script>
+
+
+
+
+
+
+
+
+
+                                            <div class="row mb-3">
+                                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Cover Photo</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="~/assetsUser/img/@Model.coverPhoto" alt="cover" id="myImageCover">
+                                                    <div class="pt-2">
+                                                        <input type="file" name="coverPhoto" class="custom-file-input" accept="image/*" id="myFileInputCover">
+                                                        @Html.ValidationMessageFor(model => model.coverPhoto, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row mb-3">
-                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="@Model.linkedin">
+                                            <script>
+                                                const fileInputC = document.getElementById('myFileInputCover');
+                                                const imagePreviewC = document.getElementById('myImageCover');
+
+                                                fileInputC.addEventListener('change', function () {
+                                                    const file = this.files[0];
+
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.addEventListener('load', function () {
+                                                            imagePreviewC.src = URL.createObjectURL(file);
+                                                        });
+                                                        reader.readAsDataURL(file);
+                                                    } else {
+                                                        imagePreview.src = 'default-image-source.jpg';
+                                                    }
+                                                });
+
+                                            </script>
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="row mb-3">
+
+                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @value = Model.FullName } })
+                                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
+
+                                            <div class="row mb-3">
+                                                <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    @Html.TextAreaFor(model => model.bio, new { @class = "form-control", @rows = "5", @style = "height:100px;", @value = Model.bio })
+                                                    @Html.ValidationMessageFor(model => model.bio, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control", @type = "number", @value = Model.age, @min = 0, @max = 100 } })
+                                                    @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+
+
+
+
+                                            {
+                                                sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                                sight.Models.city Type = new sight.Models.city();
+                                                var dev = db.cities.ToList();
+
+
+                                                <div class="row mb-3">
+                                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
+                                                    <div class="col-md-4 col-lg-4">
+
+                                                        @foreach (var item in dev)
+                                                        {
+                                                            <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
+
+                                                        }
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4">
+
+                                                        @foreach (var item in Model.photographer_cities)
+                                                        {
+                                                            <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
+
+                                                        }
+                                                    </div>
+
+                                                </div>
+                                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="row mb-3">
+                                                <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })
+                                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <label class="form-control">@User.Identity.Name</label>
+                                                </div>
+                                            </div>
+
+
+
+                                            {
+                                                sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                                sight.Models.PhotographyType Type = new sight.Models.PhotographyType();
+                                                var dev = db.PhotographyTypes.ToList();
+
+
+                                                <div class="row mb-3">
+                                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                                    <div class="col-md-4 col-lg-4">
+
+                                                        @foreach (var item in dev)
+                                                        {
+                                                            <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
+
+                                                        }
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4">
+
+                                                        @foreach (var item in Model.PhotographerTypes)
+                                                        {
+                                                            <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
+
+                                                        }
+                                                    </div>
+
+
+                                                </div>
+
+
+
+
+                                            }
+
+
+
+
+
+                                            @*<div class="row mb-3">
+                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                        <div class="col-md-8 col-lg-9">
+
+                                            @foreach (var item in Model.PhotographerTypes)
+                                            {
+                                                @item.PhotographyType.TypeName <span>&nbsp;</span>
+
+                                            }
                                         </div>
+                                    </div>*@
 
-                                        <div class="text-center">
-                                            <input type="submit" value="Save Changes" class="btn btn-warning" />
 
+
+
+                                            <div class="row mb-3">
+                                                <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="twitter" type="text" class="form-control" id="Twitter" value="@Model.twitter">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="facebook" type="text" class="form-control" id="Facebook" value="@Model.facebook">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="instagram" type="text" class="form-control" id="Instagram" value="@Model.instagram">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="linkedin" type="text" class="form-control" id="Linkedin" value="@Model.linkedin">
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <input type="submit" value="Save Changes" class="btn btn-warning" />
+
+                                            </div>
+                                            //End Profile Edit Form
+
+
+
+
+                                        }
+
+
+
+                                    </div>
+
+                                    <div class="tab-pane fade pt-3" id="profile-booking">
+
+
+                                        @Html.Action("BookingPhotographerInProfile", "photo_sessions")
+                                    </div>
+
+                                    <div class="tab-pane fade pt-3" id="profile-booking-Past">
+
+
+                                        @Html.Action("PastBookingPhotographerInProfile", "photo_sessions")
+                                    </div>
+
+
+
+
+
+                                    <div class="tab-pane fade pt-3" id="profile-feedback">
+
+                                        @Html.Action("feedbackPhot", "comments")
+
+
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="tab-pane fade pt-3" id="profile-change-password">
+                                        @Html.Action("ChangePassword", "Manage")
+
+                                        @*Change Password Form
+                                <form>
+
+                                    <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="password" type="password" class="form-control" id="currentPassword">
                                         </div>
-                                        //End Profile Edit Form
+                                    </div>
 
+                                    <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                        </div>
+                                    </div>
 
+                                    <div class="row mb-3">
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                        </div>
+                                    </div>
 
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-warning">Change Password</button>
+                                    </div>
+                                </form> End Change Password Form*@
 
-                                    }
-
-
+                                    </div>
 
                                 </div>
 
-                                <div class="tab-pane fade pt-3" id="profile-booking">
-
-
-                                    @Html.Action("BookingPhotographerInProfile", "photo_sessions")
-                                </div>
-
-                                <div class="tab-pane fade pt-3" id="profile-booking-Past">
-
-
-                                    @Html.Action("PastBookingPhotographerInProfile", "photo_sessions")
-                                </div>
-
-
-
-
-
-                                <div class="tab-pane fade pt-3" id="profile-feedback">
-
-                                    @*feedback Form*@
-                                    <form>
-
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Feedback</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <table class="table-bordered table table-hover table-responsive">
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Comment</th>
-                                                        <th></th>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Ahmad</td>
-                                                        <td>Hi</td>
-                                                        <td><a href="#">view</a></td>
-
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-
-
-                                    </form>
-                                    End feedback
-
-                                </div>
-
-
-
-
-
-
-
-
-
-
-                                <div class="tab-pane fade pt-3" id="profile-change-password">
-                                    Change Password Form
-                                    <form>
-
-                                        <div class="row mb-3">
-                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="currentPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-warning">Change Password</button>
-                                        </div>
-                                    </form> End Change Password Form
-
-                                </div>
+                                @*End Bordered Tabs*@
 
                             </div>
-
-                            @*End Bordered Tabs*@
-
                         </div>
-                    </div>
 
-                </div>
+                    </div>
             </div>
         </section>
 

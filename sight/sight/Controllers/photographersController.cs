@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using sight.Models;
+using System.Net.Mail;
 
 namespace sight.Controllers
 {
@@ -19,7 +20,7 @@ namespace sight.Controllers
         // GET: photographers
         public ActionResult Index()
         {
-            var photographers = db.photographers.Include(p => p.AspNetUser);
+            var photographers = db.photographers.Include(p => p.AspNetUser).Include(p => p.Subscriptions);
             return View(photographers.ToList());
         }
         public ActionResult Indexx()
@@ -33,6 +34,15 @@ namespace sight.Controllers
             var photographers = db.photographers.Include(p => p.AspNetUser);
             return View(photographers.ToList());
         }
+        public ActionResult Photos()
+        {
+            var photos = db.photos.Include(p => p.photographer).Include(p => p.PhotographyType1);
+            return View(photos.ToList());
+        }
+
+
+
+
         public ActionResult Search(string search, string searchBut)
         {
             if (searchBut == "FullName")
@@ -62,6 +72,40 @@ namespace sight.Controllers
             }
         }
 
+        public ActionResult SearchUser(string search, string searchBut)
+        {
+            var currentDate = DateTime.Now;
+
+            if (searchBut == "FullName")
+            {
+                return View("photographers", db.photographers.Where(p => p.FullName.Contains(search)).Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate)).ToList());
+            }
+            else if (searchBut == "PhoneNumber")
+            {
+                return View("photographers", db.photographers.Where(p => p.PhoneNumber.Contains(search)).Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate)).ToList());
+            }
+            else if (searchBut == "All")
+            {
+                return View("photographers", db.photographers
+                    .Where(p => p.FullName.ToLower().Contains(search.ToLower())
+                            || p.PhoneNumber.ToLower().Contains(search.ToLower())
+                            || p.AspNetUser.Email.ToLower().Contains(search.ToLower()))
+                    .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
+                    .Include(p => p.AspNetUser)
+                    .ToList());
+            }
+            else if (searchBut == "Email")
+            {
+                return View("photographers", db.photographers.Include(p => p.AspNetUser).Where(p => p.AspNetUser.Email.Contains(search)).Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate)).ToList());
+            }
+            else
+            {
+                return View("photographers");
+            }
+        }
+
+
+
         public ActionResult Pays()
         {
             return View();
@@ -70,13 +114,28 @@ namespace sight.Controllers
         public ActionResult Accept(int? id)
         {
             var photographer = db.photographers.Find(id);
+
+            var subsID = db.Subscriptions.FirstOrDefault(a => a.PhotographerId == id).ID;
+            var subscription = db.Subscriptions.Find(subsID);
+
+            subscription.PhotographerId = (int)id;
+            subscription.startDate = DateTime.Now;
+            subscription.endDate = DateTime.Now.AddDays(7);
+            subscription.Price = 0;
+
             if (photographer == null)
             {
                 return HttpNotFound();
             }
             photographer.accept = true;
+            photographer.is_hidden = false;
+
+            //db.Entry(subscription).State = EntityState.Added;
+
+            db.Entry(subscription).State = EntityState.Modified;
             db.Entry(photographer).State = EntityState.Modified;
             db.SaveChanges();
+
             return RedirectToAction("Indexxx", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
         }
 
@@ -116,6 +175,35 @@ namespace sight.Controllers
             photographer.is_hidden = false;
             db.Entry(photographer).State = EntityState.Modified;
             db.SaveChanges();
+            return RedirectToAction("Index", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+
+
+        public ActionResult ActivateFree(int? id)
+        {
+            var photographer = db.photographers.Find(id);
+
+            var subsID = db.Subscriptions.FirstOrDefault(a => a.PhotographerId == id).ID;
+            var subscription = db.Subscriptions.Find(subsID);
+
+            subscription.PhotographerId = (int)id;
+            subscription.startDate = DateTime.Now;
+            subscription.endDate = DateTime.Now.AddDays(7);
+            subscription.Price = 0;
+
+            if (photographer == null)
+            {
+                return HttpNotFound();
+            }
+            photographer.is_hidden = false;
+
+            //db.Entry(subscription).State = EntityState.Added;
+
+            db.Entry(subscription).State = EntityState.Added;
+            db.Entry(photographer).State = EntityState.Modified;
+            db.SaveChanges();
+
             return RedirectToAction("Index", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
         }
 
@@ -159,41 +247,132 @@ namespace sight.Controllers
 
         public ActionResult photographers()
         {
-            var photographers = db.photographers.Include(p => p.AspNetUser);
-            return View(photographers.ToList());
+
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
+            var photographers = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
+                .ToList();
+
+            return View(photographers);
+
         }
+
+
+
+
         public ActionResult photographersInCity()
-        {          
+        {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
+
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersInIrbid()
         {
+
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersInAmman()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Amman"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersInJarash()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.photographer_cities)
                                 .Where(p => p.photographer_cities.Any(c => c.city.cityName == "Jarash"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
@@ -201,54 +380,150 @@ namespace sight.Controllers
 
         public ActionResult photographersPortrait()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Portrait"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersProduct()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Product"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersNewborn()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Newborn"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersFood()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Food"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersOccasions()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Occasions"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
 
         public ActionResult photographersLandscape()
         {
+            var currentDate = DateTime.Now;
+            var photographersCheck = db.photographers
+                .Include(p => p.AspNetUser)
+                .Where(p => p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now || p.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now).ToList();
+
+            foreach (var photographer in photographersCheck)
+            {
+                if (photographer.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now)
+                {
+                    photographer.is_hidden = true;
+                }
+            }
+
+            db.SaveChanges();
+
             var photographers = db.photographers
                                 .Include(p => p.PhotographerTypes)
                                 .Where(p => p.PhotographerTypes.Any(c => c.PhotographyType.TypeName == "Landscape"))
+                                .Where(p => p.Subscriptions.Any(s => s.endDate > currentDate && s.startDate < currentDate))
                                 .ToList();
             return View("photographersInCity", photographers);
         }
@@ -263,14 +538,44 @@ namespace sight.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            photographer photographer = db.photographers.Find(id);
+
+            var photographer = db.photographers.Find(id);
+
             if (photographer == null)
             {
                 return HttpNotFound();
             }
 
+            if (!photographer.accept || photographer.is_hidden)
+            {
+                return View("Error");
+            }
+
+            var sessionsCount = db.photo_sessions
+                .Include(p => p.photographer)
+                .Where(p => p.photographer_id == id && p.status)
+                .Count();
+            ViewBag.sessionsCount = sessionsCount;
+
+            var clientsCount = db.photo_sessions
+                .Where(p => p.photographer_id == id && p.status)
+                .Select(p => p.client_id)
+                .Distinct()
+                .Count();
+            ViewBag.clientsCount = clientsCount;
+
             return View(photographer);
         }
+
+        //public ActionResult sessionsCount(int? id)
+        //{
+        //    var count = db.photo_sessions
+        //               .Include(p => p.photographer)
+        //              .Where(p => p.photographer_id == id && p.status)
+        //              .Count();
+
+        //    return Content(count.ToString());
+        //}
 
 
         // GET: photographers/Details/5

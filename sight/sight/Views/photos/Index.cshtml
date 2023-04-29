@@ -2,57 +2,111 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.photo_url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created_at)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.photographer.user_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhotographyType1.TypeName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.photo_url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.photographer.user_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
 
-</table>
+@*<div class="row row-cols-1 row-cols-md-3 g-4">
+
+
+
+
+    @foreach (var item in Model)
+    {
+
+        <div class="col">
+            <div class="card">
+                <img src="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo_url)" class="card-img-top" alt="@Html.DisplayFor(modelItem => item.title)">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)</h5>
+                    <p class="card-text">@Html.ActionLink("Edit", "Edit", new { id = item.id }) | @Html.ActionLink("Delete", "Delete", new { id = item.id })</p>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>*@
+
+
+
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            @foreach (var item in Model.OrderByDescending(p => p.created_at))
+            {
+                <div class="col-lg-2 col-md-4 portfolio-item @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)">
+                    <div class="portfolio-wrap">
+                        <img src="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo_url)" class="img-fluid" alt="@Html.DisplayFor(modelItem => item.title)">
+                        <div class="portfolio-info">
+                            <!-- <h4>App 1</h4> -->
+                            <p>
+                                @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)
+                            </p>
+                            <p class="card-text">@Html.ActionLink("Edit", "Edit", new { id = item.id }) | @Html.ActionLink("Delete", "Delete", new { id = item.id })</p>
+
+                            <div class="portfolio-links">
+                                <a href="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo_url)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="@Html.DisplayFor(modelItem => item.title)"><i class="bx bx-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.photo_url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.created_at)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.photographer.user_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotographyType1.TypeName)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.photo_url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.photographer.user_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

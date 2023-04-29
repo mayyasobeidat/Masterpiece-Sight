@@ -2,67 +2,117 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
-<h2>Create</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>photo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.photographer_id, "photographer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("photographer_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.photographer_id, "", new { @class = "text-danger" })
+
+
+
+
+<style>
+    /*custom inpu file*/
+    .custom-file-input {
+        color: transparent;
+    }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: "▲ Upload Photo";
+            color: #fff;
+            display: inline-block;
+            background: #ffc107;
+            padding: 10px 22px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
+
+        .custom-file-input:focus {
+            outline: none !important;
+        }
+
+        .custom-file-input:active::before {
+            transform: scale(.9) translate(0px, 2px);
+            box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.20);
+        }
+</style>
+
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+
+
+
+    <div class="container">
+        <section class="section profile">
+
+            <div class="row">
+                @using (Html.BeginForm("Create", "photos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+                {
+                    @Html.AntiForgeryToken()
+
+
+                    <div class="row g-4">
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="container">
+
+                                <div class="row">
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                                    <div class="mb-3 col-sm-12 col-xl-3">
+                                        @Html.DropDownList("photographyType", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.photographyType, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="mb-3 col-sm-12 col-xl-3">
+                                        @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter a title" } })
+                                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+
+                                    </div>
+
+                                    <div class="mb-3 col-sm-12 col-xl-2">
+                                        <input type="file" onchange="uploadImage(this)" accept="image/*" class="custom-file-input" name="photo_url">
+
+                                    </div>
+                                    <div class="mb-3 col-sm-12 col-xl-2">
+                                        <input type="submit" value="Create" class="btn btn-warning" />
+                                    </div>
+                                    <div class="mb-3 col-sm-12 col-xl-2">
+                                        @Html.ActionLink("Back", "Edit", "photographersProfile")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                }
+
+            
+
+                @Html.Action("Index")
+
+
+
+
+
             </div>
-        </div>
+                    </section>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.photo_url, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.photo_url, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.photo_url, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.created_at, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.created_at, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.created_at, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.photographyType, "photographyType", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("photographyType", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.photographyType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+                        </div>
+</main>

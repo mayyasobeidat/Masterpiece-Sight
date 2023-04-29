@@ -496,7 +496,9 @@
                             <div class="profile-card">
                                 <img src="~/assetsUser/img/@photographerData.profilePhoto" alt="" />
                                 <div class="profile-details">
-                                    <h3>@photographerData.FullName</h3>
+                                    <h3>
+                                        <a href="/photographers/PhotographerProfile/@photographerData.id">@photographerData.FullName</a>
+                                    </h3>
                                     <p>This month it received @photographerBookings bookings</p>
                                     <div class="social-media-list">
                                         <a href="@photographerData.facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
