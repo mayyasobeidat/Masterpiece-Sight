@@ -231,6 +231,7 @@
 <!-- End Hero -->
 
 <main id="main">
+    <br /><br />
 
     <!-- ======= About Section ======= -->
     <section id="about">
@@ -245,7 +246,7 @@
                     Hello and welcome to our website!<br>
                     We created this site to bring photographers in our community and people who need their services together.
                     Our goal was to make it easy to find a trusted photographer and see their work, as well as to make communication and booking sessions easier.
-                    <br><br><a href="#about" style="color: #FEF445; text-decoration: none;">Get to know us more..</a>
+                    <br><br><a href="/Home/About" style="color: #FEF445; text-decoration: none;">Get to know us more..</a>
                 </p>
             </div>
             <div>
@@ -256,31 +257,23 @@
         </div>
     </section>
     <!-- End About Section -->
-    <!-- ======= Clients Section ======= -->
-    @*<section id="clients" class="clients">
-        <div class="container">
 
-            <div class="clients-slider swiper">
-                <div class="swiper-wrapper align-items-center">
-                    @foreach (var item in Model)
-                    {
-                        <div class="swiper-slide">
-                                <div class="icon-box">
-                                    <img src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)" width="100%">
-                                    <h4 class="text-center"><a href="">@Html.DisplayFor(modelItem => item.TypeName)</a></h4>
-                            </div>
-                        </div>
-                    }
 
-                    </div>
-                <div class="swiper-pagination"></div>
-            </div>
 
-        </div>
-    </section>*@
-    <!-- End Clients Section -->
+
+
+    <style>
+
+
+        .mm {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 278px;
+            object-fit: cover;
+        }
+    </style>
     <!-- ======= Services Section ======= -->
-
 
 
 
@@ -291,130 +284,132 @@
                 <h2>Services</h2>
                 <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">S</span>ervices</p>
             </div>
-            <div class="row">
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="icon-box">
-                        <img src="~/assetsUser/img/Portrait.jpg" width="100%">
-                        <h4><a href="">Portrait photography</a></h4>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="icon-box">
-                        <img src="~/assetsUser/img/Product.jpg" width="100%">
-                        <h4><a href="">Product Photography</a></h4>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="icon-box">
-                        <img src="~/assetsUser/img/Newborn.jpg" width="100%">
-                        <h4><a href="">Newborn Photography</a></h4>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="icon-box">
-                        <img src="~/assetsUser/img/Food.jpg" width="100%">
-                        <h4><a href="">Food Photography</a></h4>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="icon-box">
-                        <img src="~/assetsUser/img/Occasions.jpg" width="100%">
-                        <h4><a href="">Occasions Photography</a></h4>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="icon-box">
-                        <img src="~/assetsUser/img/Landscape.jpg" width="100%">
-                        <h4><a href="">Landscape Photography</a></h4>
-                    </div>
-                </div>
-
-            </div>
-
-            @*<div class="row">
-            <div class="col-6">
-                <h3 class="mb-3"></h3>
-            </div>
-
-            <div class="col-6 text-md-end">
-                <a class="btn btn-warning mb-3 me-1"
-                   href="#carouselExampleIndicators2" role="button"
-                   data-bs-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <a class="btn btn-warning mb-3 " href="#carouselExampleIndicators2"
-                   role="button" data-bs-slide="next">
-                    <i class="fa fa-arrow-right"></i>
-                </a>
-            </div>
-
-
-
-            <div class="col-12">
-                <div id="carouselExampleIndicators2" class="carousel slide"
-                     data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                @foreach (var item in Model.Take(3))
-                                {
-                                    <div class="col-md-4 mb-3">
-                                        <div class="card">
-                                            <img class="img-fluid" alt="100%x280"
-                                                 src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)">
-                                            <div class="card-body">
-                                                <h4 class="card-title">
-                                                    @Html.DisplayFor(modelItem => item.TypeName)
-                                                </h4>
-                                                <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                }
-
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            <div class="row">
-                                @foreach (var item in Model.Reverse().Take(3))
-                                {
-
-
-                                    <div class="col-md-4 mb-3">
-                                        <div class="card">
-                                            <img class="img-fluid" alt="100%x280"
-                                                 src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)">
-                                            <div class="card-body">
-                                                <h4 class="card-title">@Html.DisplayFor(modelItem => item.TypeName)</h4>
-                                                <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
         </div>
-    </section>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="mb-3 d-block w-100">
+                        <div class="container">
+                            <div class="container">
+                                <div class="container">
+
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="~/assetsUser/img/services.png" class="img-fluid rounded-start mm" alt="...">
+                                        </div>
+                                        <div class="col-md-8" style=" background-color: black; opacity: 0.5;">
+                                            <div class="card-body" style=" padding: 50px; color: white;">
+                                                <h2 class="card-title">Sight Services</h2><br />
+                                                <p class="card-text">We have the most skilled photographers specialized in all types of photography. You can now browse through the category you are looking for and find your perfect photographer.</p>
+                                                <p class="card-text"><small class="text-muted">Let us help you make memories and get creative at work</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var item in Model)
+                {
+
+
+
+
+                    <div class="carousel-item">
+                        <div class="mb-3 d-block w-100">
+                            <div class="container">
+                                <div class="container">
+                                    <div class="container">
+
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)" class="img-fluid rounded-start mm" alt="...">
+                                            </div>
+                                            <div class="col-md-8" style=" background-color: black; opacity: 0.5;">
+                                                <div class="card-body" style=" padding: 50px; color: white;">
+                                                    <h3 class="card-title">@Html.DisplayFor(modelItem => item.TypeName)</h3><br />
+                                                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                    <p class="card-text"><small class="text-muted">Let us help you make memories and get creative at work</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </section><br />
     <!-- End Services Section -->
+
+
+
+
+
+    @*<div >
+        <img src="~/assetsUser/img/line.png" width="100%" class="imgAbout">
+
+    </div>*@
+
+
+
+
+
+
+
+
     <!-- ======= Cta Section ======= -->
     <section id="cta" class="cta">
         <div class="container" data-aos="zoom-in">
 
             <div class="text-center">
-                <h3>Join Us Now</h3>
-                <p> Join us now and experience the ultimate photography platform. Connect with talented photographers, book unique shoots and bring your vision to life. Don't miss out on endless possibilities. Click the 'Join us' button below and become a part of our community today.</p>
-                <a class="cta-btn" href="#">Join us</a>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <h3>Join Us Now</h3>
+                    <p> Join us now and experience the ultimate photography platform. Connect with talented photographers, book unique shoots and bring your vision to life. Don't miss out on endless possibilities. Click the 'Join us' button below and become a part of our community today.</p>
+                    <a class="cta-btn" href="/Account/Register">Join us</a>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Photographer") || User.IsInRole("Client"))
+                    {
+                        <p> &nbsp;</p>
+                        <h3>We thank you for the decision to join us, and we hope that we will live up to your expectations 💛 </h3>
+                        <a>&nbsp;</a>
+                    }
+                    else if (User.IsInRole("Block"))
+                    {
+                        <p> &nbsp;</p>
+                        <h3>We hope you will correct what you did and put you on the banned list</h3>
+                        <a>&nbsp;</a>
+
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <h3>&nbsp;</h3>
+                        <p><br /><br /></p>
+                        <p><br /><br /></p>
+                    }
+
+                }
+
             </div>
 
         </div>
@@ -461,8 +456,8 @@
         <div class="container">
 
             <div class="section-title">
-                <h2>Team</h2>
-                <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">T</span>eam</p>
+                <h2>The Most Booked</h2>
+                <p style="color: #ddd;"><span style="color: #F2C511;">C</span>heck <span style="color: #F2C511;">o</span>ur <span style="color: #F2C511;">P</span>hotographers</p>
             </div>
 
 
@@ -490,7 +485,7 @@
                         if (photographerData != null)
                         {
                             var photographerBookings = db.photo_sessions
-                                .Where(p => p.photographer_id == photographer.PhotographerId && p.status && p.created_at >= monthAgo)
+                                .Where(p => p.photographer_id == photographer.PhotographerId && p.status == true && p.created_at >= monthAgo)
                                 .Count();
 
                             <div class="profile-card">
@@ -510,7 +505,7 @@
                             </div>
                         }
                     }
-                }       
+                }
             </div>
         </div>
 

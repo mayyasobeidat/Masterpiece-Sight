@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Block";
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+}
+
+
+
+
+
+
+
+
+<style>
+    .details {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+    .bbb {
+        background-image: url("conn.png");
+        background-size: cover;
+    }
+
+    .bookCard {
+        width: 60%;
+        padding: 4.5%;
+    }
+
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
+    }
+</style>
+
+<main id="main" class="main" style="padding-top: 60px;">
+
+    <div class="container">
+
+
+        <section class="section profile">
+
+
+
+            <div class="row d-flex align-items-center justify-content-center">
+
+                <div class="card bookCard">
+                    <h3>Your account has been banned.</h3>
+                    <h5>If you have any questions regarding this ban, you can contact us via our <a href="mailto:sight@photographer.net"  target="_blank"><b>Email</b></a> or via the <a href="/Home/Contact"  target="_blank"><b>contact</b></a> page</h5>
+
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+<!-- End #main -->

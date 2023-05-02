@@ -1,0 +1,27 @@
+﻿@model sight.Models.city
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>city</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cityName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -83,7 +83,7 @@
                                             <b>60<sub>min</sub></b>
                                         </div>
                                         <div>
-                                            @Html.EditorFor(model => model.PriceOneHour, new { htmlAttributes = new { @class = "form-control" } })
+                                            <input class="form-control" name="PriceOneHour" type="text" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value="@Model.PriceOneHour" placeholder="00.00" maxlength="10" />
                                             @Html.ValidationMessageFor(model => model.PriceOneHour, "", new { @class = "text-danger" })
                                         </div>
                                         <br />
@@ -96,7 +96,7 @@
                                             <b>90<sub>min</sub></b>
                                         </div>
                                         <div>
-                                            @Html.EditorFor(model => model.PriceOneAndHalfHour, new { htmlAttributes = new { @class = "form-control" } })
+                                            <input class="form-control" name="PriceOneAndHalfHour" type="text" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value="@Model.PriceOneAndHalfHour" placeholder="00.00" maxlength="10" />
                                             @Html.ValidationMessageFor(model => model.PriceOneAndHalfHour, "", new { @class = "text-danger" })
                                         </div>
                                         <br />
@@ -106,7 +106,7 @@
                                             <b>120<sub>min</sub></b>
                                         </div>
                                         <div>
-                                            @Html.EditorFor(model => model.PriceTwoHours, new { htmlAttributes = new { @class = "form-control" } })
+                                            <input class="form-control" name="PriceTwoHours" type="text" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value="@Model.PriceTwoHours" placeholder="00.00" maxlength="10" />
                                             @Html.ValidationMessageFor(model => model.PriceTwoHours, "", new { @class = "text-danger" })
                                         </div>
                                         <br />

@@ -58,7 +58,7 @@
 
         <div class="form-group text-start">
             <span>Start date</span>
-            @Html.TextBoxFor(model => model.startDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+            @Html.TextBoxFor(model => model.startDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") , @max = DateTime.Now.ToString("yyyy-MM-dd") })
             @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
         </div>
 
@@ -106,7 +106,6 @@
     <br />
 
     <div class="form-group d-flex flex-column">
-
         <input type="submit" value="Pay" class="btn btn-default bg-black text-white" />
     </div>
 }

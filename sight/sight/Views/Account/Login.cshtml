@@ -19,7 +19,7 @@
 
     .login{
     position: absolute;
-    top: 55%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     }
@@ -68,58 +68,7 @@ h1{
                 background-color: #ffc451;
             }
 
-               /* Switch Default */
-/*        .switch {
-            position: relative;
-            display: inline-block;
-            width: 30px;
-            height: 17px;
-        }
-
-            .switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-            .slider:before {
-                position: absolute;
-                content: "";
-                height: 13px;
-                width: 13px;
-                left: 2px;
-                bottom: 2px;
-                background-color: white;
-                -webkit-transition: .4s;
-                transition: .4s;
-            }
-
-        input:checked + .slider {
-            background-color: #ffc451;
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px #ffc451;
-        }
-
-        input:checked + .slider:before {
-            -webkit-transform: translateX(13px);
-            -ms-transform: translateX(13px);
-            transform: translateX(13px);
-        }
-*/
+  
 
         .social-icon{
     background-color: white;
@@ -172,6 +121,12 @@ input[type="text"], input[type="password"], input[type="email"],button[type="sub
         {
             @Html.AntiForgeryToken()
             <h1>Log In</h1>
+            if (TempData["DeletMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["DeletMessage"]
+                </div>
+            }
             <br>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div>
@@ -199,37 +154,83 @@ input[type="text"], input[type="password"], input[type="email"],button[type="sub
 
 
 
+            <style>
+                .checkbox-wrapper-41 {
+                    --size: 45px;
+                }
+
+                    .checkbox-wrapper-41 input[type="checkbox"] {
+                        -webkit-appearance: none;
+                        width: var(--size);
+                        height: calc(var(--size) / 2);
+                        background-color: #fff;
+                        border: 3px solid #222;
+                        border-radius: 30px 100px 100px 100px;
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                        outline: none;
+                        cursor: pointer;
+                        position: relative;
+                        transition: all 0.5s;
+                    }
+
+                        .checkbox-wrapper-41 input[type="checkbox"]::before {
+                            content: "";
+                            position: absolute;
+                            width: calc(var(--size) / 2);
+                            height: calc(var(--size) / 2);
+                            left: 0;
+                            top: 50%;
+                            transform: translateY(-50%) scale(0.7);
+                            border: 3px solid #222;
+                            border-radius: 30px 100px 100px 100px;
+                            background-color: #f2c511;
+                            box-sizing: border-box;
+                            transition: all 0.5s;
+                        }
+
+                        .checkbox-wrapper-41 input[type="checkbox"]:checked {
+                            background-color: #f2c511;
+                            border-radius: 100px 100px 30px 100px;
+                        }
+
+                            .checkbox-wrapper-41 input[type="checkbox"]:checked::before {
+                                left: 50%;
+                                background-color: #fff;
+                                border-radius: 100px 100px 30px 100px;
+                            }
+            </style>
+
+
 
 
             <!-- Switch Default -->
-            <div style="display: flex; align-items: center;">
-                @Html.ActionLink("Forgot Yore Password?", "ForgotPassword")
-                &nbsp;
-                @*<label class="switch">
-                    @Html.CheckBoxFor(m => m.RememberMe, new { id = "rememberMeToggle" })
-                    <span class="slider"></span>
-                </label> &nbsp;
-                <span style="color: #ccc;"> Remember me</span>*@
-            </div>
+    <div style="display: flex; align-items: center;">
+        <div class="checkbox-wrapper-41">
+
+            @Html.CheckBoxFor(m => m.RememberMe, new { id = "rememberMeToggle" })
+        </div>
+
+
+
+         <span style="color: #ccc;"> &nbsp;  Remember me</span>
+    </div>
 
 
         }
 
         <p style="color: #ccc;padding: 20px;">Don't have an account ? <a href="/Account/Register">Create Account</a></p>
+        @*@Html.ActionLink("Forgot Yore Password?", "ForgotPassword")*@
 
-        <p class="w-100 text-center" style="color:white;">&mdash; Or Sign In With &mdash;</p>
-        <div class="w-100">
-            <p class="social-media d-flex justify-content-center">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        <!--<p class="w-100 text-center" style="color:white;">&mdash; Or Sign In With &mdash;</p>
+    <div class="w-100">
+        <p class="social-media d-flex justify-content-center">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })-->
+        @*<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook-official"></span></a>
+        <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+        <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-google"></span></a>*@
 
-                @*<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook-official"></span></a>
-                <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-                <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-google"></span></a>*@
-
-            </p>
-        </div>
-
-
+        <!--</p>
+    </div>-->
         <!-- End Body-->
 
 

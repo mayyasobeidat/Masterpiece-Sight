@@ -1,0 +1,47 @@
+﻿@model sight.Models.city
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+    <h4>Add city</h4>
+    <hr />
+
+    
+
+
+
+<div class="row g-4">
+    <div class="col-sm-12 col-xl-12">
+        <div class="bg-secondary rounded h-100 p-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="form-group col-xl-10">
+                        @Html.EditorFor(model => model.cityName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter city name" } })
+                        @Html.ValidationMessageFor(model => model.cityName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-xl-2">
+                        <input type="submit" value="Create" class="btn btn-warning" />
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-12">
+        <div class="bg-secondary rounded h-100 p-4">
+
+
+                @Html.Action("Index")
+
+
+        </div>
+    </div>
+
+</div>

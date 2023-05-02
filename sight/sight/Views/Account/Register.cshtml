@@ -300,30 +300,10 @@
             </div>
         </section>
 
-        @*<section id="typeSubscriptions">
-            <div class="tile2">
-                <input type="radio" name="Subscriptions" id="oneMonth" value="oneMonth" required>
-                <label for="oneMonth" class="label2">
-                    <div class="fas"><img src="~/assetsUser/img/free.png" style="width:100%"></div>
-                    <h4 style="color: #fff; text-align: center;">1 Month</h4>
-                    <h6 style="color: #fff; text-align: center;"><b>75 JD</b><br /> every month</h6>
-
-                </label>
-            </div>
-            <div class="tile2">
-                <input type="radio" name="Subscriptions" id="threeMonth" value="threeMonth">
-                <label for="threeMonth" class="label2">
-                    <div class="fas"><img src="~/assetsUser/img/free.png" style="width:100%"></div>
-                    <h4 style="color: #fff; text-align: center;">3 Month</h4>
-                    <h6 style="color: #fff; text-align: center;"><b>200 JD</b><br /> every three month</h6>
-                </label>
-            </div>
-        </section>*@
 
 
 
-
-        @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "form-control" })
+        @Html.TextBoxFor(m => m.Email, new { type = "email", placeholder = "Email", @class = "form-control" })
         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Password" })
         @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -335,32 +315,32 @@
 </div>
 
 @*<script>
-    const photographerRadio = document.getElementById('Photographer');
-    photographerRadio.addEventListener('change', setVisibility);
+        const photographerRadio = document.getElementById('Photographer');
+        photographerRadio.addEventListener('change', setVisibility);
 
-    function setVisibility() {
-        const typeAccount = document.getElementById('typeAccount');
-        const typeSubscriptions = document.getElementById('typeSubscriptions');
-        const login = document.getElementsByClassName('login').item(0);
-        const mqMobile = window.matchMedia("(max-width: 480px)");
+        function setVisibility() {
+            const typeAccount = document.getElementById('typeAccount');
+            const typeSubscriptions = document.getElementById('typeSubscriptions');
+            const login = document.getElementsByClassName('login').item(0);
+            const mqMobile = window.matchMedia("(max-width: 480px)");
 
 
 
-        if (photographerRadio.checked) {
-            typeAccount.style.display = 'none';
-            typeSubscriptions.style.display = 'flex';
-            if (mqMobile.matches) {
-                login.style.top = '75%';
+            if (photographerRadio.checked) {
+                typeAccount.style.display = 'none';
+                typeSubscriptions.style.display = 'flex';
+                if (mqMobile.matches) {
+                    login.style.top = '75%';
+                }
+
+            } else {
+                typeAccount.style.display = 'flex';
+                typeSubscriptions.style.display = 'none';
             }
-
-        } else {
-            typeAccount.style.display = 'flex';
-            typeSubscriptions.style.display = 'none';
         }
-    }
 
 
-</script>*@
+    </script>*@
 
 
 

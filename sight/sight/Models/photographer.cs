@@ -44,6 +44,7 @@ namespace sight.Models
         public string twitter { get; set; }
         public string linkedin { get; set; }
         public string PhoneNumber { get; set; }
+        public string state { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

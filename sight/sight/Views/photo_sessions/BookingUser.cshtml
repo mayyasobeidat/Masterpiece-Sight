@@ -10,21 +10,30 @@
     <hr />
     <table class="table-bordered table table-hover table-responsive">
         <tr>
-            @if (item.status)
+            @if (item.caase == 2)
             {
                 <th style="background-color:limegreen">
                     Status:
                 </th>
                 <td style="background-color:limegreen">Accepted</td>
             }
-            else
+            else if (item.caase == 1)
             {
                 <th style="background-color: gold">
                     Status:
                 </th>
                 <td style="background-color: gold">Waiting</td>
-
             }
+            else if (item.caase == 3)
+            {
+                <th style="background-color: red">
+                    Status:
+                </th>
+                <td style="background-color: red">Rejected</td>
+            }
+
+
+
         </tr>
         <tr>
             <th>

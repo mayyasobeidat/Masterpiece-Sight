@@ -1,0 +1,219 @@
+﻿@model IEnumerable<sight.Models.photographer>
+
+@{
+    ViewBag.Title = "photographersInCity";
+    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+}
+
+
+
+<style>
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+    .card-custom {
+        overflow: hidden;
+        min-height: 450px;
+        box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
+    }
+
+    .card-custom-img {
+        height: 200px;
+        min-height: 200px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        border-color: inherit;
+        border: 3px solid #222225;
+    }
+
+        /* First border-left-width setting is a fallback */
+        .card-custom-img::after {
+            position: absolute;
+            content: '';
+            top: 161px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-top-width: 40px;
+            border-right-width: 0;
+            border-bottom-width: 0;
+            border-left-width: 545px;
+            border-left-width: calc(575px - 5vw);
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: inherit;
+        }
+
+    .card-custom-avatar img {
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
+        position: absolute;
+        top: 100px;
+        left: 1.25rem;
+        width: 100px;
+        height: 100px;
+        border: 3px solid #222225;
+    }
+
+    .cardButt {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background: #222225 !important;
+        padding: 30px 70px;
+    }
+
+    .mmm {
+        width: 100%;
+    }
+
+    .mm {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .section-title {
+        padding-bottom: 0;
+    }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+        .cardButt {
+            padding: 20px 20px;
+        }
+    }
+
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+        .cardButt {
+            padding: 20px 20px;
+        }
+    }
+</style>
+
+
+<main id="main">
+    <section id="contact" class="contact" style="padding-top:200px ; padding-bottom: 20px !important;">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Photographers</h2>
+                <p style="color: #ddd;"><span style="color: #F2C511;">C</span>hoose <span style="color: #F2C511;">Y</span>our <span style="color: #F2C511;">P</span>hotographer</p>
+            </div>
+        </div>
+    </section>
+    <style>
+        .boxx {
+            background: rgba(0, 0, 0, 0.16);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5.7px);
+            -webkit-backdrop-filter: blur(5.7px);
+        }
+    </style>
+
+    <div class="container">
+        <div class="rounded-top p-4 boxx">
+            @using (Html.BeginForm("SearchUser", "photographers"))
+            {
+                <div class="row g-4 d-flex align-items-center">
+
+
+
+                    <div class="col-sm-6 col-xl-6">
+
+                        @Html.TextBox("search", "", new { @class = "form-control visible-lg-inline-block bg-black border-0  text-light", type = "search", placeholder = "Search", @maxlength = "200" })
+
+                    </div>
+
+                    <div class="col-sm-6 col-xl-6 d-flex flex-sm-row flex-column">
+
+                        <label>Search by : &nbsp; &nbsp;</label>
+                        <span> @Html.RadioButton("searchBut", "All", true, new { @class = "form-check-input bg-black" }) All &nbsp; &nbsp; </span>
+
+                        <span> @Html.RadioButton("searchBut", "FullName", new { @class = "form-check-input bg-black" }) Full Name &nbsp; &nbsp; </span>
+                        <span>
+                            @Html.RadioButton("searchBut", "PhoneNumber", new { @class = "form-check-input bg-black" })  Phone &nbsp; &nbsp;
+                        </span>
+                        <span>  @Html.RadioButton("searchBut", "Email", new { @class = "form-check-input bg-black" })  E-mail &nbsp; &nbsp;</span>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row pt-5 m-auto">
+
+
+
+            @foreach (var item in Model.Where(p => p.accept && !p.is_hidden))
+            {
+
+
+                <div class="col-sm-6 col-md-6 col-lg-4 pb-3">
+                    <!-- Card code -->
+                    <div class="card card-custom" style="border: #b0b0b0 1px solid; height: 605px; overflow: hidden;">
+                        <div class="card-custom-img" style="background-image: url(@Url.Content("~/assetsUser/img/" + item.coverPhoto));"></div>
+                        <div class="card-custom-avatar container mmm">
+                            <img class="img-fluid mm" src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.profilePhoto)" alt="Avatar" />
+                        </div>
+                        <div class="card-body" style="overflow-y: auto; background: #222225;">
+                            <h4 class="card-title" style="color:#ddd;">
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </h4>
+                            <p class="card-text" style="color:#ddd;">
+                                @Html.DisplayFor(modelItem => item.bio)
+                            </p>
+                        </div>
+                        <div class="cardButt">
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (User.IsInRole("Photographer"))
+                                {
+                                    <a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>
+
+                                }
+                                else if (User.IsInRole("Client"))
+                                {
+                                    @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo_sessions", new { id = item.id }, new { @class = "btn btn-warning" })
+                                }
+                                else if (User.IsInRole("Admin"))
+                                {
+                                    <a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>
+                                }
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Login", "Account", new { id = item.id }, new { @class = "btn btn-warning" })
+                            }
+
+
+                            @*<a href="#" class="btn btn-warning">
+                                    Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
+                                </a>*@
+                            @*<a href="#" class="btn btn-outline-warning">View Photos and Reviews</a>*@
+                            @Html.ActionLink("View Photos and Reviews", "PhotographerProfile", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+
+        </div>
+    </div>
+
+
+
+</main>
+<!-- End #main -->

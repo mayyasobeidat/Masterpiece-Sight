@@ -103,7 +103,7 @@ namespace sight.Controllers
                 }
                 db.Entry(admin).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit");
             }
             ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", admin.user_id);
             return View(admin);

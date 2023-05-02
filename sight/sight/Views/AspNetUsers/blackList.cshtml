@@ -1,0 +1,93 @@
+﻿@model IEnumerable<sight.Models.photographer>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+<style>
+
+
+    .myIMG {
+        top: -50px;
+        left: -35px;
+        display: block;
+        z-index: 999;
+        cursor: pointer;
+        -webkit-transition-property: all;
+        -webkit-transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease;
+    }
+
+        .myIMG:hover {
+            transform: scale(4);
+        }
+</style>
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">State</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create Date</th>
+                        <th scope="col">Accept</th>
+                        <th scope="col">Active</th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        var i = 1;
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                            <td style="color:red">@Html.DisplayFor(modelItem => item.state)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.created_at)</td>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.accept)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.is_hidden)
+                            </th>
+                            <td>
+                                @Html.ActionLink("Unblock", "UnblockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
+
+
+                            </td>
+                        </tr>
+                        {
+                            i++;
+                        }
+                    }
+
+
+
+
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

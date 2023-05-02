@@ -68,6 +68,7 @@
     <EntitySetMapping Name="clients">
       <EntityTypeMapping TypeName="sightModel.client">
         <MappingFragment StoreEntitySet="clients">
+          <ScalarProperty Name="state" ColumnName="state" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="fullName" ColumnName="fullName" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
@@ -91,6 +92,7 @@
     <EntitySetMapping Name="photo_sessions">
       <EntityTypeMapping TypeName="sightModel.photo_sessions">
         <MappingFragment StoreEntitySet="photo_sessions">
+          <ScalarProperty Name="caase" ColumnName="caase" />
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="session_minutes" ColumnName="session_minutes" />
           <ScalarProperty Name="theDescription" ColumnName="theDescription" />
@@ -120,6 +122,7 @@
     <EntitySetMapping Name="photographers">
       <EntityTypeMapping TypeName="sightModel.photographer">
         <MappingFragment StoreEntitySet="photographers">
+          <ScalarProperty Name="state" ColumnName="state" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="linkedin" ColumnName="linkedin" />
           <ScalarProperty Name="twitter" ColumnName="twitter" />
@@ -240,6 +243,15 @@
           <ScalarProperty Name="comment1" ColumnName="comment" />
           <ScalarProperty Name="client_id" ColumnName="client_id" />
           <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FAQs">
+      <EntityTypeMapping TypeName="sightModel.FAQ">
+        <MappingFragment StoreEntitySet="FAQ">
+          <ScalarProperty Name="answer" ColumnName="answer" />
+          <ScalarProperty Name="question" ColumnName="question" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

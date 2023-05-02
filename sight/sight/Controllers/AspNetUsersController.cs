@@ -19,6 +19,35 @@ namespace sight.Controllers
         {
             return View(db.AspNetUsers.ToList());
         }
+        public ActionResult blackList()
+        {
+            //var blockedPhotographers = db.photographers
+            //                .Where(p => p.state == "Block")
+            //                .Select(p => p.AspNetUser)
+            //                .ToList();
+
+            //var blockedClients = db.clients
+            //                        .Where(c => c.state == "Block")
+            //                        .Select(c => c.AspNetUser)
+            //                        .ToList();
+
+            //var blockedUsers = blockedPhotographers.Concat(blockedClients).ToList();
+
+            var blockedPhotographers = db.photographers
+                            .Where(p => p.state == "Block")
+                            .Include(p => p.AspNetUser);
+
+            return View(blockedPhotographers.ToList());
+        }
+
+
+        public ActionResult blackListClient()
+        {
+            var blockedClients = db.clients
+                                    .Where(c => c.state == "Block")
+                                    .Include(c => c.AspNetUser);
+            return View(blockedClients.ToList());
+        }
 
         // GET: AspNetUsers/Details/5
         public ActionResult Details(string id)

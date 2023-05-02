@@ -31,16 +31,20 @@
                         }
                         else if (User.IsInRole("Admin"))
                         {
-                            <li>@Html.ActionLink("Dashboard", "Dashboard", "AdminDashboard", routeValues: new {}, htmlAttributes: new { title = "Manage" })</li>
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "AdminDashboard", routeValues: new { }, htmlAttributes: new { title = "Manage" })</li>
+                        }
+                        else if (User.IsInRole("Block"))
+                        {
+                            <li>@Html.ActionLink("" + User.Identity.GetUserName().Split('@')[0] + "!", "BlockProfile", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                         }
                         else
                         {
-                            <li>@Html.ActionLink("Profile " + User.Identity.GetUserName().Split('@')[0] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                        }
+                            <li></li>
 
+                        }
                         <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log Out</a></li>
                         @*<li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>*@
+        <li><a href="#">Drop Down 4</a></li>*@
                     </ul>
                 </li>
             </ul>

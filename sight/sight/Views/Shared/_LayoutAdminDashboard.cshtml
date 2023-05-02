@@ -38,194 +38,224 @@
 </head>
 
 
+@{ sight.Models.sightEntities db = new sight.Models.sightEntities();
+    sight.Models.admin Type = new sight.Models.admin();
+    var dev = db.admins.ToList();
 
+    foreach (var item in dev)
+    {
 
-<body>
-    <div class="container-fluid position-relative d-flex p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-        <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-secondary navbar-dark">
-                <a href="/Home/Index" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa bi-camera me-2"></i>SIGHT</h3>
-                </a>
-                <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="~/AdminDashboard/img/user.jpeg" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0">Mayyas</h6>
-                        <span>Admin</span>
+        <body>
+            <div class="container-fluid position-relative d-flex p-0">
+                <!-- Spinner Start -->
+                <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
-                <div class="navbar-nav w-100">
-                    <a href="~/AdminDashboard/Dashboard" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="~/AdminDashboard/Statistics" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Statistics</a>
-                    <a href="~/photosAdmins/Index" class="nav-item nav-link"><i class="fa bi-camera2 me-2"></i>Gallery</a>
-                    <a href="~/clients/Index" id="Link" class="nav-item nav-link"><i class="fa fa-user-edit me-2"></i>Users</a>
-                    <a href="~/photographers/Indexxx" class="nav-item nav-link"><i class="fa bi-person me-2"></i>Photographers</a>
-                    @*<div class="nav-item dropdown">
-            <a href="~/photographers/Indexxx" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa bi-person me-2"></i>Photographers</a>
-            <div class="dropdown-menu bg-transparent border-0">
-                <a href="~/photographers/Indexxx" class="dropdown-item">Photographers</a>
-
-                <a href="~/photographers/Indexx" class="dropdown-item">All Photographers</a>
-                <a href="~/photographers/Index" class="dropdown-item">Accept Photographers</a>
-                <a href="~/photographers/Photos" class="dropdown-item">Photos Gallery</a>
+                <!-- Spinner End -->
+                <!-- Sidebar Start -->
 
 
-            </div>
-        </div>*@
-                    <a href="~/PhotographyTypes/Index" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Services</a>
-                    <a href="~/commentsHomes/Index" class="nav-item nav-link"><i class="fa-solid fa-comment me-2"></i>Feedback</a>
-
-                    @*<div class="nav-item dropdown">
-        <a href="~/AdminDashboard/Services" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
-        <div class="dropdown-menu bg-transparent border-0">
-            <a href="~/AdminDashboard/CreateNewService" class="dropdown-item">Buttons</a>
-        </div>*@
-                </div>
-            </nav>
-        </div>
-        <!-- Sidebar End -->
-        <!-- Content Start -->
-        <div class="content">
-            <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
-                </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
-                    <i class="fa fa-bars"></i>
-                </a>
-                @*<form class="d-none d-md-flex ms-4">
-                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-                </form>*@
-                <div class="navbar-nav align-items-center ms-auto">
-                    @*<div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Message</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="~/img/user.jpeg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all message</a>
-                            </div>
-                        </div>*@
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="~/AdminDashboard/img/user.jpeg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">Mayyas</span>
+                <div class="sidebar pe-4 pb-3">
+                    <nav class="navbar bg-secondary navbar-dark">
+                        <a href="/Home/Index" class="navbar-brand mx-4 mb-3">
+                            <h3 class="text-primary"><i class="fa bi-camera me-2"></i>SIGHT</h3>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            @*<a href="#" class="dropdown-item">My Profile</a>*@
-                            @*<a href="#" class="dropdown-item">Settings</a>*@
-                            @if (Request.IsAuthenticated)
-                            {
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                {
-                                    @Html.AntiForgeryToken() 
-                                    
-                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
-                                    
-                                }
-                            }
+                        <div class="d-flex align-items-center ms-4 mb-4">
+
+                            <div class="position-relative">
+
+                                <img class="rounded-circle" src="~/assetsUser/img/@item.profilePhoto" alt="" style="width: 40px; height: 40px;">
+
+
+                                <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0">@item.FullName</h6>
+                                <span>Admin</span>
+                            </div>
+
+                        </div>
+                        <div class="navbar-nav w-100">
+                            <a href="~/AdminDashboard/Dashboard" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                            <a href="~/AdminDashboard/Statistics" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Statistics</a>
+                            <a href="~/photosAdmins/Index" class="nav-item nav-link"><i class="fa bi-camera2 me-2"></i>Gallery</a>
+                            <a href="~/clients/Index" id="Link" class="nav-item nav-link"><i class="fa fa-user-edit me-2"></i>Users</a>
+                            <a href="~/photographers/Indexxx" class="nav-item nav-link"><i class="fa bi-person me-2"></i>Photographers</a>
+                            @*<div class="nav-item dropdown">
+                                    <a href="~/photographers/Indexxx" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa bi-person me-2"></i>Photographers</a>
+                                    <div class="dropdown-menu bg-transparent border-0">
+                                        <a href="~/photographers/Indexxx" class="dropdown-item">Photographers</a>
+
+                                        <a href="~/photographers/Indexx" class="dropdown-item">All Photographers</a>
+                                        <a href="~/photographers/Index" class="dropdown-item">Accept Photographers</a>
+                                        <a href="~/photographers/Photos" class="dropdown-item">Photos Gallery</a>
+
+
+                                    </div>
+                                </div>*@
+                            <a href="~/photo_sessions/Index" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Bookings</a>
+
+                            <a href="~/commentsHomes/Index" class="nav-item nav-link"><i class="fa-solid fa-comment me-2"></i>Feedback</a>
+
+
+                            @*<a href="#" class="nav-item nav-link"><i class="fa-solid bi-list me-2"></i>Black List</a>*@
+
+
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid bi-list me-2"></i>Black List</a>
+                                <div class="dropdown-menu bg-transparent border-0">
+                                    <a href="~/AspNetUsers/blackList" class="dropdown-item">Blocked Photographers</a>
+                                    <a href="~/AspNetUsers/blackListClient" class="dropdown-item">Blocked Users</a>
+                                    <a href="~/photographers/state" class="dropdown-item">Photographers</a>
+                                    <a href="~/clients/state" class="dropdown-item">Users</a>
+                                </div>
+                            </div>
+
+
+                            @*<div class="nav-item dropdown">
+                                <a href="~/AdminDashboard/Services" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                                <div class="dropdown-menu bg-transparent border-0">
+                                    <a href="~/AdminDashboard/CreateNewService" class="dropdown-item">Buttons</a>
+                                </div>*@
+                        </div>
+                    </nav>
+                </div>
+              
+                <!-- Sidebar End -->
+                <!-- Content Start -->
+                <div class="content">
+                    <!-- Navbar Start -->
+                    <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                        <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                            <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                        </a>
+                        <a href="#" class="sidebar-toggler flex-shrink-0">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        @*<form class="d-none d-md-flex ms-4">
+                                <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                            </form>*@
+                        <div class="navbar-nav align-items-center ms-auto">
+                            @*<div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i class="fa fa-envelope me-lg-2"></i>
+                                        <span class="d-none d-lg-inline-flex">Message</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                        <a href="#" class="dropdown-item">
+                                            <div class="d-flex align-items-center">
+                                                <img class="rounded-circle" src="~/img/user.jpeg" alt="" style="width: 40px; height: 40px;">
+                                                <div class="ms-2">
+                                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                                    <small>15 minutes ago</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a href="#" class="dropdown-item">
+                                            <div class="d-flex align-items-center">
+                                                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                                <div class="ms-2">
+                                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                                    <small>15 minutes ago</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a href="#" class="dropdown-item">
+                                            <div class="d-flex align-items-center">
+                                                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                                <div class="ms-2">
+                                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                                    <small>15 minutes ago</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a href="#" class="dropdown-item text-center">See all message</a>
+                                    </div>
+                                </div>*@
+
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <img class="rounded-circle me-lg-2" src="~/assetsUser/img/@item.profilePhoto" alt="" style="width: 40px; height: 40px;">
+                                    <span class="d-none d-lg-inline-flex">@item.FullName</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                    @*<a href="#" class="dropdown-item">My Profile</a>*@
+                                    @*<a href="#" class="dropdown-item">Settings</a>*@
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
+
+                                        }
+                                    }
                                     @*<a href="#" class="dropdown-item">Log Out</a>*@
                                 </div>
-                    </div>
-                </div>
-            </nav>
-            <!-- Navbar End -->
-            <!-- Blank Start -->
-            <div class="container-fluid pt-4 px-4">
-                @RenderBody()
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- Navbar End -->
+                    <!-- Blank Start -->
+                    <div class="container-fluid pt-4 px-4">
+                        @RenderBody()
 
-            </div>
-            <!-- Blank End -->
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="/Home/Index">SIGHT</a>, All Right Reserved.
+                    </div>
+                    <!-- Blank End -->
+                    <!-- Footer Start -->
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="bg-secondary rounded-top p-4">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 text-center text-sm-start">
+                                    &copy; <a href="/Home/Index">SIGHT</a>, All Right Reserved.
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- Footer End -->
                 </div>
+                <!-- Content End -->
+                <!-- Back to Top -->
+                <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
             </div>
-            <!-- Footer End -->
-        </div>
-        <!-- Content End -->
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/AdminDashboard/lib/chart/chart.min.js"></script>
-    <script src="~/AdminDashboard/lib/easing/easing.min.js"></script>
-    <script src="~/AdminDashboard/lib/waypoints/waypoints.min.js"></script>
-    <script src="~/AdminDashboard/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/AdminDashboard/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="~/AdminDashboard/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="~/AdminDashboard/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+            <!-- JavaScript Libraries -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/AdminDashboard/lib/chart/chart.min.js"></script>
+            <script src="~/AdminDashboard/lib/easing/easing.min.js"></script>
+            <script src="~/AdminDashboard/lib/waypoints/waypoints.min.js"></script>
+            <script src="~/AdminDashboard/lib/owlcarousel/owl.carousel.min.js"></script>
+            <script src="~/AdminDashboard/lib/tempusdominus/js/moment.min.js"></script>
+            <script src="~/AdminDashboard/lib/tempusdominus/js/moment-timezone.min.js"></script>
+            <script src="~/AdminDashboard/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="~/AdminDashboard/js/main.js"></script>
+            <!-- Template Javascript -->
+            <script src="~/AdminDashboard/js/main.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            var current = location.pathname;
-            $('.navbar-nav a').each(function () {
-                var $this = $(this);
-                if ($this.attr('href').indexOf(current) !== -1) {
-                    $this.addClass('active');
-                }
-            })
-        })
-    </script>
+            <script>
+                $(document).ready(function () {
+                    var current = location.pathname;
+                    $('.navbar-nav a').each(function () {
+                        var $this = $(this);
+                        if ($this.attr('href').indexOf(current) !== -1) {
+                            $this.addClass('active');
+                        }
+                    })
+                })
+            </script>
 
-</body>
+        </body>
 
 
-
+        }
+    }
 
 
 

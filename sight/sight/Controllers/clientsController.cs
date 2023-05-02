@@ -23,6 +23,12 @@ namespace sight.Controllers
             return View(clients.ToList());
         }
 
+        public ActionResult state()
+        {
+            var clients = db.clients.Include(p => p.AspNetUser);
+            return View(clients.ToList());
+        }
+
         // GET: clients/Details/5
         public ActionResult Details(int? id)
         {
@@ -74,6 +80,8 @@ namespace sight.Controllers
             }
             client client = db.clients.Find(id);
             Session["photo"] = client.photo;
+            Session["user_id"] = client.user_id;
+
 
             if (client == null)
             {
@@ -91,6 +99,7 @@ namespace sight.Controllers
         public ActionResult Edit([Bind(Include = "id,user_id,photo,PhoneNumber,fullName")] client client, HttpPostedFileBase photo)
         {
             client.photo = Session["photo"].ToString();
+            client.user_id = Session["user_id"].ToString();
 
             if (ModelState.IsValid)
             {

@@ -110,8 +110,9 @@
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
                                 </li>
 
+                            
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings">Settings</button>
                                 </li>
 
                             </ul>
@@ -130,25 +131,35 @@
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                         @Html.HiddenFor(model => model.id)
 
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control", style = "display:none;" })
-                                                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
+                               
 
                                         //Profile Edit Form
-                                        <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile" id="myImage">
-                                                <div class="pt-2">
-                                                    <input type="file" name="photo" class="custom-file-input" accept="image/*" id="myFileInput">
-                                                    @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
+                                    <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile" id="myImage">
+                                            <div class="pt-2">
+                                                <input type="file" name="photo" class="custom-file-input" accept="image/*" id="myFileInput" onchange="checkFileSize()">
 
-                                                </div>
+
+                                                <script>
+                                                    function checkFileSize() {
+                                                        const fileInput = document.getElementById('myFileInput');
+                                                        const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+                                                        const imagePreview = document.getElementById('myImage');
+                                                        if (fileSize > 2) { // check if the file size is greater than 2 MB
+                                                            alert('File size should not exceed 2 MB');
+                                                            fileInput.value = ''; // clear the input field
+                                                            imagePreview.style.display = 'none'; // hide the image preview
+                                                        } else {
+                                                            imagePreview.style.display = 'block'; // show the image preview
+                                                        }
+                                                    }
+
+                                                </script>
                                             </div>
                                         </div>
+                                    </div>
 
 
 
@@ -189,7 +200,7 @@
 
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                                             <div class="col-md-8 col-lg-9">
-                                                @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control", @value = Model.fullName } })
+                                                @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control", @value = Model.fullName, @maxlength = "25", @placeholder = "Ex: Mayyas Obeidat" } })
                                                 @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -197,7 +208,7 @@
                                         <div class="row mb-3">
                                             <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                                             <div class="col-md-8 col-lg-9">
-                                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })
+                                                <input class="form-control" name="PhoneNumber" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@Model.PhoneNumber" placeholder="Enter Jordanian phone number" />
                                                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
 
                                             </div>
@@ -206,7 +217,7 @@
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 @*@Html.EditorFor(model => model.AspNetUser.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @value = Model.AspNetUser.Email, @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
+                        @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
                                                 <label>@User.Identity.Name</label>
                                             </div>
                                         </div>
@@ -271,9 +282,9 @@
                                 </div>
 
 
-                                <div class="tab-pane fade pt-3" id="profile-feedback">             
+                                <div class="tab-pane fade pt-3" id="profile-feedback">
 
-                                     @Html.Action("feedback", "comments")
+                                    @Html.Action("feedback", "comments")
 
                                 </div>
 
@@ -286,10 +297,42 @@
 
 
 
-                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <div class="tab-pane fade pt-3" id="settings">
                                     @Html.Action("ChangePassword", "Manage")
+                                    <hr />
+                                    <h4>Delete Accaount</h4>
+                                    <p>If you click on this button, your account will be permanently deleted and will not be recovered</p>
+
+
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        Delete Account
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                                        Delete Accaount
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to permanently delete the account?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <a class="btn btn-danger" href="/Account/DeleteAccountClient/">Delete Account</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
+
 
                             </div>
 

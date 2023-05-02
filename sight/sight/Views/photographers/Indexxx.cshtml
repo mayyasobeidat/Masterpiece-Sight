@@ -95,13 +95,20 @@
                                 @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
 
                             </td>
-                            <td>
-                                @if (!item.accept)
-                                {
-                                    @Html.ActionLink("Accept", "Accept", new { id = item.id }, new { @class = "btn btn-success" })
 
-                                }
-                            </td>
+                            @if (!item.accept)
+                            {
+                                <td>
+                                    @Html.ActionLink("Accept", "Accept", new { id = item.id }, new { @class = "btn btn-success" })
+                                </td>
+                                <td>
+                                    @*@Html.ActionLink("Reject", "Reject", new { id = item.id }, new { @class = "btn btn-danger" })*@
+                                    
+                                    @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
+
+                                </td>
+                            }
+
                         </tr>
 
                     }
@@ -130,7 +137,7 @@
                     {
                         <tr>
                             <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
-                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td><a href="~/assetsUser/img/@item.profilePhoto" download="@item.FullName"><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></a></td>
                             <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
                             <td>
                                 @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
@@ -139,7 +146,9 @@
                             <td>
                                 @if (item.accept)
                                 {
-                                    @Html.ActionLink("Reject", "Reject", new { id = item.id }, new { @class = "btn btn-danger" })
+                                    @*@Html.ActionLink("Reject", "Reject", new { id = item.id }, new { @class = "btn btn-danger" })*@
+
+                                    @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
 
                                 }
                             </td>

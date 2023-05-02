@@ -52,13 +52,15 @@
                             <td>@Html.DisplayFor(modelItem => item.fullName)</td>
                             <td>@Html.DisplayFor(modelItem => item.AspNetUser.Email)</td>
                             <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                            <td><img src="~/assetsUser/img/@item.photo" width="30px" class="myIMG" /></td>
+                            <td><a href="~/assetsUser/img/@item.photo" download="@item.fullName"><img src="~/assetsUser/img/@item.photo" width="30px" class="myIMG" /></a></td>
                             <td>
                                 @*@Html.ActionLink("Details", "Details", new { id = item.id }) |*@
-                                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                                @*@Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })*@
+                                @Html.ActionLink("Block", "BlockUserClient", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
+
                                 @*<a class="btn btn-primary">Edit</a>
-                    <a class="btn btn-primary">Details</a>
-                     <a class="btn btn-primary">Delete</a>*@
+        <a class="btn btn-primary">Details</a>
+         <a class="btn btn-primary">Delete</a>*@
 
                             </td>
                         </tr>

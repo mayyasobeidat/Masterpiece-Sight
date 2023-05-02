@@ -2,75 +2,104 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.session_date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.session_time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created_at)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.city.cityName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.client.user_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.photographer.user_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
-        </th>
-        <th></th>
-    </tr>
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <div class="table-responsive">
+            <h6 class="mb-4">All Bookings</h6>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.session_date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.session_time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.city.cityName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.client.user_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.photographer.user_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+            <table class="table">
+                <tr>
+                    <th>
+                        Session Date
+                    </th>
+                    <th>
+                        Session Time
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Book Date
+                    </th>
+                    <th>
+                        City
+                    </th>
+                    <th>
+                        Client Name
+                    </th>
+                    <th>
+                        Photographer
+                    </th>
+                    <th>
+                        Photography Type
+                    </th>
+                    <th>
+                        Client Phone
+                    </th>
+                    <th>
+                        Client Email
+                    </th>
+                    <th></th>
+                </tr>
 
-</table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @String.Format("{0:MM/dd/yyyy}", item.session_date)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.session_time)
+                        </td>
+                        <td>
+                            @if (item.caase == 1)
+                            {
+                                <span style="color:gold">waiting</span>
+                            }
+                            else if (item.caase == 2)
+                            {
+                                <span style="color:lawngreen">accept</span>
+                            }
+                            else if (item.caase == 3)
+                            {
+                                <span style="color:red">reject</span>
+                            }
+                        </td>
+                        <td>
+                            @String.Format("{0:MM/dd/yyyy}", item.created_at)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.city.cityName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.client.fullName)
+                        </td>
+                        <td>
+                            <a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographer.id)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.client.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.client.AspNetUser.Email)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

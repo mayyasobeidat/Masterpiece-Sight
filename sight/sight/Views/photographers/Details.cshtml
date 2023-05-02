@@ -19,14 +19,15 @@
 
 
             <dd>
-                @Html.DisplayFor(model => model.FullName)
+                <a href="/photographers/PhotographerProfile/@Html.DisplayFor(model => model.id)">@Html.DisplayFor(model => model.FullName)</a>
             </dd>
 
             <dt><b style="color: #d9d9d9;">Email:</b></dt>
 
 
             <dd>
-                @Html.DisplayFor(model => model.AspNetUser.Email)
+                <a href="mailto:@Html.DisplayFor(model => model.AspNetUser.Email)">@Html.DisplayFor(model => model.AspNetUser.Email)</a>
+
             </dd>
             <dt><b style="color: #d9d9d9;">Date:</b></dt>
 
@@ -50,7 +51,7 @@
 
 
             <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
+                <a href="tel:@Html.DisplayFor(model => model.PhoneNumber)">@Html.DisplayFor(model => model.PhoneNumber)</a>
             </dd>
             <dt><b style="color: #d9d9d9;">Age:</b></dt>
 
@@ -69,43 +70,64 @@
 
 
             <dd>
-                @Html.DisplayFor(model => model.facebook)
+                <a href="@Html.DisplayFor(model => model.facebook)" target="_blank">@Html.DisplayFor(model => model.facebook)</a>
             </dd>
 
             <dt><b style="color: #d9d9d9;">Instagram:</b></dt>
 
 
             <dd>
-                @Html.DisplayFor(model => model.instagram)
+                <a href="@Html.DisplayFor(model => model.instagram)" target="_blank">@Html.DisplayFor(model => model.instagram)</a>
             </dd>
             <dt><b style="color: #d9d9d9;">Twitter:</b></dt>
 
             <dd>
-                @Html.DisplayFor(model => model.twitter)
+                <a href="@Html.DisplayFor(model => model.twitter)" target="_blank">@Html.DisplayFor(model => model.twitter)</a>
             </dd>
 
             <dt><b style="color: #d9d9d9;">Linkedin:</b></dt>
 
 
             <dd>
-                @Html.DisplayFor(model => model.linkedin)
+                <a href="@Html.DisplayFor(model => model.linkedin)" target="_blank">@Html.DisplayFor(model => model.linkedin)</a>
             </dd>
 
 
-            <dt><b style="color: #d9d9d9;">Active:</b></dt>
+            <dt><b style="color: #d9d9d9;">Status:</b></dt>
 
 
             @if (Model.accept)
             {
-                <dd style="color:limegreen">Accepted</dd>
+
+                if (Model.state == "block")
+                {
+                    <dd style="color:red">Blocked</dd>
+
+                }
+                else
+                {
+                    <dd style="color:limegreen">Accepted</dd>
+
+                }
             }
             else
             {
-                <dd style="color:red">Not Accepted</dd>
+                if (Model.state == "block")
+                {
+                    <dd style="color:red">Blocked</dd>
+
+                }
+                else
+                {
+                    <dd style="color:red">Not Accepted</dd>
+
+                }
 
             }
 
-            <dt><b style="color: #d9d9d9;">Status:</b></dt>
+
+
+            <dt><b style="color: #d9d9d9;">Active:</b></dt>
 
             @if (Model.is_hidden)
             {
@@ -120,8 +142,11 @@
 
 
         <div class="col-md-4 col-sm-12">
-            <img src="~/assetsUser/img/@Model.profilePhoto" name="photo" alt="photo" width="50%" class="img-fluid"><br /><br />
-            <img src="~/assetsUser/img/@Model.coverPhoto" name="photo" alt="photo" width="50%" class="img-fluid">
+            <a href="~/assetsUser/img/@Model.profilePhoto" download="@Model.FullName"><img src="~/assetsUser/img/@Model.profilePhoto" name="photo" alt="photo" width="50%" class="img-fluid" /></a>
+
+            <br /><br />
+            <a href="~/assetsUser/img/@Model.coverPhoto" download="@Model.FullName"><img src="~/assetsUser/img/@Model.coverPhoto" name="photo" alt="photo" width="50%" class="img-fluid" /></a>
+
 
         </div>
     </div>
@@ -132,11 +157,18 @@
             @Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" })
 
         }
+
+        @if (Model.state == "block")
+        {
+            @Html.ActionLink("Unblock", "UnblockUser", "Account", new { id = Model.user_id }, new { @class = "btn btn-danger" })
+
+        }
         else
         {
-            @Html.ActionLink("Reject", "Reject", new { id = Model.id }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Block", "BlockUser", "Account", new { id = Model.user_id }, new { @class = "btn btn-danger" })
 
         } |
+
         @if (Model.is_hidden)
         {
             @Html.ActionLink("Activate", "Activate", new { id = Model.id }, new { @class = "btn btn-success" })
@@ -147,6 +179,25 @@
             @Html.ActionLink("Deactivate", "Deactivate", new { id = Model.id }, new { @class = "btn btn-light" })
 
         } |
+
+        @{
+            var latestSubscription = Model.Subscriptions.OrderByDescending(s => s.endDate).FirstOrDefault();
+
+            if (latestSubscription.endDate < DateTime.Now)
+            {
+                @Html.ActionLink("Free +7", "ActivateFree", new { id = Model.id }, new { @class = "btn btn-success" })
+            }
+
+        }|
+
+
+
+
+
+
+
         @Html.ActionLink("Back", "Index")
     </p>
 </div>
+
+

@@ -126,7 +126,7 @@
 
                     <div class="col-sm-6 col-xl-6">
 
-                        @Html.TextBox("search", "", new { @class = "form-control visible-lg-inline-block bg-black border-0  text-light", type = "search", placeholder = "Search" })
+                        @Html.TextBox("search", "", new { @class = "form-control visible-lg-inline-block bg-black border-0  text-light", type = "search", placeholder = "Search", @maxlength = "200" })
 
                     </div>
 
@@ -158,7 +158,7 @@
 
                 <div class="col-sm-6 col-md-6 col-lg-4 pb-3">
                     <!-- Card code -->
-                    <div class="card card-custom" style="border: #b0b0b0 1px solid; height: 605px; overflow: hidden;">
+                    <div class="card card-custom" style="border: #b0b0b0 1px solid; height: 630px; overflow: hidden;">
                         <div class="card-custom-img" style="background-image: url(@Url.Content("~/assetsUser/img/" + item.coverPhoto));"></div>
                         <div class="card-custom-avatar container mmm">
                             <img class="img-fluid mm" src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.profilePhoto)" alt="Avatar" />

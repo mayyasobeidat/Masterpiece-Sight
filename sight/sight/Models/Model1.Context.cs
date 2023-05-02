@@ -44,5 +44,6 @@ namespace sight.Models
         public virtual DbSet<PhotographerPricing> PhotographerPricings { get; set; }
         public virtual DbSet<photo> photos { get; set; }
         public virtual DbSet<comment> comments { get; set; }
+        public virtual DbSet<FAQ> FAQs { get; set; }
     }
 }

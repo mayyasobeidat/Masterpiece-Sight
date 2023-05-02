@@ -87,26 +87,24 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model.Where(x => x.accept && (
-                    x.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate < DateTime.Now ||
-                    x.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate > DateTime.Now)))
-                    {
-                        var latestSubscription = item.Subscriptions.OrderByDescending(s => s.endDate).FirstOrDefault();
-                        <tr>
-                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
-                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
-                            <td>@String.Format("{0:MM/dd/yyyy}", latestSubscription.startDate) <br />@String.Format("{0:MM/dd/yyyy}", latestSubscription.endDate)</td>
-                            <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
-                            </td>
-                            <td>
-                                @if (latestSubscription.endDate < DateTime.Now)
-                                {
-                                    @Html.ActionLink("Free +7", "ActivateFree", new { id = item.id }, new { @class = "btn btn-success" })
-                                }
-                                
-                            </td>
-                        </tr>
+                    @foreach (var item in Model.Where(x => x.is_hidden && x.accept))
+                    { 
+                    var latestSubscription = item.Subscriptions.OrderByDescending(s => s.endDate).FirstOrDefault();
+                    <tr>
+                        <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                        <td><a href="~/assetsUser/img/@item.profilePhoto" download="@item.FullName"><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></a></td>
+                        <td>@String.Format("{0:MM/dd/yyyy}", latestSubscription.startDate) <br />@String.Format("{0:MM/dd/yyyy}", latestSubscription.endDate)</td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+                        </td>
+                        <td>
+                            @if (latestSubscription.endDate < DateTime.Now)
+                            {
+                                @Html.ActionLink("Free +7", "ActivateFree", new { id = item.id }, new { @class = "btn btn-success" })
+                            }
+
+                        </td>
+                    </tr>
                     }
 
 
@@ -130,19 +128,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Where(x => x.accept && (
-                              x.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().endDate > DateTime.Now ||
-                              x.Subscriptions.OrderByDescending(s => s.ID).FirstOrDefault().startDate < DateTime.Now)))
+                    @foreach (var item in Model.Where(x => !x.is_hidden && x.accept))
+
                     {
                         var latestSubscription = item.Subscriptions.OrderByDescending(s => s.endDate).FirstOrDefault();
                         <tr>
                             <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
-                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td><a href="~/assetsUser/img/@item.profilePhoto" download="@item.FullName"><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></a></td>
                             <td>@String.Format("{0:MM/dd/yyyy}", latestSubscription.startDate) <br />@String.Format("{0:MM/dd/yyyy}", latestSubscription.endDate)</td>
                             <td>
                                 @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
                             </td>
-                
+
                         </tr>
                     }
 
@@ -164,7 +161,7 @@
 
 
 <!-- Table Start -->
-<div class="row g-4">
+<!--<div class="row g-4">
     <div class="col-sm-12 col-xl-6">
         <div class="bg-secondary rounded h-100 p-4">
             <h6 class="mb-4">Deactivate accounts</h6>
@@ -250,9 +247,9 @@
         </div>
     </div>
 
-</div>
+</div>-->
 <!-- Table End -->
-<br />
+<!--<br />-->
 
 
 

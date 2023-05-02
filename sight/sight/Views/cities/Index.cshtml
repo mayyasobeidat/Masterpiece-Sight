@@ -1,0 +1,30 @@
+﻿@model IEnumerable<sight.Models.city>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+
+<table class="table table-hover">
+    <tr>
+        <th>
+           Name Of City
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.cityName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

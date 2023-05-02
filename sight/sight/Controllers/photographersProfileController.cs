@@ -71,6 +71,7 @@ namespace sight.Controllers
         }
 
         // GET: photographersProfile/Edit/5
+        [Authorize(Roles = "Photographer")]
         public ActionResult Edit(int? id)
         {
             var x = User.Identity.GetUserId();
@@ -87,6 +88,10 @@ namespace sight.Controllers
             Session["profilePhoto"] = photographer.profilePhoto;
             Session["create"] = photographer.created_at;
             Session["is_hidden"] = photographer.is_hidden;
+            Session["accept"] = photographer.accept;
+            Session["user_id"] = photographer.user_id;
+
+
             if (photographer == null)
             {
                 return HttpNotFound();
@@ -115,6 +120,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Photographer")]
+
         public ActionResult Edit([Bind(Include = "id,user_id,FullName,subscription_type,profilePhoto,coverPhoto,bio,accept,is_hidden,created_at,age,instagram,facebook,twitter,linkedin,PhoneNumber")] photographer photographer, HttpPostedFileBase coverPhoto, HttpPostedFileBase profilePhoto)
         {
 
@@ -122,6 +129,10 @@ namespace sight.Controllers
             photographer.coverPhoto = Session["coverPhoto"].ToString();
             photographer.created_at = (DateTime)Session["create"];
             photographer.is_hidden = (bool)Session["is_hidden"];
+            photographer.accept = (bool)Session["accept"];
+            photographer.user_id = (string)Session["user_id"];
+
+
 
             if (ModelState.IsValid)
             {
@@ -148,7 +159,7 @@ namespace sight.Controllers
             return View(photographer);     
         }
 
-
+        [Authorize(Roles = "Photographer")]
         public ActionResult AddType(int id)
         {
             try
@@ -194,6 +205,7 @@ namespace sight.Controllers
             }
 
         }
+        [Authorize(Roles = "Photographer")]
 
         public ActionResult DeleteType(int id)
         {
@@ -217,6 +229,7 @@ namespace sight.Controllers
 
 
 
+        [Authorize(Roles = "Photographer")]
 
         public ActionResult AddCity(int id)
         {
@@ -252,6 +265,7 @@ namespace sight.Controllers
             }
 
         }
+        [Authorize(Roles = "Photographer")]
 
         public ActionResult DeleteCity(int id)
         {

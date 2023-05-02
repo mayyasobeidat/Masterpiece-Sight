@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using sight.Models;
@@ -61,6 +64,7 @@ namespace sight.Controllers
         public ActionResult Login(string returnUrl)
         {
 
+
             //هذا الكود يتحقق إذا كان المستخدم مسجل دخوله، إذا كان كذلك، فإنه سيتم إعادة توجيه المستخدم إلى الصفحة الرئيسية "Home". يستخدم هذا الكود بشكل رئيسي في صفحة تسجيل الدخول أو التسجيل، لأنه يمنع المستخدم الذي سجل دخوله أو الذي تم تسجيله مسبقًا من الوصول إلى صفحة التسجيل أو تسجيل الدخول مرة أخرى. يتم تحديد ذلك عادة لتجنب إعادة تسجيل الدخول مرة أخرى واستخدام ذلك في الغالب للأمان.
 
             if (User.Identity.IsAuthenticated)
@@ -78,6 +82,7 @@ namespace sight.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
 
             if (!ModelState.IsValid)
             {
@@ -115,8 +120,118 @@ namespace sight.Controllers
             }
         }
 
+        // GET: comments/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            comment comment = db.comments.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(comment);
+        }
 
+        // POST: comments/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            comment comment = db.comments.Find(id);
+            db.comments.Remove(comment);
+            db.SaveChanges();
+            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+            if (UserManager.IsInRole(currentUser.Id, "Client"))
+            {
+                return RedirectToAction("Edit", "Clients");
+            }
+            else if (UserManager.IsInRole(currentUser.Id, "Photographer"))
+            {
+                return RedirectToAction("Edit", "photographersProfile");
+            }
+            else
+            {
+                // Return to a default action if user role is not found
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
+        public ActionResult DeleteAccount()
+        {
+            // Get the current user
+            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+
+            // Change the email in AspNetUsers table
+            var newEmail = "deleteaccount." + currentUser.Email;
+            var newUser = "deleteaccount." + currentUser.UserName;
+
+            currentUser.Email = newEmail;
+            currentUser.UserName = newUser;
+
+            UserManager.Update(currentUser);
+
+            // Change the state and is_hidden in photographers table
+            var photographer = db.photographers.Where(p => p.user_id == currentUser.Id).FirstOrDefault();
+            if (photographer != null)
+            {
+                photographer.state = "deleted";
+                photographer.is_hidden = true;
+                photographer.profilePhoto = "photographerProfile.png";
+                photographer.coverPhoto = "newPhotographer.jpg";
+                photographer.FullName = "Sight Photographer";
+                db.Entry(photographer).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            var subscription = db.Subscriptions.Where(p => p.PhotographerId == photographer.id).FirstOrDefault();
+            if (subscription != null)
+            {
+                subscription.startDate = DateTime.Now.AddDays(-1); 
+                subscription.endDate = DateTime.Now.AddDays(-1);
+                db.Entry(subscription).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            // Sign out the user and redirect to home page
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            TempData["DeletMessage"] = "The account has been deleted successfully.";
+            return RedirectToAction("Login", "Account");
+
+        }
+
+        public ActionResult DeleteAccountClient()
+        {
+            // Get the current user
+            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+
+            // Change the email in AspNetUsers table
+            var newEmail = "deleteaccount." + currentUser.Email;
+            var newUser = "deleteaccount." + currentUser.UserName;
+
+            currentUser.Email = newEmail;
+            currentUser.UserName = newUser;
+
+            UserManager.Update(currentUser);
+
+            // Change the state and is_hidden in photographers table
+            var client = db.clients.Where(p => p.user_id == currentUser.Id).FirstOrDefault();
+            if (client != null)
+            {
+                client.photo = "cliantProfile.png";
+                client.fullName = "Sight User";
+                client.state = "deleted";
+                db.Entry(client).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            // Sign out the user and redirect to home page
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            TempData["DeletMessage"] = "The account has been deleted successfully.";
+            return RedirectToAction("Login", "Account");
+
+        }
 
         public ActionResult PhotographerProfileForm()
         {
@@ -300,7 +415,181 @@ namespace sight.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-     
+
+
+        public async Task<ActionResult> BlockUser(string id)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                // Check if the user is already blocked
+                if (!await userManager.IsInRoleAsync(id, "block"))
+                {
+                    // Remove all existing roles for the user
+                    var userRoles = await userManager.GetRolesAsync(id);
+                    await userManager.RemoveFromRolesAsync(id, userRoles.ToArray());
+
+                    // Add the block role to the user
+                    await userManager.AddToRoleAsync(id, "block");
+
+                    // Save the changes
+                    var result = await userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        // Update the photographer's state to "block"
+                        photographer photographers = new photographer();
+                        var photographer = db.photographers.FirstOrDefault(p => p.user_id == id);
+                        if (photographer != null)
+                        {
+                            photographer.state = "block";
+                            db.Entry(photographer).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("blackList", "AspNetUsers");
+                    }
+                }
+            }
+
+            // Redirect the user to an error page if the user is not found or the update fails
+            return RedirectToAction("state", "photographers");
+        }
+
+
+        public async Task<ActionResult> BlockUserClient(string id)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                // Check if the user is already blocked
+                if (!await userManager.IsInRoleAsync(id, "block"))
+                {
+                    // Remove all existing roles for the user
+                    var userRoles = await userManager.GetRolesAsync(id);
+                    await userManager.RemoveFromRolesAsync(id, userRoles.ToArray());
+
+                    // Add the block role to the user
+                    await userManager.AddToRoleAsync(id, "block");
+
+                    // Save the changes
+                    var result = await userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        // Update the photographer's state to "block"
+                        client clients = new client();
+                        var client = db.clients.FirstOrDefault(p => p.user_id == id);
+                        if (client != null)
+                        {
+                            client.state = "block";
+                            db.Entry(client).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("blackListClient", "AspNetUsers");
+                    }
+                }
+            }
+
+            // Redirect the user to an error page if the user is not found or the update fails
+            return RedirectToAction("state", "clients");
+        }
+
+
+
+        public async Task<ActionResult> UnblockUserClient(string id)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                // Check if the user is blocked
+                if (await userManager.IsInRoleAsync(id, "block"))
+                {
+                    // Remove all existing roles for the user
+                    var userRoles = await userManager.GetRolesAsync(id);
+                    await userManager.RemoveFromRolesAsync(id, userRoles.ToArray());
+
+                    // Add the block role to the user
+                    await userManager.AddToRoleAsync(id, "Client");
+
+                    // Save the changes
+                    var result = await userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        // Update the client's state to "unblock"
+                        var client = db.clients.FirstOrDefault(p => p.user_id == id);
+                        if (client != null)
+                        {
+                            client.state = "unblock";
+                            db.Entry(client).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("blackListClient", "AspNetUsers");
+                    }
+                }
+            }
+
+            // Redirect the user to an error page if the user is not found or the update fails
+            return RedirectToAction("blackListClient", "AspNetUsers");
+        }
+
+
+
+
+        public async Task<ActionResult> UnblockUser(string id)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                // Check if the user is blocked
+                if (await userManager.IsInRoleAsync(id, "block"))
+                {
+                    // Remove all existing roles for the user
+                    var userRoles = await userManager.GetRolesAsync(id);
+                    await userManager.RemoveFromRolesAsync(id, userRoles.ToArray());
+
+                    // Add the block role to the user
+                    await userManager.AddToRoleAsync(id, "Photographer");
+
+                    // Save the changes
+                    var result = await userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // Update the photographer's state to "unblock"
+                        photographer photographers = new photographer();
+                        var photographer = db.photographers.FirstOrDefault(p => p.user_id == id);
+                        if (photographer != null)
+                        {
+                            photographer.state = "unblock";
+                            db.Entry(photographer).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("blackList", "AspNetUsers");
+                    }
+                }
+            }
+
+            // Redirect the user to an error page if the user is not found or the update fails
+            return RedirectToAction("blackList", "AspNetUsers");
+        }
+
+
+
+
 
 
 
@@ -526,7 +815,7 @@ namespace sight.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

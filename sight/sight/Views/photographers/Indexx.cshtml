@@ -115,7 +115,7 @@
                         <th scope="col">Photo</th>
                         <th scope="col">Create at</th>
                         <th scope="col">Accept</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Subscription</th>
                         <th scope="col"></th>
 
 
@@ -136,17 +136,38 @@
                             <td>
                                 <a href="tel:@Html.DisplayFor(modelItem => item.PhoneNumber)">@Html.DisplayFor(modelItem => item.PhoneNumber)</a>
                             </td>
-                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td><a href="~/assetsUser/img/@item.profilePhoto" download="@item.FullName"><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></a></td>
                             <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
                             @if (item.accept)
                             {
-                                <td style="color:limegreen">Accepted</td>
+
+                                if (item.state == "block")
+                                {
+                                    <td style="color:red">Blocked</td>
+
+                                }
+                                else
+                                {
+                                    <td style="color:limegreen">Accepted</td>
+
+                                }
+
                             }
                             else
                             {
-                                <td style="color:red">Not Accepted</td>
+                                if (item.state == "block")
+                                {
+                                    <td style="color:red">Blocked</td>
+
+                                }
+                                else
+                                {
+                                    <td style="color:red">Not Accepted</td>
+
+                                }
 
                             }
+
                             @if (item.is_hidden)
                             {
                                 <td style="color:red">Deactivated</td>
@@ -156,6 +177,8 @@
                                 <td style="color:limegreen">Activated</td>
 
                             }
+
+
                             <td>
                                 @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
 

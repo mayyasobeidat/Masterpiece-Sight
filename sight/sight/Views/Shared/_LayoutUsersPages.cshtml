@@ -54,8 +54,25 @@
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
+
+
+            <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    var current = location.pathname;
+                    $('.navbar a').each(function () {
+                        var $this = $(this);
+                        // check if the current path is like this link
+                        if ($this.attr('href').indexOf(current) !== -1) {
+                            $this.addClass('active');
+                        }
+                    })
+                });
+            </script>
+
             <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
+                <ul class="naaav">
                     <li class="dropdown profiles" style=" display: none;">
                         <a href="#"><span>@User.Identity.GetUserName().Split('@')[0]</span> <i class="bi bi-chevron-down" style="font-size:10px"></i></a>
                         <ul>
@@ -63,31 +80,55 @@
                             <li><a href="javascript:document.getElementById('logoutForm').submit()" class="get-started-btn scrollto">Log Out</a></li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link scrollto active" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link scrollto" })</li>
+                    <li><a class="nav-link scrollto" href="/Home/Index">Home</a></li>
+                    <li><a class="nav-link scrollto" href="/Home/About">About</a></li>
                     <li><a class="nav-link scrollto" href="/Home/Index#services">Services</a></li>
-                    <li><a class="nav-link scrollto " href="/Home/Index#portfolio">Gallery</a></li>
+                    <li><a class="nav-link scrollto" href="/Home/Index#portfolio">Gallery</a></li>
                     <li class="dropdown">
                         <a href="/photographers/photographers"><span>Photographers</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="/photographers/photographers">Sight Photographers</a></li>
+                            <li><a href="/photographers/photographers">All Photographers</a></li>
                             <li class="dropdown">
                                 <a href="#"><span>Photographers In City</span> <i class="bi bi-chevron-right"></i></a>
                                 <ul>
-                                    <li><a href="/photographers/photographersInAmman">Amman</a></li>
-                                    <li><a href="/photographers/photographersInIrbid">Irbid</a></li>
-                                    <li><a href="/photographers/photographersInJarash">Jarash</a></li>
+                                    @{
+                                        sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                        sight.Models.city cityy = new sight.Models.city();
+                                        var dev = db.cities.ToList();
+
+                                        foreach (var item in dev)
+                                        {
+                                            <li><a href="/photographers/CityFiltter/@item.id">@item.cityName</a></li>
+                                        }
+                                    }
+
+
+                                    @*<li><a href="/photographers/photographersInAmman">Amman</a></li>
+        <li><a href="/photographers/photographersInIrbid">Irbid</a></li>
+        <li><a href="/photographers/photographersInJarash">Jarash</a></li>*@
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#"><span>Types Of Photography</span> <i class="bi bi-chevron-right"></i></a>
                                 <ul>
-                                    <li><a href="/photographers/photographersPortrait">Portrait</a></li>
+
+                                    @{
+                                        sight.Models.sightEntities dbb = new sight.Models.sightEntities();
+                                        sight.Models.PhotographyType Type = new sight.Models.PhotographyType();
+                                        var devv = db.PhotographyTypes.ToList();
+
+                                        foreach (var item in devv)
+                                        {
+                                            <li><a href="/photographers/TypeFiltter/@item.TypeID">@item.TypeName</a></li>
+                                        }
+                                    }
+
+                                    @*<li><a href="/photographers/photographersPortrait">Portrait</a></li>
                                     <li><a href="/photographers/photographersProduct">Product</a></li>
                                     <li><a href="/photographers/photographersNewborn">Newborn</a></li>
                                     <li><a href="/photographers/photographersFood">Food</a></li>
                                     <li><a href="/photographers/photographersOccasions">Occasions</a></li>
-                                    <li><a href="/photographers/photographersLandscape">Landscape</a></li>
+                                    <li><a href="/photographers/photographersLandscape">Landscape</a></li>*@
                                 </ul>
                             </li>
 
@@ -128,10 +169,10 @@
 
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-info">
-                            <a href="index.html"><img src="logo.png" alt="" style="width:40%;"></a><br>
+                            <a href="/Home/Index"><img src="~/assetsUser/img/logo.png" alt="" style="width:40%;"></a><br>
                             <p>
-                                Irbid<br>
-                                Jordan<br><br>
+                                <br>
+                                <strong>Address:</strong> Jordan<br>
                                 <strong>Phone:</strong> +962778095499<br>
                                 <strong>Email:</strong> sight@photographer.net<br>
                             </p>
@@ -144,7 +185,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-md-6 footer-links">
+                    <div class="col-lg-2 col-md-6 footer-links"><br />
                         <h4>Useful Links</h4>
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
@@ -155,7 +196,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 footer-links">
+                    <div class="col-lg-3 col-md-6 footer-links"><br />
                         <h4>Our Services</h4>
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Portrait photography</a></li>
@@ -166,7 +207,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 footer-newsletter">
+                    <div class="col-lg-4 col-md-6 footer-newsletter"><br />
                         <h4>Our Newsletter</h4>
                         <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
                         <form action="" method="post">
@@ -212,6 +253,7 @@
     <!-- Template Main JS File -->
     <script src="~/assetsUser/js/main.js"></script>
     @RenderSection("scripts", required: false)
+
 
 </body>
 </html>

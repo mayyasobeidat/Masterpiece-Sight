@@ -83,6 +83,7 @@
           <Property Name="created_at" Type="datetime" />
           <Property Name="fullName" Type="varchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="state" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="comments">
           <Key>
@@ -105,6 +106,14 @@
           <Property Name="is_approved" Type="bit" Nullable="false" />
           <Property Name="created_at" Type="datetime" />
         </EntityType>
+        <EntityType Name="FAQ">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question" Type="varchar" MaxLength="1000" />
+          <Property Name="answer" Type="varchar" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="photo_sessions">
           <Key>
             <PropertyRef Name="id" />
@@ -116,13 +125,14 @@
           <Property Name="TypeID" Type="int" Nullable="false" />
           <Property Name="session_date" Type="date" Nullable="false" />
           <Property Name="session_time" Type="time" Precision="7" Nullable="false" />
-          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="status" Type="bit" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="howMany" Type="int" Nullable="false" />
           <Property Name="pricing_id" Type="int" />
-          <Property Name="theDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="theDescription" Type="text" />
           <Property Name="session_minutes" Type="varchar" MaxLength="50" />
           <Property Name="phone" Type="nvarchar(max)" />
+          <Property Name="caase" Type="int" />
         </EntityType>
         <EntityType Name="photographer_cities">
           <Key>
@@ -154,7 +164,7 @@
           <Property Name="subscription_type" Type="varchar" MaxLength="10" />
           <Property Name="profilePhoto" Type="varchar" MaxLength="255" />
           <Property Name="coverPhoto" Type="varchar" MaxLength="255" />
-          <Property Name="bio" Type="varchar" MaxLength="400" />
+          <Property Name="bio" Type="text" />
           <Property Name="accept" Type="bit" Nullable="false" />
           <Property Name="is_hidden" Type="bit" Nullable="false" />
           <Property Name="created_at" Type="datetime" />
@@ -164,6 +174,7 @@
           <Property Name="twitter" Type="varchar" MaxLength="150" />
           <Property Name="linkedin" Type="varchar" MaxLength="150" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="state" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="PhotographerTypes">
           <Key>
@@ -564,6 +575,7 @@
           <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comments" EntityType="Self.comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="commentsHome" EntityType="Self.commentsHome" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FAQ" EntityType="Self.FAQ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="photo_sessions" EntityType="Self.photo_sessions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="photographer_cities" EntityType="Self.photographer_cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhotographerPricing" EntityType="Self.PhotographerPricing" Schema="dbo" store:Type="Tables" />
@@ -803,6 +815,7 @@
             <End Role="photographer" EntitySet="photographers" />
             <End Role="comment" EntitySet="comments" />
           </AssociationSet>
+          <EntitySet Name="FAQs" EntityType="sightModel.FAQ" />
           </EntityContainer>
         <EntityType Name="admin">
           <Key>
@@ -889,6 +902,7 @@
           <NavigationProperty Name="AspNetUser" Relationship="sightModel.FK__clients__user_id__22751F6C" FromRole="client" ToRole="AspNetUser" />
           <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__clien__40F9A68C" FromRole="client" ToRole="photo_sessions" />
           <NavigationProperty Name="comments" Relationship="sightModel.FK__comments__client__282DF8C2" FromRole="client" ToRole="comment" />
+          <Property Name="state" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="commentsHome">
           <Key>
@@ -912,11 +926,11 @@
           <Property Name="TypeID" Type="Int32" Nullable="false" />
           <Property Name="session_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="session_time" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="status" Type="Boolean" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="howMany" Type="Int32" Nullable="false" />
           <Property Name="pricing_id" Type="Int32" />
-          <Property Name="theDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="theDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="city" Relationship="sightModel.FK__photo_ses__city___41EDCAC5" FromRole="photo_sessions" ToRole="city" />
           <NavigationProperty Name="client" Relationship="sightModel.FK__photo_ses__clien__40F9A68C" FromRole="photo_sessions" ToRole="client" />
           <NavigationProperty Name="photographer" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photo_sessions" ToRole="photographer" />
@@ -924,6 +938,7 @@
           <NavigationProperty Name="PhotographerPricing" Relationship="sightModel.FK_photo_sessions_PhotographerPricing" FromRole="photo_sessions" ToRole="PhotographerPricing" />
           <Property Name="session_minutes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="caase" Type="Int32" />
         </EntityType>
         <EntityType Name="photographer_cities">
           <Key>
@@ -946,7 +961,7 @@
           <Property Name="subscription_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="profilePhoto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="coverPhoto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="bio" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="accept" Type="Boolean" Nullable="false" />
           <Property Name="is_hidden" Type="Boolean" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
@@ -966,6 +981,7 @@
           <NavigationProperty Name="PhotographerPricings" Relationship="sightModel.FK__Photograp__Photo__45BE5BA9" FromRole="photographer" ToRole="PhotographerPricing" />
           <NavigationProperty Name="photos" Relationship="sightModel.FK__photos__photogra__2BFE89A6" FromRole="photographer" ToRole="photo" />
           <NavigationProperty Name="comments" Relationship="sightModel.FK__comments__photog__2739D489" FromRole="photographer" ToRole="comment" />
+          <Property Name="state" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PhotographerType">
           <Key>
@@ -1370,6 +1386,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FAQ">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="answer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1443,6 +1467,7 @@
           <EntitySetMapping Name="clients">
             <EntityTypeMapping TypeName="sightModel.client">
               <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="fullName" ColumnName="fullName" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
@@ -1466,6 +1491,7 @@
           <EntitySetMapping Name="photo_sessions">
             <EntityTypeMapping TypeName="sightModel.photo_sessions">
               <MappingFragment StoreEntitySet="photo_sessions">
+                <ScalarProperty Name="caase" ColumnName="caase" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="session_minutes" ColumnName="session_minutes" />
                 <ScalarProperty Name="theDescription" ColumnName="theDescription" />
@@ -1495,6 +1521,7 @@
           <EntitySetMapping Name="photographers">
             <EntityTypeMapping TypeName="sightModel.photographer">
               <MappingFragment StoreEntitySet="photographers">
+                <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="linkedin" ColumnName="linkedin" />
                 <ScalarProperty Name="twitter" ColumnName="twitter" />
@@ -1615,6 +1642,15 @@
                 <ScalarProperty Name="comment1" ColumnName="comment" />
                 <ScalarProperty Name="client_id" ColumnName="client_id" />
                 <ScalarProperty Name="photographer_id" ColumnName="photographer_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAQs">
+            <EntityTypeMapping TypeName="sightModel.FAQ">
+              <MappingFragment StoreEntitySet="FAQ">
+                <ScalarProperty Name="answer" ColumnName="answer" />
+                <ScalarProperty Name="question" ColumnName="question" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

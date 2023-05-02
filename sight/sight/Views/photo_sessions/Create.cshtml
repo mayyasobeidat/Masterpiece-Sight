@@ -89,19 +89,19 @@
                                 </div>
                                 <div class="mb-3 firstForm">
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.TextBoxFor(model => model.session_time, "{0:hh\\:mm}", new { @class = "form-control", @type = "time", @id = "NewField9" })
+                                        @Html.TextBoxFor(model => model.session_time, "{0:hh\\:mm}", new { @class = "form-control", @type = "time", @id = "NewField9", data_sb_validations = "required" })
                                         @Html.ValidationMessageFor(model => model.session_time, "", new { @class = "text-danger" })
                                         <label for="newField9">Time</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.EditorFor(model => model.howMany, new { htmlAttributes = new { @class = "form-control", type = "number", data_sb_validations = "required", @id = "NewFields", min = "1", max = "20" } })
+                                        @Html.EditorFor(model => model.howMany, new { htmlAttributes = new { @class = "form-control", type = "number", data_sb_validations = "required", @id = "NewFields", min = "1", max = "30" } })
                                         @Html.ValidationMessageFor(model => model.howMany, "", new { @class = "text-danger" })
-                                        <label for="newFields">People</label>
+                                        <label for="newFields">The number of people</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
                                         @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", type = "phone", data_sb_validations = "required", @id = "newField3", @value = ViewBag.phone } })*@
                                         @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @value = Model.client.PhoneNumber } })*@
-                                        <input class="form-control" data-sb-validations="required" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" />
+                                        <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" required />
                                         @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
 
                                         <label for="newField3">Your Phone</label>
@@ -113,7 +113,11 @@
                                     <label class="form-label d-block">Please tell us about your shoot vision and goals, including anything specific you are hoping to see in your photos.*</label>
 
                                     <div class="form-floating mb-3 row-cols-lg-3">
-                                        @Html.TextAreaFor(model => model.theDescription, new { @class = "form-control", id = "NewFieldsss", style = "height: 10rem;", data_sb_validations = "required", placeholder = "Examples include:\n1) any specific landmarks or locations you would like in the background\n2) photo style, such as romantic, fun, playful, etc.\n3) any must-have shots, such as solo shots or photos of only certain participants" })
+                                       <textarea class="form-control" id="NewFieldsss" style="height: 10rem;" name="theDescription" required></textarea>
+
+
+
+
                                         @Html.ValidationMessageFor(model => model.theDescription, "", new { @class = "text-danger" })
                                     </div>
                                     <p class="details">

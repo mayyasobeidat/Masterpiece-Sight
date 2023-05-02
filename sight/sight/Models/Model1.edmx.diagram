@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b9fffd90cdcb4a1b84150e95f6ba9d10" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="b9fffd90cdcb4a1b84150e95f6ba9d10" Name="Diagram1" ZoomLevel="65">
         <EntityTypeShape EntityType="sightModel.admin" Width="1.5" PointX="3" PointY="13.75" />
         <EntityTypeShape EntityType="sightModel.AspNetRole" Width="1.5" PointX="3.75" PointY="8.375" />
         <EntityTypeShape EntityType="sightModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="16.625" />
@@ -49,6 +49,7 @@
         <EntityTypeShape EntityType="sightModel.comment" Width="1.5" PointX="5.25" PointY="27.125" />
         <AssociationConnector Association="sightModel.FK__comments__client__282DF8C2" />
         <AssociationConnector Association="sightModel.FK__comments__photog__2739D489" />
+        <EntityTypeShape EntityType="sightModel.FAQ" Width="1.5" PointX="3.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

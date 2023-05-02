@@ -37,11 +37,12 @@ namespace sight.Controllers
 
             int PhoID = @ViewBag.phoID;
 
-            int newBookingCount = db.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.session_date >= DateTime.Today).Count();
+            int newBookingCount = db.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.caase == 1  &&  p.session_date >= DateTime.Today).Count();
             ViewBag.newBookingCount = newBookingCount;
             return View();
 
-        }
+        }                           
+
 
 
         public ActionResult CreateFenish()
@@ -99,7 +100,7 @@ namespace sight.Controllers
                             .Include(p => p.photographer)
                             .Include(p => p.PhotographyType)
                             .Include(p => p.PhotographerPricing)
-                            .Where(p => p.photographer_id == idPho && p.status == false && p.session_date >= today);
+                            .Where(p => p.photographer_id == idPho && p.status == false && p.session_date >= today && p.caase == 1);
 
             return View(photo_sessions.ToList());
 
@@ -118,8 +119,8 @@ namespace sight.Controllers
                             .Include(p => p.photographer)
                             .Include(p => p.PhotographyType)
                             .Include(p => p.PhotographerPricing)
-                            .Where(p => p.photographer_id == idPho && p.status == false && p.session_date >= today);
-
+                            .Where(p => p.photographer_id == idPho && p.status == false && p.session_date >= today && p.caase == 1);
+             
             return View(photo_sessions.ToList());
 
 
@@ -182,7 +183,7 @@ namespace sight.Controllers
 
         }
 
- 
+
 
         // GET: photo_sessions1/Details/5
         public ActionResult Details(int? id)
@@ -198,6 +199,56 @@ namespace sight.Controllers
             }
             return View(photo_sessions);
         }
+
+        public ActionResult Accept(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            photo_sessions photo_sessions = db.photo_sessions.Find(id);
+            if (photo_sessions == null)
+            {
+                return HttpNotFound();
+            }
+
+            photo_sessions.status = true;
+            photo_sessions.caase = 2;
+
+
+            db.Entry(photo_sessions).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("BookingPhotographer", "photo_sessions"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+        public ActionResult Reject(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            photo_sessions photo_sessions = db.photo_sessions.Find(id);
+            if (photo_sessions == null)
+            {
+                return HttpNotFound();
+            }
+
+            photo_sessions.status = false;
+            photo_sessions.caase = 3;
+
+
+            db.Entry(photo_sessions).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("BookingPhotographer", "photo_sessions"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
+        }
+
+
+      
+
+
+
+
 
         // GET: photo_sessions1/Create
         public ActionResult Create(int? id)
@@ -252,8 +303,10 @@ namespace sight.Controllers
                 photo_sessions.client_id = iduser;
                 photo_sessions.photographer_id = (int)id;
                 photo_sessions.created_at = DateTime.Now;
+                photo_sessions.caase = 1;
+                photo_sessions.status = false;
 
-               db.photo_sessions.Add(photo_sessions);
+                db.photo_sessions.Add(photo_sessions);
                 db.SaveChanges();
                 int photoSessionsID = db.photo_sessions.OrderByDescending(a => a.id).FirstOrDefault(s => s.client_id == iduser).id;
                 Session["type"] = photo_sessions.TypeID;
@@ -268,6 +321,8 @@ namespace sight.Controllers
                 Session["howMany"] = photo_sessions.howMany;
                 Session["created_at"] = photo_sessions.created_at;
                 Session["status"] = photo_sessions.status;
+                Session["caase"] = photo_sessions.caase;
+
 
 
                 return RedirectToAction("Edit", new { id = (int)photoSessionsID });
@@ -365,8 +420,11 @@ namespace sight.Controllers
 
                 photo_sessions.theDescription = Session["theDescription"].ToString();
                 photo_sessions.howMany = (int)Session["howMany"];
-                photo_sessions.created_at = (DateTime)Session["created_at"] ;
+                photo_sessions.created_at = (DateTime)Session["created_at"];
                 photo_sessions.status = (bool)Session["status"];
+
+                photo_sessions.caase = (int)Session["caase"];
+
 
                 db.Entry(photo_sessions).State = EntityState.Modified;
                 db.SaveChanges();
@@ -400,7 +458,7 @@ namespace sight.Controllers
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
             db.photo_sessions.Remove(photo_sessions);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "Clients");
         }
 
         protected override void Dispose(bool disposing)

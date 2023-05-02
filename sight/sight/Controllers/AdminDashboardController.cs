@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using sight.Models;
 
 namespace sight.Controllers
@@ -41,7 +42,18 @@ namespace sight.Controllers
             var count = db.AspNetUsers.Count();
             return Content(count.ToString());
         }
-  
+
+        public ActionResult totalProfits()
+        {
+            var count = db.Subscriptions.Sum(s => s.Price);
+            return Content(count.ToString());
+        }
+
+        public ActionResult totalSubscriptions()
+        {
+            var count = db.Subscriptions.Count();
+            return Content(count.ToString());
+        }
 
 
         public ActionResult Index()
@@ -49,32 +61,15 @@ namespace sight.Controllers
             return View();
         }
 
-        public ActionResult Services()
-        {
-            return View();
-        }
-        public ActionResult CreateNewService()
-        {
-            return View();
-        }
+   
 
-        public ActionResult Photographers()
-        {
-            return View();
-        }
+   
+       
 
-        public ActionResult Users()
-        {
-            return View();
-        }
-        public ActionResult Gallery()
-        {
-            return View();
-        }
-        public ActionResult AddNewPhoto()
-        {
-            return View();
-        }
+
+
+
+
         public ActionResult Statistics()
         {
             int irbidCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid")).Count();

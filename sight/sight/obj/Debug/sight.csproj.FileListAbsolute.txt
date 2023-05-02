@@ -210,3 +210,9 @@ C:\Users\dell\Masterpiece-Sight\sight\sight\bin\System.Memory.xml
 C:\Users\dell\Masterpiece-Sight\sight\sight\bin\System.Numerics.Vectors.xml
 C:\Users\dell\Masterpiece-Sight\sight\sight\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\dell\Masterpiece-Sight\sight\sight\bin\GoogleAuthentication.dll
+C:\Users\dell\Masterpiece-Sight\sight\sight\bin\xunit.abstractions.dll
+C:\Users\dell\Masterpiece-Sight\sight\sight\bin\xunit.core.dll
+C:\Users\dell\Masterpiece-Sight\sight\sight\bin\xunit.execution.desktop.dll
+C:\Users\dell\Masterpiece-Sight\sight\sight\bin\xunit.abstractions.xml
+C:\Users\dell\Masterpiece-Sight\sight\sight\bin\xunit.core.xml
+C:\Users\dell\Masterpiece-Sight\sight\sight\bin\xunit.execution.desktop.xml

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<sight.Models.photographer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+}
+
+
+
+<style>
+
+
+    .myIMG {
+        top: -50px;
+        left: -35px;
+        display: block;
+        z-index: 999;
+        cursor: pointer;
+        -webkit-transition-property: all;
+        -webkit-transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease;
+    }
+
+        .myIMG:hover {
+            transform: scale(4);
+        }
+</style>
+
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        @*<h4 class="mb-4">  @Html.ActionLink("Add New Photographer", "Create")</h4>*@
+        <div class="table-responsive">
+            <h6 class="mb-4">All Photographers</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col">Accept</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var m = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@m</th>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td>
+                                <a href="mailto:@Html.DisplayFor(modelItem => item.AspNetUser.Email)">@Html.DisplayFor(modelItem => item.AspNetUser.Email)</a>
+                            </td>
+                            <td>
+                                <a href="tel:@Html.DisplayFor(modelItem => item.PhoneNumber)">@Html.DisplayFor(modelItem => item.PhoneNumber)</a>
+                            </td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                            @if (item.accept)
+                            {
+                                <td style="color:limegreen">Accepted</td>
+                            }
+                            else
+                            {
+                                <td style="color:red">Not Accepted</td>
+
+                            }
+                            @if (item.is_hidden)
+                            {
+                                <td style="color:red">Deactivated</td>
+                            }
+                            else
+                            {
+                                <td style="color:limegreen">Activated</td>
+
+                            }
+                            <td>
+                                @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-outline-warning" })
+
+                            </td>
+
+                        </tr>
+                        {
+                            m++;
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<br />

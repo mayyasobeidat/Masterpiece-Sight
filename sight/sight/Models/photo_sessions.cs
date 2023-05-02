@@ -21,13 +21,14 @@ namespace sight.Models
         public int TypeID { get; set; }
         public System.DateTime session_date { get; set; }
         public System.TimeSpan session_time { get; set; }
-        public bool status { get; set; }
+        public Nullable<bool> status { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public int howMany { get; set; }
         public Nullable<int> pricing_id { get; set; }
         public string theDescription { get; set; }
         public string session_minutes { get; set; }
         public string phone { get; set; }
+        public Nullable<int> caase { get; set; }
     
         public virtual city city { get; set; }
         public virtual client client { get; set; }

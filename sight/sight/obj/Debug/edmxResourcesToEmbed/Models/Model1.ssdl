@@ -78,6 +78,7 @@
     <Property Name="created_at" Type="datetime" />
     <Property Name="fullName" Type="varchar" MaxLength="50" />
     <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="state" Type="varchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="comments">
     <Key>
@@ -100,6 +101,14 @@
     <Property Name="is_approved" Type="bit" Nullable="false" />
     <Property Name="created_at" Type="datetime" />
   </EntityType>
+  <EntityType Name="FAQ">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="question" Type="varchar" MaxLength="1000" />
+    <Property Name="answer" Type="varchar" MaxLength="1000" />
+  </EntityType>
   <EntityType Name="photo_sessions">
     <Key>
       <PropertyRef Name="id" />
@@ -111,13 +120,14 @@
     <Property Name="TypeID" Type="int" Nullable="false" />
     <Property Name="session_date" Type="date" Nullable="false" />
     <Property Name="session_time" Type="time" Precision="7" Nullable="false" />
-    <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="status" Type="bit" />
     <Property Name="created_at" Type="datetime" />
     <Property Name="howMany" Type="int" Nullable="false" />
     <Property Name="pricing_id" Type="int" />
-    <Property Name="theDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="theDescription" Type="text" />
     <Property Name="session_minutes" Type="varchar" MaxLength="50" />
     <Property Name="phone" Type="nvarchar(max)" />
+    <Property Name="caase" Type="int" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>
@@ -149,7 +159,7 @@
     <Property Name="subscription_type" Type="varchar" MaxLength="10" />
     <Property Name="profilePhoto" Type="varchar" MaxLength="255" />
     <Property Name="coverPhoto" Type="varchar" MaxLength="255" />
-    <Property Name="bio" Type="varchar" MaxLength="400" />
+    <Property Name="bio" Type="text" />
     <Property Name="accept" Type="bit" Nullable="false" />
     <Property Name="is_hidden" Type="bit" Nullable="false" />
     <Property Name="created_at" Type="datetime" />
@@ -159,6 +169,7 @@
     <Property Name="twitter" Type="varchar" MaxLength="150" />
     <Property Name="linkedin" Type="varchar" MaxLength="150" />
     <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="state" Type="varchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="PhotographerTypes">
     <Key>
@@ -559,6 +570,7 @@
     <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="comments" EntityType="Self.comments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="commentsHome" EntityType="Self.commentsHome" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FAQ" EntityType="Self.FAQ" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="photo_sessions" EntityType="Self.photo_sessions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="photographer_cities" EntityType="Self.photographer_cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PhotographerPricing" EntityType="Self.PhotographerPricing" Schema="dbo" store:Type="Tables" />

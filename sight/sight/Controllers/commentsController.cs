@@ -190,7 +190,7 @@ namespace sight.Controllers
             comment comment = db.comments.Find(id);
             db.comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "Clients");
         }
 
         protected override void Dispose(bool disposing)

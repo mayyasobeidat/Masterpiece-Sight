@@ -120,6 +120,7 @@
       <End Role="photographer" EntitySet="photographers" />
       <End Role="comment" EntitySet="comments" />
     </AssociationSet>
+    <EntitySet Name="FAQs" EntityType="sightModel.FAQ" />
   </EntityContainer>
   <EntityType Name="admin">
     <Key>
@@ -206,6 +207,7 @@
     <NavigationProperty Name="AspNetUser" Relationship="sightModel.FK__clients__user_id__22751F6C" FromRole="client" ToRole="AspNetUser" />
     <NavigationProperty Name="photo_sessions" Relationship="sightModel.FK__photo_ses__clien__40F9A68C" FromRole="client" ToRole="photo_sessions" />
     <NavigationProperty Name="comments" Relationship="sightModel.FK__comments__client__282DF8C2" FromRole="client" ToRole="comment" />
+    <Property Name="state" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="commentsHome">
     <Key>
@@ -229,11 +231,11 @@
     <Property Name="TypeID" Type="Int32" Nullable="false" />
     <Property Name="session_date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="session_time" Type="Time" Nullable="false" Precision="7" />
-    <Property Name="status" Type="Boolean" Nullable="false" />
+    <Property Name="status" Type="Boolean" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="howMany" Type="Int32" Nullable="false" />
     <Property Name="pricing_id" Type="Int32" />
-    <Property Name="theDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="theDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="city" Relationship="sightModel.FK__photo_ses__city___41EDCAC5" FromRole="photo_sessions" ToRole="city" />
     <NavigationProperty Name="client" Relationship="sightModel.FK__photo_ses__clien__40F9A68C" FromRole="photo_sessions" ToRole="client" />
     <NavigationProperty Name="photographer" Relationship="sightModel.FK__photo_ses__photo__40058253" FromRole="photo_sessions" ToRole="photographer" />
@@ -241,6 +243,7 @@
     <NavigationProperty Name="PhotographerPricing" Relationship="sightModel.FK_photo_sessions_PhotographerPricing" FromRole="photo_sessions" ToRole="PhotographerPricing" />
     <Property Name="session_minutes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="caase" Type="Int32" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>
@@ -263,7 +266,7 @@
     <Property Name="subscription_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="profilePhoto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="coverPhoto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="bio" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="accept" Type="Boolean" Nullable="false" />
     <Property Name="is_hidden" Type="Boolean" Nullable="false" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
@@ -283,6 +286,7 @@
     <NavigationProperty Name="PhotographerPricings" Relationship="sightModel.FK__Photograp__Photo__45BE5BA9" FromRole="photographer" ToRole="PhotographerPricing" />
     <NavigationProperty Name="photos" Relationship="sightModel.FK__photos__photogra__2BFE89A6" FromRole="photographer" ToRole="photo" />
     <NavigationProperty Name="comments" Relationship="sightModel.FK__comments__photog__2739D489" FromRole="photographer" ToRole="comment" />
+    <Property Name="state" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="PhotographerType">
     <Key>
@@ -687,4 +691,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="FAQ">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="question" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="answer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>
