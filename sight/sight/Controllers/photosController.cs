@@ -96,11 +96,20 @@ namespace sight.Controllers
         // GET: photos/Edit/5
         public ActionResult Edit(int? id)
         {
+            var x = User.Identity.GetUserId();
+            int iduser = db.photographers.FirstOrDefault(a => a.user_id == x).id;
+            ViewBag.photographersID = iduser;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             photo photo = db.photos.Find(id);
+            Session["IMG"] = photo.photo_url;
+            Session["iduser"] = iduser;
+
+
+
             if (photo == null)
             {
                 return HttpNotFound();
@@ -115,13 +124,23 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,photographer_id,photo_url,created_at,photographyType,title")] photo photo)
+        public ActionResult Edit([Bind(Include = "id,photographer_id,photo_url,created_at,photographyType,title")] photo photo, HttpPostedFileBase photo_url)
         {
+            photo.photo_url = Session["IMG"].ToString();
+            photo.photographer_id = (int)Session["iduser"];
+
             if (ModelState.IsValid)
             {
+                string imgPath = "";
+                if (photo_url != null)
+                {
+                    imgPath = Path.GetFileName(photo_url.FileName);
+                    photo_url.SaveAs(Path.Combine(Server.MapPath("~/assetsUser/img/portfolio/") + photo_url.FileName));
+                    photo.photo_url = imgPath;
+                }
                 db.Entry(photo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", photo.photographer_id);
             ViewBag.photographyType = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo.photographyType);
@@ -151,7 +170,7 @@ namespace sight.Controllers
             photo photo = db.photos.Find(id);
             db.photos.Remove(photo);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

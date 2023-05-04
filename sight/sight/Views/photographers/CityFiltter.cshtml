@@ -139,7 +139,7 @@
                         <span>
                             @Html.RadioButton("searchBut", "PhoneNumber", new { @class = "form-check-input bg-black" })  Phone &nbsp; &nbsp;
                         </span>
-                        <span>  @Html.RadioButton("searchBut", "Email", new { @class = "form-check-input bg-black" })  E-mail &nbsp; &nbsp;</span>
+                        @*<span>  @Html.RadioButton("searchBut", "Email", new { @class = "form-check-input bg-black" })  E-mail &nbsp; &nbsp;</span>*@
 
                     </div>
                 </div>
@@ -178,8 +178,25 @@
                             {
                                 if (User.IsInRole("Photographer"))
                                 {
-                                    <a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>
+                                    <a href="#" class="btn btn-warning" onclick="preventDefault()">
+                                        Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
+                                    </a>
+                                    <script>
+                                        function preventDefault() {
+                                            Swal.fire({
+                                                title: 'You must log in with a user account',
+                                                text: 'Do you want to log out?',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#ffc107',
+                                                cancelButtonColor: '#222225',
+                                                confirmButtonText: 'LogOut'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) { document.getElementById('logoutForm').submit(); }
+                                            });
+                                        }
 
+                                    </script>
                                 }
                                 else if (User.IsInRole("Client"))
                                 {
@@ -187,8 +204,26 @@
                                 }
                                 else if (User.IsInRole("Admin"))
                                 {
-                                    <a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>
-                                }
+                                    <a href="#" class="btn btn-warning" onclick="preventDefault()">
+                                        Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
+                                    </a>
+                                    <script>
+                                        function preventDefault() {
+                                            Swal.fire({
+                                                title: 'You must log in with a user account',
+                                                text: 'Do you want to log out?',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#ffc107',
+                                                cancelButtonColor: '#222225',
+                                                confirmButtonText: 'LogOut'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) { document.getElementById('logoutForm').submit(); }
+                                            });
+                                        }
+
+                                    </script>
+ }
                             }
                             else
                             {
@@ -197,8 +232,8 @@
 
 
                             @*<a href="#" class="btn btn-warning">
-                                    Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
-                                </a>*@
+            Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
+        </a>*@
                             @*<a href="#" class="btn btn-outline-warning">View Photos and Reviews</a>*@
                             @Html.ActionLink("View Photos and Reviews", "PhotographerProfile", new { id = item.id }, new { @class = "btn btn-outline-warning" })
 
@@ -217,3 +252,5 @@
 
 </main>
 <!-- End #main -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></scrip

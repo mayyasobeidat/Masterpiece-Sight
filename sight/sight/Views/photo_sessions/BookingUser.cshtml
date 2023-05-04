@@ -69,8 +69,12 @@
 
         <tr>
             <td colspan="2">
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                @Html.ActionLink("Details", "Details", new { id = item.id }) 
+                @if (item.caase == 3 || item.caase == 1)
+                {
+                   <span>|</span> @Html.ActionLink("Delete", "Delete", new { id = item.id })
+
+                }
 
             </td>
         </tr>

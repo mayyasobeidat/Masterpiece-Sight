@@ -99,7 +99,33 @@
 <!-- Chart Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+
+
+        <div class="row g-4">
+            <h3 class="IconColor2">Most Popular Cities</h3>
+            <hr />
+            @Html.Partial("MostPopulerCities")
+        </div>
+
+
+        <div class="row g-4">
+
+            @Html.Partial("PhotoSessions")
+
+            @Html.Partial("Photographers")
+
+            @Html.Partial("Subscription")
+
+        </div>
+
+        <div class="row g-4">
+            @Html.Partial("MostPopulerTypes")
+        </div>
+
+
+
+
+        @*<div class="col-sm-12 col-xl-6">
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Single Line Chart</h6>
                 <canvas id="line-chart"></canvas>
@@ -134,15 +160,15 @@
                 <h6 class="mb-4">Doughnut Chart</h6>
                 <canvas id="doughnut-chart"></canvas>
             </div>
-        </div>
+        </div>*@
     </div>
 </div>
 <!-- Chart End -->
-<script>
+@*<script>
     (function ($) {
         "use strict";
 
- 
+
         // Chart Global Color
         Chart.defaults.color = "#6C7293";
         Chart.defaults.borderColor = "#000000";
@@ -293,4 +319,4 @@
 
 
     })(jQuery);
-</script>
+</script>*@

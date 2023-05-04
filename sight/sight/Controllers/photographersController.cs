@@ -101,11 +101,13 @@ namespace sight.Controllers
                     .Where(p => p.is_hidden == false)
                     .Include(p => p.AspNetUser)
                     .ToList());
+               
             }
             else if (searchBut == "Email")
             {
                 return View("photographers", db.photographers.Include(p => p.AspNetUser).Where(p => p.AspNetUser.Email.Contains(search)).Where(p => p.is_hidden == false).ToList());
             }
+         
             else
             {
                 return View("photographers");
@@ -614,6 +616,14 @@ namespace sight.Controllers
 
         public ActionResult PhotographerProfile(int? id)
         {
+            if(User.IsInRole("Client"))
+            {
+                var x = User.Identity.GetUserId();
+                int iduser = db.clients.FirstOrDefault(a => a.user_id == x).id;
+                ViewBag.clientid = iduser;
+                ViewBag.photographerId = id;
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

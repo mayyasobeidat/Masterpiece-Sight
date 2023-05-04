@@ -308,6 +308,8 @@
     <Compile Include="Models\photo_sessions.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PopulerCities.cs" />
+    <Compile Include="Models\PopulerTypes.cs" />
     <Compile Include="Models\Subscription.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -917,6 +919,11 @@
     <Content Include="Views\FAQs\Edit.cshtml" />
     <Content Include="Views\FAQs\Index.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\AdminDashboard\MostPopulerCities.cshtml" />
+    <Content Include="Views\AdminDashboard\PhotoSessions.cshtml" />
+    <Content Include="Views\AdminDashboard\MostPopulerTypes.cshtml" />
+    <Content Include="Views\AdminDashboard\Photographers.cshtml" />
+    <Content Include="Views\AdminDashboard\Subscription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

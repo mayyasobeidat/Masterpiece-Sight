@@ -168,8 +168,8 @@
         }
         else
         {
-    <h5 class="text-center">I will add the photos I took as soon as possible</h5>
-            }
+            <h5 class="text-center">I will add the photos I took as soon as possible</h5>
+        }
     </div>
 </section>
 
@@ -181,75 +181,117 @@
 @if (User.IsInRole("Client"))
 {
 
-    <section id="comment" class="services">
-
-        <div class="container">
-
-            <div class="section-title">
-                <h2>Add Review</h2>
-                <p>We value our community's feedback, and that's why we give you the opportunity to leave a review for your photographer after your photoshoot. We encourage you to share your honest opinion and provide constructive feedback to help us improve our services. Your reviews also help other clients make informed decisions when choosing their photographer. So, take a moment to leave a thoughtful comment, and let your photographer know what you appreciated about your experience. We look forward to hearing from you!</p>
-            </div>
-
-            <div class="row">
-                <div class="container px-5 my-5" id="">
+    sight.Models.sightEntities db = new sight.Models.sightEntities();
+    sight.Models.photo_sessions Type = new sight.Models.photo_sessions();
+    var dev = db.photo_sessions.ToList();
 
 
-                    @Html.Action("Create", "comments")
+    int clientId = (int)ViewBag.clientid;
+    int photographerId = (int)ViewBag.photographerId;
+    if (db.photo_sessions.Any(b => b.client_id == clientId && b.caase == 3 && b.photographer_id == photographerId))
+    {
 
+
+        <section id="comment" class="services">
+
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Add Review</h2>
+                    <p>We value our community's feedback, and that's why we give you the opportunity to leave a review for your photographer after your photoshoot. We encourage you to share your honest opinion and provide constructive feedback to help us improve our services. Your reviews also help other clients make informed decisions when choosing their photographer. So, take a moment to leave a thoughtful comment, and let your photographer know what you appreciated about your experience. We look forward to hearing from you!</p>
+                </div>
+
+                <div class="row">
+                    <div class="container px-5 my-5" id="">
+
+
+                        @Html.Action("Create", "comments")
+
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+
+
+        </section>
+
+    }
+    else
+    {
+        <section id="comment" class="services">
+
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Add Review</h2>
+                    <p>We value our community's feedback, and that's why we give you the opportunity to leave a review for your photographer after your photoshoot. We encourage you to share your honest opinion and provide constructive feedback to help us improve our services. Your reviews also help other clients make informed decisions when choosing their photographer. So, take a moment to leave a thoughtful comment, and let your photographer know what you appreciated about your experience. We look forward to hearing from you!</p>
+                </div>
+
+                <div class="row">
+                    <div class="container px-5 my-5" id="">
 
 
 
-    </section>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </section>
+    }
+
 }
-    <!-- End Testimonials Section -->
-    <!-- ======= Services Section ======= -->
+<!-- End Testimonials Section -->
+<!-- ======= Services Section ======= -->
 
 
-    <section id="testimonials" class="testimonials section-bg">
+<section id="testimonials" class="testimonials section-bg">
 
 
 
-        <div class="container">
+    <div class="container">
 
-            <div class="section-title">
-                <h2>Testimonials</h2>
-                <p>
-                   Testimonials are the personal experiences shared by our clients who have worked with our talented photographers. These are the genuine opinions of people who have chosen Sight for their photography needs, and we're proud to showcase them on our platform. These testimonials provide an insight into the quality of work that our photographers deliver, and the satisfaction of our clients. Read through these testimonials to get an idea of how Sight can help you capture your special moments.                </p>
-            </div>
-
-            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                <div class="swiper-wrapper">
-                    @foreach (var item in Model.comments.Where(x => x.is_approved))
-                    {
-
-
-                        <div class="swiper-slide">
-                            <div class="testimonial-item" data-aos="fade-up">
-                                <p>
-                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    @item.comment1
-
-                                </p>
-                                <img src="~/assetsUser/img/@item.client.photo" class="testimonial-img" alt="">
-                                <h3>@item.client.fullName</h3>
-                            </div>
-                        </div>
-                    }
-
-                    <!-- End testimonial item -->
-
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-
+        <div class="section-title">
+            <h2>Testimonials</h2>
+            <p>
+                Testimonials are the personal experiences shared by our clients who have worked with our talented photographers. These are the genuine opinions of people who have chosen Sight for their photography needs, and we're proud to showcase them on our platform. These testimonials provide an insight into the quality of work that our photographers deliver, and the satisfaction of our clients. Read through these testimonials to get an idea of how Sight can help you capture your special moments.
+            </p>
         </div>
 
-    </section>
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.comments.Where(x => x.is_approved))
+                {
+
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item" data-aos="fade-up">
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                @item.comment1
+
+                            </p>
+                            <img src="~/assetsUser/img/@item.client.photo" class="testimonial-img" alt="">
+                            <h3>@item.client.fullName</h3>
+                        </div>
+                    </div>
+                }
+
+                <!-- End testimonial item -->
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+
+</section>
 
 

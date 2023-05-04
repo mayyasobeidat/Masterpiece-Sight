@@ -110,7 +110,7 @@
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
                                 </li>
 
-                            
+
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings">Settings</button>
                                 </li>
@@ -131,35 +131,40 @@
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                         @Html.HiddenFor(model => model.id)
 
-                               
+
 
                                         //Profile Edit Form
-                                    <div class="row mb-3">
-                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile" id="myImage">
-                                            <div class="pt-2">
-                                                <input type="file" name="photo" class="custom-file-input" accept="image/*" id="myFileInput" onchange="checkFileSize()">
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img src="~/assetsUser/img/@Model.photo" name="profilePhoto" alt="Profile" id="myImage">
+                                                <div class="pt-2">
+                                                    <input type="file" name="photo" class="custom-file-input" accept="image/*" id="myFileInput" onchange="checkFileSize()">
 
 
-                                                <script>
-                                                    function checkFileSize() {
-                                                        const fileInput = document.getElementById('myFileInput');
-                                                        const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
-                                                        const imagePreview = document.getElementById('myImage');
-                                                        if (fileSize > 2) { // check if the file size is greater than 2 MB
-                                                            alert('File size should not exceed 2 MB');
-                                                            fileInput.value = ''; // clear the input field
-                                                            imagePreview.style.display = 'none'; // hide the image preview
-                                                        } else {
-                                                            imagePreview.style.display = 'block'; // show the image preview
+                                                    <script>
+                                                        function checkFileSize() {
+                                                            const fileInput = document.getElementById('myFileInput');
+                                                            const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+                                                            const imagePreview = document.getElementById('myImage');
+                                                            if (fileSize > 2) { // check if the file size is greater than 2 MB
+                                                                Swal.fire({
+                                                                    title: 'Sorry',
+                                                                    text: 'File size should not exceed 2 MB',
+                                                                    icon: 'warning',
+                                                                    confirmButtonColor: '#ffc107',
+                                                                });
+                                                                fileInput.value = ''; // clear the input field
+                                                                imagePreview.style.display = 'none'; // hide the image preview
+                                                            } else {
+                                                                imagePreview.style.display = 'block'; // show the image preview
+                                                            }
                                                         }
-                                                    }
 
-                                                </script>
+                                                    </script>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
 
 
@@ -217,7 +222,7 @@
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 @*@Html.EditorFor(model => model.AspNetUser.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @value = Model.AspNetUser.Email, @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
+                                                    @Html.ValidationMessageFor(model => model.AspNetUser.Email, "", new { @class = "text-danger" })*@
                                                 <label>@User.Identity.Name</label>
                                             </div>
                                         </div>
@@ -298,8 +303,11 @@
 
 
                                 <div class="tab-pane fade pt-3" id="settings">
-                                    @Html.Action("ChangePassword", "Manage")
-                                    <hr />
+                                    <h4>Change Password</h4>
+                                    <p>To change the password, go to the password change form from here</p>
+                                    <a href="~/Manage/ChangePassword/" class="btn btn-outline-dark">
+                                        Change Password
+                                    </a><br /><br />                                    <hr />
                                     <h4>Delete Accaount</h4>
                                     <p>If you click on this button, your account will be permanently deleted and will not be recovered</p>
 
@@ -347,3 +355,5 @@
 
     </div>
 </main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>

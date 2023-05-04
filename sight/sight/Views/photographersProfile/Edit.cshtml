@@ -69,7 +69,7 @@
 
     <div class="container">
         <section class="section profile">
-        
+
             <div class="row">
                 <div class="col-xl-4">
 
@@ -218,162 +218,238 @@
 
 
 
-                    <div class="col-xl-8">
-                        @if (TempData["alertMessage"] != null)
-                        {
-                            <div class="alert alert-success">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <strong>Success!</strong> @TempData["alertMessage"]
-                            </div>
-                        }
-                        <div class="card">
-                            <div class="card-body pt-3">
-                                @*Bordered Tabs*@
-                                <ul class="nav nav-tabs nav-tabs-bordered">
+                <div class="col-xl-8">
+                    @if (TempData["alertMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Success!</strong> @TempData["alertMessage"]
+                        </div>
+                    }
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            @*Bordered Tabs*@
+                            <ul class="nav nav-tabs nav-tabs-bordered">
 
-                                    <li class="nav-item">
-                                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                                    </li>
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                </li>
 
-                                    <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
-                                    </li>
-                                    <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking-Past">Previous Booking</button>
-                                    </li>
-                                    <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
-                                    </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking">Booking</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-booking-Past">Previous Booking</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-feedback">Feedback</button>
+                                </li>
 
-                                    <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings">Settings</button>
-                                    </li>
-                         
-
-                                </ul>
-
-                                <div class="tab-content pt-2">
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings">Settings</button>
+                                </li>
 
 
-                                    <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+                            </ul>
+
+                            <div class="tab-content pt-2">
+
+
+                                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
 
 
-                                        @using (Html.BeginForm("Edit", "photographersProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    @using (Html.BeginForm("Edit", "photographersProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.id)
+
+
+                                        //Profile Edit Form
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img src="~/assetsUser/img/@Model.profilePhoto" name="profilePhoto" alt="Profile" id="myImage">
+                                                <div class="pt-2">
+                                                    <input type="file" name="profilePhoto" class="custom-file-input" accept="image/*" id="myFileInput" onchange="checkFileSize()">
+
+                                                    <script>
+                                                        function checkFileSize() {
+                                                            const fileInput = document.getElementById('myFileInput');
+                                                            const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+                                                            const imagePreview = document.getElementById('myImage');
+                                                            if (fileSize > 2) { // check if the file size is greater than 2 MB
+                                                                Swal.fire({
+                                                                    title: 'Sorry',
+                                                                    text: 'File size should not exceed 2 MB',
+                                                                    icon: 'warning',
+                                                                    confirmButtonColor: '#ffc107',
+                                                                });
+                                                                fileInput.value = ''; // clear the input field
+                                                                imagePreview.style.display = 'none'; // hide the image preview
+                                                            } else {
+                                                                imagePreview.style.display = 'block'; // show the image preview
+                                                            }
+                                                        }
+
+                                                    </script>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <script>
+                                            const fileInput = document.getElementById('myFileInput');
+                                            const imagePreview = document.getElementById('myImage');
+
+                                            fileInput.addEventListener('change', function () {
+                                                const file = this.files[0];
+
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.addEventListener('load', function () {
+                                                        imagePreview.src = URL.createObjectURL(file);
+                                                    });
+                                                    reader.readAsDataURL(file);
+                                                } else {
+                                                    imagePreview.src = 'default-image-source.jpg';
+                                                }
+                                            });
+
+                                        </script>
+
+
+
+
+
+
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Cover Photo <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img src="~/assetsUser/img/@Model.coverPhoto" alt="cover" id="myImageCover">
+                                                <div class="pt-2">
+                                                    <input type="file" name="coverPhoto" class="custom-file-input" accept="image/*" id="myFileInputCover" onchange="checkFileSizeCover()">
+
+
+                                                    <script>
+                                                        function checkFileSizeCover() {
+                                                            const fileInput = document.getElementById('myFileInputCover');
+                                                            const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+                                                            const imagePreview = document.getElementById('myImageCover');
+                                                            if (fileSize > 2) { // check if the file size is greater than 2 MB
+                                                                Swal.fire({
+                                                                    title: 'Sorry',
+                                                                    text: 'File size should not exceed 2 MB',
+                                                                    icon: 'warning',
+                                                                    confirmButtonColor: '#ffc107',
+                                                                });
+                                                                fileInput.value = ''; // clear the input field
+                                                                imagePreview.style.display = 'none'; // hide the image preview
+                                                            } else {
+                                                                imagePreview.style.display = 'block'; // show the image preview
+                                                            }
+                                                        }
+
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            const fileInputC = document.getElementById('myFileInputCover');
+                                            const imagePreviewC = document.getElementById('myImageCover');
+
+                                            fileInputC.addEventListener('change', function () {
+                                                const file = this.files[0];
+
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.addEventListener('load', function () {
+                                                        imagePreviewC.src = URL.createObjectURL(file);
+                                                    });
+                                                    reader.readAsDataURL(file);
+                                                } else {
+                                                    imagePreview.src = 'default-image-source.jpg';
+                                                }
+                                            });
+
+                                        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <div class="row mb-3">
+
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @value = Model.FullName, @maxlength = "25", @placeholder = "Ex: Mayyas Obeidat" } })
+                                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mb-3">
+                                            <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.TextAreaFor(model => model.bio, new { @class = "form-control", @rows = "5", @style = "height:100px;", @value = Model.bio, @maxlength = "1500", @placeholder = "Ex: I am a ..." })
+                                                @Html.ValidationMessageFor(model => model.bio, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control", @type = "number", @value = Model.age, @min = 15, @max = 70, @placeholder = "Enter your age (15-70)" } })
+                                                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+
+
+
                                         {
-                                            @Html.AntiForgeryToken()
+                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                            sight.Models.city Type = new sight.Models.city();
+                                            var dev = db.cities.ToList();
 
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                            @Html.HiddenFor(model => model.id)
 
-
-                                            //Profile Edit Form
                                             <div class="row mb-3">
-                                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <img src="~/assetsUser/img/@Model.profilePhoto" name="profilePhoto" alt="Profile" id="myImage">
-                                                    <div class="pt-2">
-                                                        <input type="file" name="profilePhoto" class="custom-file-input" accept="image/*" id="myFileInput" onchange="checkFileSize()">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
+                                                <div class="col-md-4 col-lg-4">
 
-                                                        <script>
-                                                            function checkFileSize() {
-                                                                const fileInput = document.getElementById('myFileInput');
-                                                                const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
-                                                                const imagePreview = document.getElementById('myImage');
-                                                                if (fileSize > 2) { // check if the file size is greater than 2 MB
-                                                                    alert('File size should not exceed 2 MB');
-                                                                    fileInput.value = ''; // clear the input field
-                                                                    imagePreview.style.display = 'none'; // hide the image preview
-                                                                } else {
-                                                                    imagePreview.style.display = 'block'; // show the image preview
-                                                                }
-                                                            }
+                                                    @foreach (var item in dev)
+                                                    {
+                                                        <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
 
-                                                        </script>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <script>
-                                                const fileInput = document.getElementById('myFileInput');
-                                                const imagePreview = document.getElementById('myImage');
-
-                                                fileInput.addEventListener('change', function () {
-                                                    const file = this.files[0];
-
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.addEventListener('load', function () {
-                                                            imagePreview.src = URL.createObjectURL(file);
-                                                        });
-                                                        reader.readAsDataURL(file);
-                                                    } else {
-                                                        imagePreview.src = 'default-image-source.jpg';
                                                     }
-                                                });
-
-                                            </script>
-
-
-
-
-
-
-
-
-
-                                            <div class="row mb-3">
-                                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Cover Photo <span style="; color: #bcbcbc; font-size: 10px"><br />Photo size shouldn't exceed 2 MB</span></label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <img src="~/assetsUser/img/@Model.coverPhoto" alt="cover" id="myImageCover">
-                                                    <div class="pt-2">
-                                                        <input type="file" name="coverPhoto" class="custom-file-input" accept="image/*" id="myFileInputCover" onchange="checkFileSizeCover()">
-
-
-                                                        <script>
-                                                            function checkFileSizeCover() {
-                                                                const fileInput = document.getElementById('myFileInputCover');
-                                                                const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
-                                                                const imagePreview = document.getElementById('myImageCover');
-                                                                if (fileSize > 2) { // check if the file size is greater than 2 MB
-                                                                    alert('File size should not exceed 2 MB');
-                                                                    fileInput.value = ''; // clear the input field
-                                                                    imagePreview.style.display = 'none'; // hide the image preview
-                                                                } else {
-                                                                    imagePreview.style.display = 'block'; // show the image preview
-                                                                }
-                                                            }
-
-                                                        </script>
-                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-4 col-lg-4">
 
-                                            <script>
-                                                const fileInputC = document.getElementById('myFileInputCover');
-                                                const imagePreviewC = document.getElementById('myImageCover');
+                                                    @foreach (var item in Model.photographer_cities)
+                                                    {
+                                                        <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
 
-                                                fileInputC.addEventListener('change', function () {
-                                                    const file = this.files[0];
-
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.addEventListener('load', function () {
-                                                            imagePreviewC.src = URL.createObjectURL(file);
-                                                        });
-                                                        reader.readAsDataURL(file);
-                                                    } else {
-                                                        imagePreview.src = 'default-image-source.jpg';
                                                     }
-                                                });
+                                                </div>
 
-                                            </script>
-
-
-
+                                            </div>
+                                        }
 
 
 
@@ -381,171 +457,63 @@
 
 
 
+
+
+
+
+
+
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input class="form-control" name="PhoneNumber" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@Model.PhoneNumber" placeholder="Enter Jordanian phone number" />
+                                                @*@Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })*@
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <label class="form-control">@User.Identity.Name</label>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        {
+                                            sight.Models.sightEntities db = new sight.Models.sightEntities();
+                                            sight.Models.PhotographyType Type = new sight.Models.PhotographyType();
+                                            var dev = db.PhotographyTypes.ToList();
 
 
                                             <div class="row mb-3">
+                                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
+                                                <div class="col-md-4 col-lg-4">
 
-                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @value = Model.FullName, @maxlength = "25" , @placeholder = "Ex: Mayyas Obeidat" } })
-                                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                                    @foreach (var item in dev)
+                                                    {
+                                                        <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
+
+                                                    }
                                                 </div>
-                                            </div>
-          
+                                                <div class="col-md-4 col-lg-4">
 
-                                            <div class="row mb-3">
-                                                <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    @Html.TextAreaFor(model => model.bio, new { @class = "form-control", @rows = "5", @style = "height:100px;", @value = Model.bio, @maxlength = "1500" , @placeholder = "Ex: I am a ..." })
-                                                    @Html.ValidationMessageFor(model => model.bio, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
+                                                    @foreach (var item in Model.PhotographerTypes)
+                                                    {
+                                                        <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
 
-                                            <div class="row mb-3">
-                                                <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control", @type = "number", @value = Model.age, @min = 15, @max = 70, @placeholder = "Enter your age (15-70)" } })
-                                                    @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
-
-                                                </div>
-                                            </div>
-
-
-
-
-                                            {
-                                                sight.Models.sightEntities db = new sight.Models.sightEntities();
-                                                sight.Models.city Type = new sight.Models.city();
-                                                var dev = db.cities.ToList();
-
-
-                                                <div class="row mb-3">
-                                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Add City</label>
-                                                    <div class="col-md-4 col-lg-4">
-
-                                                        @foreach (var item in dev)
-                                                        {
-                                                            <a href="@Url.Action("AddCity", "photographersProfile", new { id = item.id })"><b style="color:green">+</b></a><span> @item.cityName</span><br />
-
-                                                        }
-                                                    </div>
-                                                    <div class="col-md-4 col-lg-4">
-
-                                                        @foreach (var item in Model.photographer_cities)
-                                                        {
-                                                            <a href="@Url.Action("DeleteCity", "photographersProfile", new { id = item.city.id })"><b style="color:red">×</b></a><span> @item.city.cityName</span><br />
-
-                                                        }
-                                                    </div>
-
-                                                </div>
-                                            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                            <div class="row mb-3">
-                                                <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input class="form-control" name="PhoneNumber" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@Model.PhoneNumber" placeholder="Enter Jordanian phone number" />
-                                                    @*@Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @type = "phone", @value = Model.PhoneNumber } })*@
-                                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <label class="form-control">@User.Identity.Name</label>
-                                                </div>
-                                            </div>
-
-
-
-
-
-                                            {
-                                                sight.Models.sightEntities db = new sight.Models.sightEntities();
-                                                sight.Models.PhotographyType Type = new sight.Models.PhotographyType();
-                                                var dev = db.PhotographyTypes.ToList();
-
-
-                                                <div class="row mb-3">
-                                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Type of Photography</label>
-                                                    <div class="col-md-4 col-lg-4">
-
-                                                        @foreach (var item in dev)
-                                                        {
-                                                            <a href="@Url.Action("AddType", "photographersProfile", new { id = item.TypeID })"><b style="color:green">+</b></a><span> @item.TypeName</span><br />
-
-                                                        }
-                                                    </div>
-                                                    <div class="col-md-4 col-lg-4">
-
-                                                        @foreach (var item in Model.PhotographerTypes)
-                                                        {
-                                                            <a href="@Url.Action("DeleteType", "photographersProfile", new { id = item.PhotographyType.TypeID })"><b style="color:red">×</b></a><span> @item.PhotographyType.TypeName</span><br />
-
-                                                        }
-                                                    </div>
-
-
+                                                    }
                                                 </div>
 
-
-
-
-                                            }
-
-
-
-
-                                            <div class="row mb-3">
-                                                <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="twitter" type="text" class="form-control" id="Twitter" value="@Model.twitter"  maxlength = "150" placeholder="https://twitter.com/example">
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="facebook" type="text" class="form-control" id="Facebook" value="@Model.facebook"  maxlength = "150" placeholder="https://facebook.com/example">
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="instagram" type="text" class="form-control" id="Instagram" value="@Model.instagram"  maxlength = "150" placeholder="https://instagram.com/example">
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="linkedin" type="text" class="form-control" id="Linkedin" value="@Model.linkedin"  maxlength = "150" placeholder="https://linkedin.com/in/example">
-                                                </div>
-                                            </div>
-
-                                            <div class="text-center">
-                                                <input type="submit" value="Save Changes" class="btn btn-warning" />
 
                                             </div>
-                                            //End Profile Edit Form
 
 
 
@@ -554,92 +522,139 @@
 
 
 
-                                    </div>
 
-                                    <div class="tab-pane fade pt-3" id="profile-booking">
-
-
-                                        @Html.Action("BookingPhotographerInProfile", "photo_sessions")
-                                    </div>
-
-                                    <div class="tab-pane fade pt-3" id="profile-booking-Past">
-
-
-                                        @Html.Action("PastBookingPhotographerInProfile", "photo_sessions")
-                                    </div>
-
-
-
-
-
-                                    <div class="tab-pane fade pt-3" id="profile-feedback">
-
-                                        @Html.Action("feedbackPhot", "comments")
-
-
-                                    </div>
-
-
-
-
-
-
-
-
-
-
-                                    <div class="tab-pane fade pt-3" id="settings">
-                                        @Html.Action("ChangePassword", "Manage")
-                                        <hr />
-                                        <h4>Delete Accaount</h4>
-                                        <p>If you click on this button, your account will be permanently deleted and will not be recovered</p>
-
-
-
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                            Delete Account
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="staticBackdropLabel">
-                                                            Delete Accaount
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Are you sure you want to permanently delete the account?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <a class="btn btn-danger" href="/Account/DeleteAccount/">Delete Account</a>
-                                                    </div>
-                                                </div>
+                                        <div class="row mb-3">
+                                            <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="@Model.twitter" maxlength="150" placeholder="https://twitter.com/example">
                                             </div>
                                         </div>
 
-                                    </div>
+                                        <div class="row mb-3">
+                                            <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="@Model.facebook" maxlength="150" placeholder="https://facebook.com/example">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="@Model.instagram" maxlength="150" placeholder="https://instagram.com/example">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="@Model.linkedin" maxlength="150" placeholder="https://linkedin.com/in/example">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <input type="submit" value="Save Changes" class="btn btn-warning" />
+
+                                        </div>
+                                        //End Profile Edit Form
 
 
 
 
-
-
+                                    }
 
 
 
                                 </div>
 
-                                @*End Bordered Tabs*@
+                                <div class="tab-pane fade pt-3" id="profile-booking">
+
+
+                                    @Html.Action("BookingPhotographerInProfile", "photo_sessions")
+                                </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-booking-Past">
+
+
+                                    @Html.Action("PastBookingPhotographerInProfile", "photo_sessions")
+                                </div>
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="profile-feedback">
+
+                                    @Html.Action("feedbackPhot", "comments")
+
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                                <div class="tab-pane fade pt-3" id="settings">
+                                    <h4>Change Password</h4>
+                                    <p>To change the password, go to the password change form from here</p>
+                                    <a href="~/Manage/ChangePassword/" class="btn btn-outline-dark">
+                                        Change Password
+                                    </a><br /><br />
+                                    @*@Html.Action("ChangePassword", "Manage")*@
+                                    <hr />
+                                    <h4>Delete Accaount</h4>
+                                    <p>If you click on this button, your account will be permanently deleted and will not be recovered</p>
+
+
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        Delete Account
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                                        Delete Accaount
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to permanently delete the account?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <a class="btn btn-danger" href="/Account/DeleteAccount/">Delete Account</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
 
                             </div>
-                        </div>
 
+                            @*End Bordered Tabs*@
+
+                        </div>
                     </div>
+
+                </div>
             </div>
         </section>
 
@@ -649,3 +664,5 @@
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>

@@ -11,7 +11,10 @@ namespace sight.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using Xunit.Sdk;
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class photo_sessions
     {
         public int id { get; set; }
@@ -19,14 +22,24 @@ namespace sight.Models
         public int client_id { get; set; }
         public int city_id { get; set; }
         public int TypeID { get; set; }
+        [Required(ErrorMessage = "The Date required.")]
+
         public System.DateTime session_date { get; set; }
+        [Required(ErrorMessage = "The Time required.")]
+
         public System.TimeSpan session_time { get; set; }
         public Nullable<bool> status { get; set; }
+
         public Nullable<System.DateTime> created_at { get; set; }
+
+        [Required(ErrorMessage = "The numberof people is required.")]
         public int howMany { get; set; }
         public Nullable<int> pricing_id { get; set; }
         public string theDescription { get; set; }
         public string session_minutes { get; set; }
+
+        [Required(ErrorMessage = "The Phone is required.")]
+
         public string phone { get; set; }
         public Nullable<int> caase { get; set; }
     

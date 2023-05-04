@@ -45,7 +45,8 @@
                                                 <div class="alert alert-success">@TempData["SuccessMessage"]</div>
                                             }
 
-                                            @Html.TextAreaFor(model => model.comment, new { @class = "form-control", @placeholder = "Write your comment here", @style = "height: 250px;" })
+                                            <textarea name="comment" class="form-control" placeholder="Write your comment here" style="height: 250px;" required></textarea>
+
                                             @Html.ValidationMessageFor(model => model.comment, "", new { @class = "text-danger" })
                                         </div>
                                         <br />

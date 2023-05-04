@@ -187,8 +187,69 @@
                         @if (User.IsInRole("Photographer"))
                         {
                             <p>
-                                @Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" }) |
-                                @Html.ActionLink("Reject", "Reject", new { id = Model.id }, new { @class = "btn btn-danger" }) |
+                                @*@Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" }) |*@
+                                |
+
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropp">
+                                    Accept
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdropp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdroppLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdroppLabel">
+                                                    Accept Booking
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to Accept this booking?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <a href="/photo_sessions/Accept/@Model.id" class="btn btn-success">Accept</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                @*@Html.ActionLink("Reject", "Reject", new { id = Model.id }, new { @class = "btn btn-danger" })*@
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    Reject
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                    Reject Booking
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to Reject this booking?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <a href="/photo_sessions/Reject/@Model.id" class="btn btn-danger">Reject</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
 
                                 @*@Html.ActionLink("Edit", "Edit", new { id = Model.id }) |*@
                                 @Html.ActionLink("Back", "BookingPhotographer")

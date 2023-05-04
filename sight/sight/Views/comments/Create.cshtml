@@ -19,8 +19,8 @@
         <div class="alert alert-success">@TempData["SuccessMessage"]</div>
     }
 
-    @Html.TextAreaFor(model => model.comment1, new { @class = "form-control", @placeholder = "Write your comment here", @style = "height: 250px;" })
-    
+<textarea id="comment1" name="comment1" class="form-control" placeholder="Write your comment here" style="height: 250px;" required></textarea>
+
 </div>
     <div class="d-grid">
         <input type="submit" value="Post comment" class="btn btn-warning btn-lg" />

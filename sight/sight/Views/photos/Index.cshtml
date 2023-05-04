@@ -8,105 +8,67 @@
 
 
 
-@*<div class="row row-cols-1 row-cols-md-3 g-4">
-
-
-
-
-    @foreach (var item in Model)
-    {
-
-        <div class="col">
-            <div class="card">
-                <img src="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo_url)" class="card-img-top" alt="@Html.DisplayFor(modelItem => item.title)">
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)</h5>
-                    <p class="card-text">@Html.ActionLink("Edit", "Edit", new { id = item.id }) | @Html.ActionLink("Delete", "Delete", new { id = item.id })</p>
-                </div>
-            </div>
-        </div>
-
-
+<style>
+    a {
+        text-decoration: none;
+        font-size: larger
     }
-</div>*@
 
+    .deletA {
+        color: red;
+    }
 
+    .pos {
+        color: white;
+    }
 
-<section id="portfolio" class="portfolio">
-    <div class="container" data-aos="fade-up">
+ 
+    .mmm {
+        width: 100%;
+    }
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-            @foreach (var item in Model.OrderByDescending(p => p.created_at))
+    .mm {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
+
+<!-- Portfolio Grid-->
+<section class="page-section" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+
+        </div>
+        <div class="row justify-content-between">
+            @foreach (var item in Model)
             {
-                <div class="col-lg-2 col-md-4 portfolio-item @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)">
-                    <div class="portfolio-wrap">
-                        <img src="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo_url)" class="img-fluid" alt="@Html.DisplayFor(modelItem => item.title)">
-                        <div class="portfolio-info">
-                            <!-- <h4>App 1</h4> -->
-                            <p>
-                                @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)
-                            </p>
-                            <p class="card-text">@Html.ActionLink("Edit", "Edit", new { id = item.id }) | @Html.ActionLink("Delete", "Delete", new { id = item.id })</p>
+                <div class="col-lg-3 col-sm-6 mb-4">
+                    <!-- Portfolio item 1-->
+                    <div class="portfolio-item">
+                   
+                        <div style="background-color: #00000030 ">
+                            &nbsp;
+                            @Html.ActionLink("✎", "Edit", new { id = item.id }, new { @class = "pos" }) <span style="color:ghostwhite">|</span>
+                            @Html.ActionLink("✘", "Delete", new { id = item.id }, new { @class = "deletA" })
+                        </div>
+                        <div class="mmm"><img class="mm" src="~/assetsUser/img/portfolio/@item.photo_url" alt="..." /></div>
+                        <div class="portfolio-caption p-1" style="background-color: #00000030 ">
+                            <span class="portfolio-caption-subheading text-muted"> @item.PhotographyType1.TypeName </span>
+                            @if( item.title != null)
+                            {
+                                <span class="portfolio-caption-heading"> , @item.title </span>
 
-                            <div class="portfolio-links">
-                                <a href="~/assetsUser/img/portfolio/@Html.DisplayFor(modelItem => item.photo_url)" data-gallery="portfolioGallery" class="portfolio-lightbox" title="@Html.DisplayFor(modelItem => item.title)"><i class="bx bx-plus"></i></a>
-                            </div>
+                            }
+
                         </div>
                     </div>
                 </div>
             }
+
         </div>
     </div>
 </section>
 
-
-
-
-
-
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.photo_url)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.created_at)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.photographer.user_id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhotographyType1.TypeName)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.photo_url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.created_at)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.photographer.user_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhotographyType1.TypeName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.id })
-            </td>
-        </tr>
-    }
-
-    </table>*@

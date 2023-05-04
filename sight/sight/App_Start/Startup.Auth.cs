@@ -50,9 +50,9 @@ namespace sight
             //    clientId: "",
             //    clientSecret: "");
 
-            app.UseTwitterAuthentication(
-               consumerKey: "494517526190333",
-               consumerSecret: "62b4ecfacfd4391a9a816ee609468976");
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "494517526190333",
+            //   consumerSecret: "62b4ecfacfd4391a9a816ee609468976");
 
             app.UseFacebookAuthentication(
               appId: "1196334390995025",

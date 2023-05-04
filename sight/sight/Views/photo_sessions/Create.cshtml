@@ -101,7 +101,16 @@
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
                                         @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", type = "phone", data_sb_validations = "required", @id = "newField3", @value = ViewBag.phone } })*@
                                         @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @value = Model.client.PhoneNumber } })*@
-                                        <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" required />
+                                        @if (ViewBag.phone != null)
+                                        {
+                                            <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" />
+
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" />
+
+                                        }
                                         @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
 
                                         <label for="newField3">Your Phone</label>

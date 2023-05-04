@@ -39,12 +39,12 @@
                                 @Html.Raw("<a  class=\"social-icon\"><i class='fa fa-google'></i></a>")
                             </button>
                         }
-                        else if (p.AuthenticationType == "Twitter")
+                        @*else if (p.AuthenticationType == "Twitter")
                         {
                             <button type="submit" class="social-icon d-flex align-items-center justify-content-center" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
                                 @Html.Raw("<a  class=\"social-icon\"><i class='fa fa-twitter'></i></a>")
                             </button>
-                        }
+                        }*@
                         else
                         {
                             <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
