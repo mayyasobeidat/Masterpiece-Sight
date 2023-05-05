@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photo_sessions>
 
 @{
+    ViewBag.Title = "Notifications";
     Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
@@ -66,11 +67,15 @@
 
                         @foreach (var item in Model)
                         {
+                            if (item.session_minutes != null)
+                            {
+
+                          
                             <hr />
                             <table class="table-bordered table table-hover table-responsive">
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.session_date)
+                                        Session Date
                                     </th>
                                     <td>
                                         @String.Format("{0:MM/dd/yyyy}", item.session_date)
@@ -78,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.session_time)
+                                        Session Time
                                     </th>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.session_time)
@@ -86,7 +91,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.city.cityName)
+                                        City
                                     </th>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.city.cityName)
@@ -94,18 +99,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.client.fullName)
+                                        Client Name
                                     </th>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.client.fullName)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.PhotographyType.TypeName)
-                                    </th>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
                                     </td>
                                 </tr>
                                 <tr>
@@ -115,8 +112,8 @@
                                     </td>
                                 </tr>
                             </table>
+                            }
                         }
-
 
 
 

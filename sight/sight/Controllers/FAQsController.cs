@@ -52,7 +52,7 @@ namespace sight.Controllers
             {
                 db.FAQs.Add(fAQ);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
             return View(fAQ);
@@ -84,7 +84,7 @@ namespace sight.Controllers
             {
                 db.Entry(fAQ).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
             return View(fAQ);
         }
@@ -112,7 +112,7 @@ namespace sight.Controllers
             FAQ fAQ = db.FAQs.Find(id);
             db.FAQs.Remove(fAQ);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

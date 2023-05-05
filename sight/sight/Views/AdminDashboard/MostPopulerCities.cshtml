@@ -1,11 +1,13 @@
 ﻿@*<div class="col-lg-12 mb-5 mt-3">
-    <div class="card">
-        <div class="card-body">
-            <canvas id="singelBarChart" style="height:500px;"></canvas>
+        <div class="card">
+            <div class="card-body">
+                <canvas id="singelBarChart" style="height:500px;"></canvas>
+            </div>
         </div>
-    </div>
-</div>*@
-
+    </div>*@
+@{
+    Layout = null;
+}
 <div class="col-sm-12 col-xl-12">
     <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">Percentage of photography bookings in each city</h6>
@@ -30,7 +32,7 @@
         success: function (data) {
             // parse the data and use it to create the chart
             var ctx = document.getElementById("singelBarChart");
-            ctx.height = 150;
+            ctx.height = 250;
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {

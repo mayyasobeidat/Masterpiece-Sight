@@ -1,7 +1,7 @@
 ﻿@model sight.Models.photographer
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Photographer Details";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -156,7 +156,7 @@
         {
             @Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" })
 
-        }
+        } |
 
         @if (Model.state == "block")
         {
@@ -188,7 +188,7 @@
                 @Html.ActionLink("Free +7", "ActivateFree", new { id = Model.id }, new { @class = "btn btn-success" })
             }
 
-        }|
+        }
 
 
 

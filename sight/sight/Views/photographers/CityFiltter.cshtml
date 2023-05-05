@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photographer>
 
 @{
-    ViewBag.Title = "photographersInCity";
+    ViewBag.Title = "photographers";
     Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
@@ -132,11 +132,11 @@
 
                     <div class="col-sm-6 col-xl-6 d-flex flex-sm-row flex-column">
 
-                        <label>Search by : &nbsp; &nbsp;</label>
-                        <span> @Html.RadioButton("searchBut", "All", true, new { @class = "form-check-input bg-black" }) All &nbsp; &nbsp; </span>
+                        <label style="color: #7d7d7d;">Search by : &nbsp; &nbsp;</label>
+                        <span style="color: #7d7d7d;"> @Html.RadioButton("searchBut", "All", true, new { @class = "form-check-input bg-black" }) All &nbsp; &nbsp; </span>
 
-                        <span> @Html.RadioButton("searchBut", "FullName", new { @class = "form-check-input bg-black" }) Full Name &nbsp; &nbsp; </span>
-                        <span>
+                        <span style="color: #7d7d7d;"> @Html.RadioButton("searchBut", "FullName", new { @class = "form-check-input bg-black" }) Full Name &nbsp; &nbsp; </span>
+                        <span style="color: #7d7d7d;">
                             @Html.RadioButton("searchBut", "PhoneNumber", new { @class = "form-check-input bg-black" })  Phone &nbsp; &nbsp;
                         </span>
                         @*<span>  @Html.RadioButton("searchBut", "Email", new { @class = "form-check-input bg-black" })  E-mail &nbsp; &nbsp;</span>*@

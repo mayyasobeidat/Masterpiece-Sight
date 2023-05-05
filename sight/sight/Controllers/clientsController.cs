@@ -25,7 +25,7 @@ namespace sight.Controllers
 
         public ActionResult state()
         {
-            var clients = db.clients.Include(p => p.AspNetUser);
+            var clients = db.clients.Include(p => p.AspNetUser).Where(a=> a.state != "block");
             return View(clients.ToList());
         }
 

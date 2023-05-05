@@ -1,7 +1,7 @@
 ﻿@model sight.Models.photo_sessions
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Booking | Sight";
     Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
@@ -93,6 +93,14 @@
                                             @Html.DisplayFor(model => model.session_time)
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>
+                                            Session Duration
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.session_minutes)
+                                        </td>
+                                    </tr>
                                     @*<tr>
             <th>
                 Status
@@ -182,8 +190,8 @@
                                         <th>
                                             Description
                                         </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.theDescription)
+                                        <td style=" overflow: auto; ">
+                                            <p style="height:40px">@Html.DisplayFor(model => model.theDescription)</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -196,10 +204,21 @@
                         {
                             @Html.AntiForgeryToken()
 
-                            <div class="form-actions no-color">
-                                <input type="submit" value="Delete" class="btn btn-danger" /> |
-                                @Html.ActionLink("Back", "BookingPhotographer")
-                            </div>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        @if (User.IsInRole("Photographer"))
+                        {
+                            @Html.ActionLink("Back", "BookingPhotographer")
+
+                        }
+                        else
+                        {
+                            
+                                @Html.ActionLink("Back", "Edit", "Clients")
+                            
+                        }
+
+                    </div>
                         }
 
 

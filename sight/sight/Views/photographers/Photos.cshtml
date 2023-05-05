@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Photographers Gallery\r\n";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -26,42 +26,42 @@
         }
 </style>
 
-<div class="row g-4">
-    <div class="col-sm-6 col-xl-3">
-        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-            <i class="fa fa-chart-area fa-3x text-primary"></i>
-            <div class="ms-3">
-                <a href="~/photographers/Indexxx" class="btn btn-warning">New Photographers</a>
+@*<div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-area fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <a href="~/photographers/Indexxx" class="btn btn-warning">New Photographers</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-            <div class="ms-3">
-                <a href="~/photographers/Index" class="btn btn-warning">Availability</a>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <a href="~/photographers/Index" class="btn btn-warning">Availability</a>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <a href="~/photographers/Indexx" class="btn btn-warning">All Photographers</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <a href="~/photographers/Photos" class="btn btn-warning">Photos Gallery</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-            <i class="fa fa-chart-line fa-3x text-primary"></i>
-            <div class="ms-3">
-                <a href="~/photographers/Indexx" class="btn btn-warning">All Photographers</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-            <div class="ms-3">
-                <a href="~/photographers/Photos" class="btn btn-warning">Photos Gallery</a>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
+    <br />*@
 
 
 
@@ -104,31 +104,36 @@
     }
 </style>
 
-<div class="container">
+<div class="bg-secondary rounded h-100 p-4">
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card-deck">
+    <div class="container">
+        <h5 class="text-center">
+            Pictures uploaded by photographers
+        </h5><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-deck">
 
-                @foreach (var item in Model.OrderByDescending(p => p.created_at))
-                {
-                    <div class="cardd">
-                        <a href="~/assetsUser/img/portfolio/@item.photo_url" download="@item.photographer.FullName">
+                    @foreach (var item in Model.OrderByDescending(p => p.created_at))
+                    {
+                        <div class="cardd">
+                            <a href="~/assetsUser/img/portfolio/@item.photo_url" download="@item.photographer.FullName">
 
-                            <img src="~/assetsUser/img/portfolio/@item.photo_url" class="card-img-topp" alt="@item.title">
-                        </a>
+                                <img src="~/assetsUser/img/portfolio/@item.photo_url" class="card-img-topp" alt="@item.title">
+                            </a>
 
-                        <div class="card-bodyd">
-                            <a class="card-text" href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographer.id)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a>
+                            <div class="card-bodyd">
+                                <a class="card-text" href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographer.id)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a>
 
-                            @*<p class="card-text">@item.photographer.FullName</p>*@
+                                @*<p class="card-text">@item.photographer.FullName</p>*@
+                            </div>
                         </div>
-                    </div>
 
-                }
-                <!-- more cards here -->
+                    }
+                    <!-- more cards here -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+</div>

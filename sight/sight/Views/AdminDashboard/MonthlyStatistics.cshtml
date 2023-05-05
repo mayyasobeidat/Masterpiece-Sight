@@ -1,0 +1,163 @@
+﻿@model Dictionary<string, int>
+@using System.Globalization
+
+@{
+    Layout = null;
+}
+
+<style>
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    /* Bar Graph Horizontal */
+    .bar-graph .year {
+        -webkit-animation: fade-in-text 2.2s 0.1s forwards;
+        -moz-animation: fade-in-text 2.2s 0.1s forwards;
+        animation: fade-in-text 2.2s 0.1s forwards;
+        opacity: 0;
+    }
+
+
+        .bar-graph-horizontal > div {
+            float: left;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        .bar-graph-horizontal .year {
+            float: left;
+            margin-top: 18px;
+            width: 80px;
+        }
+
+        .bar-graph-horizontal .bar {
+            border-radius: 3px;
+            height: 55px;
+            float: left;
+            overflow: hidden;
+            position: relative;
+            width: 0;
+        }
+
+    .bar-graph-one .bar::after {
+        -webkit-animation: fade-in-text 2.2s 0.1s forwards;
+        -moz-animation: fade-in-text 2.2s 0.1s forwards;
+        animation: fade-in-text 2.2s 0.1s forwards;
+        color: #fff;
+        content: attr(data-percentage);
+        font-weight: 700;
+        position: absolute;
+        right: 16px;
+        top: 17px;
+    }
+
+    .bar-graph-one .bar-one .bar {
+        background-color: #F2C511;
+        -webkit-animation: show-bar-one 1.2s 0.1s forwards;
+        -moz-animation: show-bar-one 1.2s 0.1s forwards;
+        animation: show-bar-one 1.2s 0.1s forwards;
+    }
+
+    .bar-graph-one .bar-two .bar {
+        background-color: #5292ac;
+        -webkit-animation: show-bar-two 1.2s 0.2s forwards;
+        -moz-animation: show-bar-two 1.2s 0.2s forwards;
+        animation: show-bar-two 1.2s 0.2s forwards;
+    }
+
+    .bar-graph-one .bar-three .bar {
+        background-color: #407286;
+        -webkit-animation: show-bar-three 1.2s 0.3s forwards;
+        -moz-animation: show-bar-three 1.2s 0.3s forwards;
+        animation: show-bar-three 1.2s 0.3s forwards;
+    }
+
+    .bar-graph-one .bar-four .bar {
+        background-color: #2e515f;
+        -webkit-animation: show-bar-four 1.2s 0.4s forwards;
+        -moz-animation: show-bar-four 1.2s 0.4s forwards;
+        animation: show-bar-four 1.2s 0.4s forwards;
+    }
+
+    /* Bar Graph Horizontal Animations */
+             @*@@-webkit-keyframes show-bar-one {
+        0% {
+            width: 0;
+        }
+
+        100% {
+            width:  @String.Format("{0}%", @ViewBag.Percentage );
+        }
+    }*@
+
+
+
+    @@-webkit-keyframes fade-in-text {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
+
+
+<div class="col-sm-12 col-xl-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Monthly booking statistics</h6>
+        <div class="table-responsive">
+
+            <table class="table table-bordered text-center table-hover">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Bookings</th>
+                        <th>percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var kvp in Model)
+                    {
+                        var monthName = DateTimeFormatInfo.CurrentInfo.GetMonthName(int.Parse(kvp.Key.Split('-')[1]));
+                        var percentage = (double)kvp.Value / Model.Values.Sum() * 100;
+
+                        <tr>
+                            <td>@Html.Encode(monthName)</td>
+                            <td>@kvp.Value</td>
+                            <td>@Html.DisplayFor(model => percentage) %</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-12">
+        <div class="bg-secondary rounded h-100 p-4">
+            <div class="container">
+
+                <section class="bar-graph bar-graph-horizontal bar-graph-one col-sm-12 col-xl-12">
+                    @foreach (var kvp in Model)
+                    {
+                        var monthName = DateTimeFormatInfo.CurrentInfo.GetMonthName(int.Parse(kvp.Key.Split('-')[1]));
+                        var percentage = Math.Round((double)kvp.Value / Model.Values.Sum() * 100, 0);
+
+                        ViewBag.Percentage = @Html.DisplayFor(model => percentage);
+
+                        <div class="bar-one">
+                            <span class="year">@Html.Encode(monthName)</span>
+                            <div class="bar" data-percentage="@Html.DisplayFor(model => percentage)%" style="width:@String.Format("{0}%", @ViewBag.Percentage )"></div>
+                        </div>
+                        <br /><br /><br />
+
+                    }
+
+                </section>
+            </div>
+
+    </div>
+</div>

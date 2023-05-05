@@ -1,46 +1,50 @@
 ﻿@model sight.Models.FAQ
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit FAQ";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
-<h2>Edit</h2>
+<h4>Edit Question</h4>
+<hr />
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>FAQ</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.question, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.question, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.question, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="row g-4">
+    <div class="col-sm-12 col-xl-12">
+        <div class="bg-secondary rounded h-100 p-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.answer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.answer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.answer, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="form-group col-xl-12">
+                        <textarea class="form-control" id="question" style="height: 200px;" name="question" maxlength="1000" placeholder="Enter the question" value="@Model.question" required></textarea><br />
+                        <script>
+                            document.getElementById("question").innerText = "@Model.question";
+
+                        </script>
+                        @*<input type="text" class="form-control" placeholder="Enter the question" maxlength="1000" name="question" id="question" required value="@Model.question" /><br />*@
+                        @Html.ValidationMessageFor(model => model.question, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-xl-12">
+                        <textarea class="form-control" id="answer" style="height: 200px;" name="answer" maxlength="1000" placeholder="Enter the answer" value="@Model.answer" required></textarea><br />
+                        <script>
+                            document.getElementById("answer").innerText = "@Model.answer";
+
+                        </script>
+                        @*<input type="text" class="form-control" placeholder="Enter the answer" maxlength="1000" name="answer" id="answer" required value="@Model.answer" /><br />*@
+                        @Html.ValidationMessageFor(model => model.answer, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-xl-2">
+                        <input type="submit" value="Create" class="btn btn-warning" /> | @Html.ActionLink("Back", "Create")
+                        <br />
+                    </div>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+

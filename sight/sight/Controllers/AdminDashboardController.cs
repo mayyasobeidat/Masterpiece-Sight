@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,8 @@ using sight.Models;
 
 namespace sight.Controllers
 {
+    [HandleError(View = "Error")]
+    [Authorize(Roles = "Admin")]
     public class AdminDashboardController : Controller
     {
         // GET: AdminDashboard
@@ -55,6 +58,8 @@ namespace sight.Controllers
             return Content(count.ToString());
         }
 
+   
+
 
         public ActionResult Index()
         {
@@ -72,45 +77,28 @@ namespace sight.Controllers
 
         public ActionResult Statistics()
         {
-            int irbidCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid")).Count();
-            int ammanCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Amman")).Count();
-            int jarashCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Jarash")).Count();
-            int ajlounCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Ajloun")).Count();
-            int aqabaCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Al-aqaba")).Count();
-
-            ViewBag.IrbidCount = irbidCount;
-            ViewBag.AmmanCount = ammanCount;
-            ViewBag.JarashCount = jarashCount;
-            ViewBag.AjlounCount = ajlounCount;
-            ViewBag.AqabaCount = aqabaCount;
+    
             return View();
         }
-        public ActionResult Statisticssss()
-        {
-            var allCount = db.photo_sessions.Count();
-            ViewBag.allCount = allCount;
+        //public ActionResult Statisticssss()
+        //{
+        //    int irbidCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Irbid")).Count();
+        //    int ammanCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Amman")).Count();
+        //    int jarashCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Jarash")).Count();
+        //    int ajlounCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Ajloun")).Count();
+        //    int aqabaCount = db.photographers.Include(p => p.photographer_cities).Where(p => p.photographer_cities.Any(c => c.city.cityName == "Al-aqaba")).Count();
 
-            var cities = db.cities.ToList(); // جلب جميع المدن
+        //    ViewBag.IrbidCount = irbidCount;
+        //    ViewBag.AmmanCount = ammanCount;
+        //    ViewBag.JarashCount = jarashCount;
+        //    ViewBag.AjlounCount = ajlounCount;
+        //    ViewBag.AqabaCount = aqabaCount;
 
-            foreach (var city in cities) // حلقة لجلب بيانات كل مدينة
-            {
-                var cityName = city.cityName;
-
-                int cityCount = db.photographers
-                                  .Include(p => p.photographer_cities)
-                                  .Where(p => p.photographer_cities.Any(c => c.city.cityName == cityName))
-                                  .Count();
-                ViewBag.cityCount = cityCount;
-
-                // حساب النسبة المئوية لكل مدينة
-                decimal cityPercentage = cityCount > 0 ? Math.Round((decimal)cityCount / allCount * 100, 1) : 0;
+        //    return View();
+        //}
 
 
-            }
 
-
-            return View();
-        }
         public ActionResult Dashboard()
         {
             return View();
@@ -250,11 +238,18 @@ namespace sight.Controllers
         {
             double Total = db.photographers.Count();
 
-            string[] State = new string[] { "Active", "Blocked", "Deleted" , "Inactive" };
+            string[] State = new string[] { "Active", "Blocked", "Deleted" , "Inactive"};
             double Deleted = db.photographers.Where(a => a.state == "deleted").Count();
             double Blocked = db.photographers.Where(a => a.state == "Block").Count();
-            double Active= db.photographers.Where(a => a.state == null && a.is_hidden == false && a.accept == true).Count();
-            double Inactive = db.photographers.Where(a => a.state == null && a.is_hidden == true && a.accept == true).Count();
+            double Active = db.photographers
+                .Where(a => a.state == null || a.state == "unblock")
+                .Where(a => a.is_hidden == false && a.accept == true)
+                .Count();
+            double Inactive = db.photographers
+                   .Where(a => a.state == null || a.state == "unblock")
+                   .Where(a => a.is_hidden == true && a.accept == true)
+                   .Count();
+
 
 
 
@@ -323,5 +318,32 @@ namespace sight.Controllers
             return Json(myData, JsonRequestBehavior.AllowGet);
         }
 
+
+
+
+        public ActionResult MonthlyStatistics()
+        {
+            var stats = db.photo_sessions.GroupBy(x => new { x.session_date.Year, x.session_date.Month })
+                                          .Select(g => new MonthlyStatistics
+                                          {
+                                              Year = g.Key.Year,
+                                              Month = g.Key.Month,
+                                              Count = g.Count(),
+                                              Percentage = (decimal)g.Count() / (decimal)db.photo_sessions.Count() * 100
+                                          })
+                                          .ToList();
+
+            var statsDict = stats.ToDictionary(s => $"{s.Year}-{s.Month}", s => s.Count);
+            return View(statsDict);
+        }
+
+    }
+
+    public class MonthlyStatistics
+    {
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public int Count { get; set; }
+        public decimal Percentage { get; set; }
     }
 }

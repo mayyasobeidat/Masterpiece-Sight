@@ -1,7 +1,7 @@
 ﻿@model sight.Models.PhotographyType
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Service";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -13,6 +13,10 @@
     <hr />
 
 
+    @if (ViewBag.Errors != null)
+    {
+        <div class="alert alert-danger"><b>Warning!! </b>You cannot delete a type of photography added to the portfolio of your photographers!!</div>
+    }
     <div class="row">
         <dl class="col-md-6 col-sm-12">
 

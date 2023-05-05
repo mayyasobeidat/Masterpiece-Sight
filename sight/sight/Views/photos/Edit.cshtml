@@ -1,15 +1,30 @@
 ﻿@model sight.Models.photo
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Photo";
     Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
 
 
-
-
 <style>
+    .details {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+
+    @@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+    .bbb {
+        background-image: url("conn.png");
+        background-size: cover;
+    }
+
+    .bookCard {
+        width: 85%;
+        padding: 4.5%;
+    }
+
     /*custom inpu file*/
     .custom-file-input {
         color: transparent;
@@ -52,133 +67,205 @@
     .bttn {
         padding: 9px 57px;
     }
+    .yes {
+        padding: 10px;
+    }
 
     .deletA {
         color: red;
     }
 
-    .pos {
-        color: white;
+    @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
+
+        .bookCard {
+            width: 90%;
+            padding: 10%;
+        }
     }
+
+    @@media only screen and (min-device-width: 0px) and (max-device-width:480px) {
+
+        .bookCard {
+            width: 95%;
+            padding: 0;
+        }
+
+        .custom-file-input::before {
+            padding: 10px 10px;
+        }
+        .bttn {
+            padding: 10px 44px;
+        }
+    }
+
+   
 </style>
 
 
-<main id="main" class="main" style="padding-top: 90px;">
-
-
-
+<main id="main" class="main" style="padding-top: 60px;">
 
     <div class="container">
+
+
         <section class="section profile">
 
-            <div class="row">
-                @using (Html.BeginForm("Edit", "photos", FormMethod.Post, new { enctype = "multipart/form-data" }))
-
-                {
-                    @Html.AntiForgeryToken()
 
 
-                <div class="row g-1 boxs">
-                    <div class="col-sm-12 col-xl-12">
+            <div class="row d-flex align-items-center justify-content-center">
+
+                <div class="card bookCard">
+
+
+
+                    <div id="form3">
+
                         <div class="container">
 
-                            <div class="row justify-content-center align-items-center">
+                            <div class="row">
 
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.id)
+                                <div class="col-sm-12 col-xl-12 yes">
+                                    <div class="container">
+
+                                        <h3>Are you sure you want to Edit this photo?</h3>
+
+                                        <hr />
+                                        <div class="row justify-content-center align-items-center">
 
 
-                                <div class="col-sm-12 col-xl-3 mb-2">
-                                    @Html.DropDownList("photographyType", null, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.photographyType, "", new { @class = "text-danger" })
+
+
+
+                                            <div class="col-lg-6">
+
+                                                <img src="~/assetsUser/img/portfolio/@Model.photo_url" name="photo_url" alt="Profile" id="myImage" style="width: 100%;"><br /><br />
+                                                <script>
+                                                    const fileInput = document.getElementById('myFileInputCover');
+                                                    const imagePreview = document.getElementById('myImage');
+
+                                                    fileInput.addEventListener('change', function () {
+                                                        const file = this.files[0];
+
+                                                        if (file) {
+                                                            const reader = new FileReader();
+                                                            reader.addEventListener('load', function () {
+                                                                imagePreview.src = URL.createObjectURL(file);
+                                                            });
+                                                            reader.readAsDataURL(file);
+                                                        } else {
+                                                            imagePreview.src = 'default-image-source.jpg';
+                                                        }
+                                                    });
+
+                                                </script>
+
+                                            </div>
+                                            <div class="col-lg-6">
+                                                @using (Html.BeginForm("Edit", "photos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+                                                {
+                                                    @Html.AntiForgeryToken()
+
+
+                                                    <div class="row g-1 boxs">
+                                                        <div class="col-sm-12 col-xl-12">
+                                                            <div class="container">
+
+                                                                <div class="row justify-content-center align-items-center">
+
+                                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                                    @Html.HiddenFor(model => model.id)
+
+
+                                                                    <div class="col-sm-12 col-xl-12 mb-2">
+                                                                        @Html.DropDownList("photographyType", null, htmlAttributes: new { @class = "form-control" })
+                                                                        @Html.ValidationMessageFor(model => model.photographyType, "", new { @class = "text-danger" })
+                                                                    </div>
+
+
+                                                                    <div class="col-sm-12 col-xl-12 mb-2">
+                                                                        @*@Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                                                        <input type="text" class="form-control" placeholder="Enter a title" maxlength="150" name="title" id="title" value="@Model.title" />
+                                                                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+
+                                                                    </div>
+
+                                                                    <div class="col-sm-12 col-xl-12 mb-2 row">
+                                                                        <input type="file" onchange="checkFileSizeCover()" accept="image/*" class="custom-file-input" name="photo_url" id="myFileInputCover">
+
+
+                                                                        <script>
+                                                                            function checkFileSizeCover() {
+                                                                                const fileInput = document.getElementById('myFileInputCover');
+                                                                                const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+                                                                                const imagePreview = document.getElementById('myImageCover');
+                                                                                if (fileSize > 2) { // check if the file size is greater than 2 MB
+                                                                                    Swal.fire({
+                                                                                        title: 'Sorry',
+                                                                                        text: 'File size should not exceed 2 MB',
+                                                                                        icon: 'warning',
+                                                                                        confirmButtonColor: '#ffc107',
+                                                                                    });
+
+                                                                                    fileInput.value = ''; // clear the input field
+                                                                                    imagePreview.style.display = 'none'; // hide the image preview
+                                                                                } else {
+                                                                                    imagePreview.style.display = 'block'; // show the image preview
+                                                                                }
+
+
+
+
+                                                                            }
+
+                                                                        </script>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                               
+
+                                                    </div>
+                                                    <div class="col-sm-12 col-xl-12 text-nowrap">
+                                                        <br /><input type="submit" value="Save" class="btn btn-warning bttn" /> <span>|</span> @Html.ActionLink("Back", "Create", new { }, new { @class = "pos" }) <span>|</span>
+                                                        @Html.ActionLink("Delete", "Delete", new { id = Model.id }, new { @class = "deletA" })
+                                                    </div>
+
+
+
+                                                }
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
-
-
-                                <div class="col-sm-12 col-xl-3 mb-2">
-                                    @*@Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })*@
-
-                                    <input type="text" class="form-control" placeholder="Enter a title" maxlength="150" name="title" id="title" value="@Model.title" />
-                                    @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-
-                                </div>
-
-                                <div class="col-sm-12 col-xl-2 mb-2 row">
-                                    <input type="file" onchange="checkFileSizeCover()" accept="image/*" class="custom-file-input" name="photo_url" id="myFileInputCover">
-
-
-                                    <script>
-                                        function checkFileSizeCover() {
-                                            const fileInput = document.getElementById('myFileInputCover');
-                                            const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
-                                            const imagePreview = document.getElementById('myImageCover');
-                                            if (fileSize > 2) { // check if the file size is greater than 2 MB
-                                                Swal.fire({
-                                                    title: 'Sorry',
-                                                    text: 'File size should not exceed 2 MB',
-                                                    icon: 'warning',
-                                                    confirmButtonColor: '#ffc107',
-                                                });
-
-                                                fileInput.value = ''; // clear the input field
-                                                imagePreview.style.display = 'none'; // hide the image preview
-                                            } else {
-                                                imagePreview.style.display = 'block'; // show the image preview
-                                            }
-
-
-
-
-                                        }
-
-                                    </script>
-                                </div>
-                                <div class="col-sm-12 col-xl-2 mb-2 row">
-                                    <input type="submit" value="Save" class="btn btn-warning bttn" />
-                                </div>
-                                @*<div class="col-sm-12 col-xl-2">
-                        @Html.ActionLink("Back", "Edit", "photographersProfile")
-                    </div>*@
                             </div>
+
                         </div>
+
+
+
+
+
+
                     </div>
-                    <div style="background-color: #00000030 ">
-                        &nbsp;
-                        @Html.ActionLink("Back", "Create", new {}, new { @class = "pos" }) <span style="color:ghostwhite">|</span>
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.id }, new { @class = "deletA" })
-                    </div>
+
 
                 </div>
-
-
-
-
-                }
-                <img src="~/assetsUser/img/portfolio/@Model.photo_url" name="photo_url" alt="Profile" id="myImage">
-                <script>
-                    const fileInput = document.getElementById('myFileInputCover');
-                    const imagePreview = document.getElementById('myImage');
-
-                    fileInput.addEventListener('change', function () {
-                        const file = this.files[0];
-
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.addEventListener('load', function () {
-                                imagePreview.src = URL.createObjectURL(file);
-                            });
-                            reader.readAsDataURL(file);
-                        } else {
-                            imagePreview.src = 'default-image-source.jpg';
-                        }
-                    });
-
-                </script>
-
             </div>
+
         </section>
 
     </div>
 </main>
+<!-- End #main -->
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 

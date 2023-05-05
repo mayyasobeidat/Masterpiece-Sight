@@ -891,7 +891,6 @@
     <Content Include="Views\photos\Edit.cshtml" />
     <Content Include="Views\photos\Index.cshtml" />
     <Content Include="Views\photographers\photographersInCity.cshtml" />
-    <Content Include="Views\AdminDashboard\Statisticssss.cshtml" />
     <Content Include="Views\photo_sessions\pastBookingUser.cshtml" />
     <Content Include="Views\comments\feedback.cshtml" />
     <Content Include="Views\photo_sessions\BookingPhotographerInProfile.cshtml" />
@@ -924,6 +923,7 @@
     <Content Include="Views\AdminDashboard\MostPopulerTypes.cshtml" />
     <Content Include="Views\AdminDashboard\Photographers.cshtml" />
     <Content Include="Views\AdminDashboard\Subscription.cshtml" />
+    <Content Include="Views\AdminDashboard\MonthlyStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

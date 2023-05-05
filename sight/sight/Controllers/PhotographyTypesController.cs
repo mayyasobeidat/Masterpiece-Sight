@@ -142,10 +142,31 @@ namespace sight.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             PhotographyType photographyType = db.PhotographyTypes.Find(id);
+            if (db.PhotographerTypes.Any(p => p.TypeID == id))
+            {
+                ViewBag.Errors = "An error occurred: ";
+                return View(photographyType);
+            }
             db.PhotographyTypes.Remove(photographyType);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    try
+        //    {
+        //        PhotographyType photographyType = db.PhotographyTypes.Find(id);
+        //        db.PhotographyTypes.Remove(photographyType);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Errors = "An error occurred: " + ex.Message;
+        //        return View();
+        //    }
+        //}
+
 
         protected override void Dispose(bool disposing)
         {

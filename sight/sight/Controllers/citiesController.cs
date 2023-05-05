@@ -107,13 +107,35 @@ namespace sight.Controllers
         // POST: cities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    try
+        //    {
+        //        city city = db.cities.Find(id);
+        //        db.cities.Remove(city);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Create");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Error = "An error occurred: " + ex.Message;
+        //        return View();
+        //    }
+        //}
+
         public ActionResult DeleteConfirmed(int id)
         {
             city city = db.cities.Find(id);
+            if (db.photographer_cities.Any(p => p.city_id == id))
+            {
+                ViewBag.Errors = "An error occurred: ";
+                return View(city);
+            }
             db.cities.Remove(city);
             db.SaveChanges();
             return RedirectToAction("Create");
         }
+
 
         protected override void Dispose(bool disposing)
         {

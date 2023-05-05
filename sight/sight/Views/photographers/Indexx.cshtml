@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photographer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Photos Gallery";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -28,7 +28,7 @@
 
 
 
-<div class="row g-4">
+@*<div class="row g-4">
     <div class="col-sm-6 col-xl-3">
         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
             <i class="fa fa-chart-area fa-3x text-primary"></i>
@@ -63,7 +63,7 @@
         </div>
     </div>
 </div>
-<br />
+<br />*@
 
 
 <div class="bg-secondary rounded-top p-4">
@@ -97,8 +97,6 @@
 
 <br />
 
-
-<br />
 
 <div class="col-12">
     <div class="bg-secondary rounded h-100 p-4">
@@ -180,7 +178,7 @@
 
 
                             <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-warning" })
 
                             </td>
 

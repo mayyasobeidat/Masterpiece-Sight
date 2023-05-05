@@ -11,13 +11,16 @@
     <table class="table-bordered table table-hover table-responsive">
         <tr>
             <th>
-                Date:
+                Session Date
             </th>
             <td>
                 @String.Format("{0:MM/dd/yyyy}", item.session_date)
             </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.id })
+            </td>
         </tr>
-        <tr>
+        @*<tr>
             <th>
                 Time of day:
             </th>
@@ -39,6 +42,6 @@
             <td colspan="2">
                 @Html.ActionLink("Details", "Details", new { id = item.id })
             </td>
-        </tr>
+        </tr>*@
     </table>
 }

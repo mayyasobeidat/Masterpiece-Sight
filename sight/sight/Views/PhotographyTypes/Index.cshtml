@@ -1,42 +1,39 @@
 ﻿@model IEnumerable<sight.Models.PhotographyType>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Services";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
 
-
-
 <style>
-
-    .myIMG {
-        top: -50px;
-        left: -35px;
-        display: block;
-        z-index: 999;
-        cursor: pointer;
-        -webkit-transition-property: all;
-        -webkit-transition-duration: 0.3s;
-        -webkit-transition-timing-function: ease;
+    .table td::-webkit-scrollbar {
+        width: 0.1em;
+        height: 10px;
+        background-color: #f8f9fa;
     }
 
-        .myIMG:hover {
-            transform: scale(4);
+    .table td::-webkit-scrollbar-thumb {
+        background-color: #555;
+    }
+
+        .table td::-webkit-scrollbar-thumb:hover {
+            background-color: darkorange;
         }
 </style>
 
 
+
 <div class="col-12">
     <div class="bg-secondary rounded h-100 p-4">
-        <h4 class="mb-4">  @Html.ActionLink("Create New Service", "Create")</h4>
+        <h4 class="mb-4"><a href="/PhotographyTypes/Create" class="btn btn-outline-warning">Create New Service</a></h4>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Service Name</th>
-                        <th scope="col">Description</th>
+                        <th scope="col" style="width:700px">Description</th>
                         <th scope="col">Photo</th>
                         <th scope="col"></th>
 
@@ -51,7 +48,9 @@
                         <tr>
                             <th scope="row">@i</th>
                             <td>@Html.DisplayFor(modelItem => item.TypeName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            <td style=" overflow: auto; ">
+                                <p style="height:40px">@Html.DisplayFor(modelItem => item.Description)</p>
+                            </td>
                             <td><img src="~/assetsUser/img/@Html.DisplayFor(modelItem => item.ImageUrl)" width="100px" class="myIMG" /></td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.TypeID }) |

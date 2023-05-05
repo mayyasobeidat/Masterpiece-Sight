@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photosAdmin>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Gallery";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 
 }
@@ -29,7 +29,7 @@
 
 <div class="col-12">
     <div class="bg-secondary rounded h-100 p-4">
-        <h4 class="mb-4">  @Html.ActionLink("Add New Photo", "Create")</h4>
+        <h4 class="mb-4"><a href="/photosAdmins/Create" class="btn btn-outline-warning">Add New Photo</a></h4>
         <div class="table-responsive">
             <table class="table">
                 <thead>

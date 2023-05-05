@@ -3,7 +3,9 @@
             <canvas id="Ord" style="max-height:500px;width:100%;"></canvas>
         </div>
     </div>*@
-
+@{ 
+    Layout = null;
+}
 
 <div class="col-sm-12 col-xl-4">
     <div class="bg-secondary rounded h-100 p-4">
@@ -29,7 +31,6 @@
         success: function (data) {
             // parse the data and use it to create the chart
             var ctx = document.getElementById("Subscription");
-            ctx.height = 150;
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -45,15 +46,15 @@
                 },
                 options: {
                     responsive: true,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+                //    scales: {
+                //        yAxes: [{
+                //            ticks: {
+                //                beginAtZero: true
+                //            }
+                //        }]
 
 
-                    }
+                //    }
                 }
             });
         }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.client>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -32,7 +32,7 @@
     <div class="bg-secondary rounded h-100 p-4">
         @*<h4 class="mb-4">  @Html.ActionLink("Add New Photographer", "Create")</h4>*@
         <div class="table-responsive">
-            <h6 class="mb-4">All Photographers</h6>
+            <h6 class="mb-4">All Users</h6>
             <table class="table">
                 <thead>
                     <tr>
@@ -53,6 +53,7 @@
                     }
                     @foreach (var item in Model)
                     {
+                       
                         <tr>
                             <th scope="row">@m</th>
                             <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.fullName)</a></td>
@@ -66,7 +67,7 @@
                             <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
                           
                             <td>
-                                @Html.ActionLink("Block", "BlockUserClient", "Account", new { id = item.user_id }, new { @class = "btn btn-outline-warning" })
+                                @Html.ActionLink("Block", "BlockUserClient", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
 
                             </td>
 

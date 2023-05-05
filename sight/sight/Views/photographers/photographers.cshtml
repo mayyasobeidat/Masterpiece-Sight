@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photographer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sight | Photographers";
 }
 
 
@@ -132,11 +132,11 @@
 
                     <div class="col-sm-6 col-xl-6 d-flex flex-sm-row flex-column">
 
-                        <label>Search by : &nbsp; &nbsp;</label>
-                        <span> @Html.RadioButton("searchBut", "All", true, new { @class = "form-check-input bg-black" }) All &nbsp; &nbsp; </span>
+                        <label style="color: #7d7d7d;">Search by : &nbsp; &nbsp;</label>
+                        <span style="color: #7d7d7d;"> @Html.RadioButton("searchBut", "All", true, new { @class = "form-check-input bg-black" }) All &nbsp; &nbsp; </span>
 
-                        <span> @Html.RadioButton("searchBut", "FullName", new { @class = "form-check-input bg-black" }) Full Name &nbsp; &nbsp; </span>
-                        <span>
+                        <span style="color: #7d7d7d;"> @Html.RadioButton("searchBut", "FullName", new { @class = "form-check-input bg-black" }) Full Name &nbsp; &nbsp; </span>
+                        <span style="color: #7d7d7d;">
                             @Html.RadioButton("searchBut", "PhoneNumber", new { @class = "form-check-input bg-black" })  Phone &nbsp; &nbsp;
                         </span>
                         @*<span>  @Html.RadioButton("searchBut", "Email", new { @class = "form-check-input bg-black" })  E-mail &nbsp; &nbsp;</span>*@
@@ -175,10 +175,21 @@
                             @*@Html.ActionLink("Request to Book" + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo-sessions", new { id = item.id }, new { @class = "btn btn-warning" })*@
 
 
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                if (User.IsInRole("Photographer"))
-                                {
+                           @{        sight.Models.sightEntities db = new sight.Models.sightEntities();
+
+
+                               var cityCount = db.photographer_cities.Where(a => a.photographer_id == item.id).Count();
+                               var typeCount = db.PhotographerTypes.Where(a => a.PhotographerID == item.id).Count();
+
+
+                               if (cityCount > 0 && typeCount > 0)
+                               {
+
+
+                                   if (User.Identity.IsAuthenticated)
+                                   {
+                                       if (User.IsInRole("Photographer"))
+                                       {
                                     @*<a href="#" class="btn btn-warning" onclick="if(confirm('You must log in with a user account. Do you want to log out?')){ document.getElementById('logoutForm').submit(); }"> Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])</a>*@
 
                                     <a href="#" class="btn btn-warning" onclick="preventDefault()">
@@ -200,13 +211,13 @@
                                         }
 
                                     </script>
-                                }
-                                else if (User.IsInRole("Client"))
-                                {
+                                       }
+                                       else if (User.IsInRole("Client"))
+                                       {
                                     @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo_sessions", new { id = item.id }, new { @class = "btn btn-warning" })
-                                }
-                                else if (User.IsInRole("Admin"))
-                                {
+                                       }
+                                       else if (User.IsInRole("Admin"))
+                                       {
                                     <a href="#" class="btn btn-warning" onclick="preventDefault()">
                                         Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])
                                     </a>
@@ -226,22 +237,22 @@
                                         }
 
                                     </script>
- }
-                            }
-                            else
-                            {
+                                       }
+                                   }
+                                   else
+                                   {
                                 @Html.ActionLink("Request to Book " + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Login", "Account", new { id = item.id }, new { @class = "btn btn-warning" })
-                            }
+                                       }
 
 
 
 
 
 
+                                   }
 
 
-
-
+                               }
 
                             @*<a href="#" class="btn btn-warning">
             Request to Book @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0])

@@ -2,39 +2,52 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
+    Layout = null;
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.question)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.answer)
-        </th>
-        <th></th>
-    </tr>
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <div class="table-responsive">
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Question</th>
+                        <th scope="col">Answer</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.question)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.answer)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+                    </tr>
+                </thead>
+                <tbody>
 
-</table>
+                    @{
+                        var i = 1;
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@Html.DisplayFor(modelItem => item.question)</td>
+                            <td>@Html.DisplayFor(modelItem => item.answer)</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                            </td>
+                        </tr>
+                        {
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

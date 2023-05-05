@@ -72,30 +72,35 @@
 
                                 <div class="mb-3 firstForm">
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-select", @id = "NewField3" })
-                                        @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
+                                        @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-select", @id = "NewField3", @required = "required" })
+                                        @*@Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })*@
                                         <label for="newField3">Type of Photography</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.DropDownList("city_id", null, htmlAttributes: new { @class = "form-select", @id = "NewField4" })
-                                        @Html.ValidationMessageFor(model => model.city_id, "", new { @class = "text-danger" })
+                                        @Html.DropDownList("city_id", null, htmlAttributes: new { @class = "form-select", @id = "NewField4", @required = "required" })
+                                        @*@Html.ValidationMessageFor(model => model.city_id, "", new { @class = "text-danger" })*@
                                         <label for="newField4">City</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.TextBoxFor(model => model.session_date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @id = "NewField" })
-                                        @Html.ValidationMessageFor(model => model.session_date, "", new { @class = "text-danger" })
+                                        <input type="date" class="form-control" id="NewField" name="session_date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                                        @*@Html.TextBoxFor(model => model.session_date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @id = "NewField" })*@
+                                        @*@Html.ValidationMessageFor(model => model.session_date, "", new { @class = "text-danger" })*@
                                         <label for="newField">day</label>
                                     </div>                                 
                                 </div>
                                 <div class="mb-3 firstForm">
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.TextBoxFor(model => model.session_time, "{0:hh\\:mm}", new { @class = "form-control", @type = "time", @id = "NewField9", data_sb_validations = "required" })
-                                        @Html.ValidationMessageFor(model => model.session_time, "", new { @class = "text-danger" })
+                                        <input type="time" class="form-control" id="NewField9" name="session_time" required />
+
+                                        @*@Html.TextBoxFor(model => model.session_time, "{0:hh\\:mm}", new { @class = "form-control", @type = "time", @id = "NewField9", data_sb_validations = "required" })*@
+                                        @*@Html.ValidationMessageFor(model => model.session_time, "", new { @class = "text-danger" })*@
                                         <label for="newField9">Time</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
-                                        @Html.EditorFor(model => model.howMany, new { htmlAttributes = new { @class = "form-control", type = "number", data_sb_validations = "required", @id = "NewFields", min = "1", max = "30" } })
-                                        @Html.ValidationMessageFor(model => model.howMany, "", new { @class = "text-danger" })
+                                        <input class="form-control" type="number" id="NewFields" name="howMany" required min="1" max="30"/>
+
+                                        @*@Html.EditorFor(model => model.howMany, new { htmlAttributes = new { @class = "form-control", type = "number", data_sb_validations = "required", @id = "NewFields", min = "1", max = "30" } })*@
+                                        @*@Html.ValidationMessageFor(model => model.howMany, "", new { @class = "text-danger" })*@
                                         <label for="newFields">The number of people</label>
                                     </div>
                                     <div class="form-floating mb-3 col-lg-4 col-md-4">
@@ -103,12 +108,12 @@
                                         @*@Html.EditorFor(model => model.client.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @value = Model.client.PhoneNumber } })*@
                                         @if (ViewBag.phone != null)
                                         {
-                                            <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" />
+                                            <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" value="@ViewBag.phone" required/>
 
                                         }
                                         else
                                         {
-                                            <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" />
+                                            <input class="form-control" id="newField3" name="phone" type="tel" pattern="^(\+?9627|009627|07)[7-9]{1}[0-9]{7}$" required />
 
                                         }
                                         @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })

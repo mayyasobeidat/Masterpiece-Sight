@@ -73,6 +73,9 @@ namespace sight.Controllers
 
         public ActionResult About()
         {
+            var ServicesCount = db.PhotographerTypes.Count();
+            ViewBag.ServicesCount = ServicesCount;
+
             ViewBag.Message = "Your application description page.";
 
             return View(db.FAQs.ToList());

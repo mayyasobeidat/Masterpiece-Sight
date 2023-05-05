@@ -623,13 +623,15 @@ namespace sight.Controllers
                 ViewBag.clientid = iduser;
                 ViewBag.photographerId = id;
             }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var photographer = db.photographers.Find(id);
+
+            ViewBag.Name = photographer.FullName;
+
 
             if (photographer == null)
             {
@@ -653,6 +655,11 @@ namespace sight.Controllers
                 .Distinct()
                 .Count();
             ViewBag.clientsCount = clientsCount;
+
+            var ServicesCount = db.PhotographerTypes
+                    .Count(p => p.PhotographerID == id);
+
+            ViewBag.ServicesCount = ServicesCount;
 
             return View(photographer);
         }

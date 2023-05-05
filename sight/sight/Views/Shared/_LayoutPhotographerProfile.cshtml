@@ -80,25 +80,36 @@
                 <h1 class="text-light">
                     @Html.DisplayFor(model => model.FullName)
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
-               
-                       if (User.IsInRole("Client"))
+                    @{sight.Models.sightEntities db = new sight.Models.sightEntities();
+
+
+                        var cityCount = db.photographer_cities.Where(a => a.photographer_id == Model.id).Count();
+                        var typeCount = db.PhotographerTypes.Where(a => a.PhotographerID == Model.id).Count();
+
+
+                        if (cityCount > 0 && typeCount > 0)
                         {
-                            <a href="@Url.Action("Create", "photo_sessions", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
-                                <i class="fas fa-plus-square"></i>
-                            </a>
 
-                        }
 
-               
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Login", "Account", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
-                            <i class="fas fa-plus-square"></i>
-                        </a>
-                    }
+                            if (User.Identity.IsAuthenticated)
+                            {
+
+                                if (User.IsInRole("Client"))
+                                {
+                    <a href="@Url.Action("Create", "photo_sessions", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
+                        <i class="fas fa-plus-square"></i>
+                    </a>
+
+                                }
+
+
+                            }
+                            else
+                            {
+                    <a href="@Url.Action("Login", "Account", new { id = Model.id })" class="warning" style="font-family: 'Open Sans', sans-serif; font-size: 24px; font-weight: bold;">
+                        <i class="fas fa-plus-square"></i>
+                    </a>
+                                } } }
 
                 </h1>
                

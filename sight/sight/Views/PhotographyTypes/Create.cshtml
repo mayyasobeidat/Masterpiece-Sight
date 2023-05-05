@@ -1,7 +1,7 @@
 ﻿@model sight.Models.PhotographyType
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Service";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -57,31 +57,72 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Service Name</label>
-                    @*<input type="text" class="form-control">*@
-                    @Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })
+                    <input type="text" class="form-control" placeholder="Enter Service Name" maxlength="70" name="TypeName" id="TypeName" required />
+                    @*@Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Description</label>
-                    @*<textarea class="form-control" placeholder="Describe this service" style="height: 150px;"></textarea>*@
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Describe this service", @style = "height: 300px;" })
+                    <textarea class="form-control" id="Description" style="height: 300px;" name="Description" maxlength="250" placeholder="Describe this service" required></textarea>
+
+                    @*@Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Describe this service", @style = "height: 300px;" })*@
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
 
 
                 </div>
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" /> |             @Html.ActionLink("Back", "Index")
+
 
                 @*<button type="submit" class="btn btn-primary">Save</button>*@
             </div>
         </div>
         <div class="col-sm-12 col-xl-6">
-            <input type="file" onchange="uploadImage(this)" accept="image/*" class="custom-file-input" name="ImageUrl">
+            <input type="file" name="ImageUrl" class="custom-file-input" accept="image/*" id="myFileInput" onchange="checkFileSize()" required>
             <img id="uploaded-image" src="#" alt="Uploaded Image" style="display: none; padding:20px 0" width="100%">
+
+
+            <script>
+                function checkFileSize() {
+                    const fileInput = document.getElementById('myFileInput');
+                    const fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+                    const imagePreview = document.getElementById('uploaded-image');
+                    if (fileSize > 2) { // check if the file size is greater than 2 MB
+                        Swal.fire({
+                            title: 'Sorry',
+                            text: 'File size should not exceed 2 MB',
+                            icon: 'warning',
+                            confirmButtonColor: '#ffc107',
+                        });
+                        fileInput.value = ''; // clear the input field
+                        imagePreview.style.display = 'none'; // hide the image preview
+                    } else {
+                        imagePreview.style.display = 'block'; // show the image preview
+                    }
+                }
+
+            </script>
+            <script>
+                const fileInput = document.getElementById('myFileInput');
+                const imagePreview = document.getElementById('uploaded-image');
+
+                fileInput.addEventListener('change', function () {
+                    const file = this.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.addEventListener('load', function () {
+                            imagePreview.src = URL.createObjectURL(file);
+                        });
+                        reader.readAsDataURL(file);
+                    } else {
+                        imagePreview.src = 'default-image-source.jpg';
+                    }
+                });
+
+            </script>
         </div>
         <br />
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+     
 
     </div>
 }
@@ -90,83 +131,7 @@
 
 
 
-<script>
-    function uploadImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#uploaded-image').attr('src', e.target.result);
-                $('#uploaded-image').show();
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<h2>Create</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>PhotographyType</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    }*@
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>

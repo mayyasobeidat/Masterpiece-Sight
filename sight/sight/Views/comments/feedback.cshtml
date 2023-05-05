@@ -4,6 +4,21 @@
     Layout = null;
 }
 
+<style>
+    .table td::-webkit-scrollbar {
+        width: 0.1em;
+        height: 10px;
+        background-color: #f8f9fa;
+    }
+
+    .table td::-webkit-scrollbar-thumb {
+        background-color: #555;
+    }
+
+        .table td::-webkit-scrollbar-thumb:hover {
+            background-color: darkorange;
+        }
+</style>
 
 @foreach (var item in Model)
 {
@@ -14,13 +29,13 @@
             <th>
                 Comment:
             </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.comment1)
+            <td style=" overflow: auto; ">
+                <p style="height:20px"> @Html.DisplayFor(modelItem => item.comment1)</p>
             </td>
         </tr>
         <tr>
             <th>
-                Created at:
+                Date:
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.created_at)
@@ -32,7 +47,7 @@
                 Photographer:
             </th>
             <td>
-                @Html.DisplayFor(modelItem => item.photographer.FullName)
+                <a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.photographer.id)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a>
             </td>
 
         </tr>

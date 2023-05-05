@@ -69,10 +69,15 @@
 
         <tr>
             <td colspan="2">
-                @Html.ActionLink("Details", "Details", new { id = item.id }) 
+                @Html.ActionLink("Details", "Details", new { id = item.id })
                 @if (item.caase == 3 || item.caase == 1)
                 {
-                   <span>|</span> @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    <span>|</span> @Html.ActionLink("Delete", "Delete", new { id = item.id })
+
+                }
+                @if (item.session_minutes == null)
+                {
+                    <span>|</span><a href="/photo_sessions/Edit/@item.id" class="text-danger">Complete Booking</a>
 
                 }
 

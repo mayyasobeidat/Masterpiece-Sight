@@ -1,33 +1,55 @@
 ﻿@model sight.Models.city
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete City";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
+
+
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this city?</h3>
 <div>
-    <h4>city</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.cityName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.cityName)
-        </dd>
+    @*@if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger"><b>Warning!! </b>You cannot delete a city added to the portfolio of your photographers!!</div>
+        }*@
 
-    </dl>
+    @if (ViewBag.Errors != null)
+    {
+        <div class="alert alert-danger"><b>Warning!! </b>You cannot delete a city added to the portfolio of your photographers!!</div>
+    }
 
-    @using (Html.BeginForm()) {
+    <div class="row">
+        <dl class="col-md-6 col-sm-12">
+
+
+            <dt><b style="color: #d9d9d9;">City:</b></dt>
+
+
+            <dd>
+                @Html.DisplayFor(model => model.cityName)
+            </dd>
+
+
+
+        </dl>
+    </div>
+
+
+
+
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back", "Create")
         </div>
     }
 </div>

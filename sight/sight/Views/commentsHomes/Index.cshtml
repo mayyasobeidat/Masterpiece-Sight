@@ -1,10 +1,24 @@
 ﻿@model IEnumerable<sight.Models.commentsHome>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Feedback";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
+<style>
+    .table td::-webkit-scrollbar {
+        width: 0.1em;
+        height: 10px;
+        background-color: #f8f9fa;
+    }
 
+    .table td::-webkit-scrollbar-thumb {
+        background-color: #555;
+    }
+
+        .table td::-webkit-scrollbar-thumb:hover {
+            background-color: darkorange;
+        }
+</style>
 
 
 <div class="col-12">
@@ -32,7 +46,9 @@
                     {
                         <tr>
                             <th scope="row">@j</th>
-                            <td>@item.comment</td>
+                            <td style=" overflow: auto; ">
+                                <p style="height:40px">@item.comment</p>
+                            </td>
                             <td>@item.created_at</td>
                             <td><a href="/photographers/PhotographerProfile/@item.photographer_id">@Html.DisplayFor(modelItem => item.photographer.FullName)</a></td>
                             <td>
@@ -77,15 +93,20 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    
                     @{
                         var i = 1;
                     }
 
                     @foreach (var item in Model.Where(x => x.is_approved))
                     {
+                        
                         <tr class="">
                             <th scope="row">@i</th>
-                            <td>@item.comment</td>
+                            <td style=" overflow: auto;">
+                                <p style="height:40px">@item.comment</p>
+                            </td>
                             <td>@item.created_at</td>
                             <td><a href="/photographers/PhotographerProfile/@item.photographer_id">@Html.DisplayFor(modelItem => item.photographer.FullName)</a></td>
                             <td>

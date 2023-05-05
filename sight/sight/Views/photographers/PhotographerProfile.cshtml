@@ -3,7 +3,7 @@
 
 
 @{
-    ViewBag.Title = "PhotographerProfile";
+    ViewBag.Title = @ViewBag.Name + " | Sight";
     Layout = "~/Views/Shared/_LayoutPhotographerProfile.cshtml";
 }
 
@@ -108,8 +108,8 @@
                             <div class="col-lg-4 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="300">
                                 <div class="count-box">
                                     <i class="bi bi-people"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
-                                    <p><strong>Hard Workers</strong> rerum asperiores dolor</p>
+                                    <span data-purecounter-start="0" data-purecounter-end="@ViewBag.ServicesCount" data-purecounter-duration="1" class="purecounter"></span>
+                                    <p><strong>Services</strong> @*rerum asperiores dolor*@</p>
                                 </div>
                             </div>
 
@@ -188,7 +188,7 @@
 
     int clientId = (int)ViewBag.clientid;
     int photographerId = (int)ViewBag.photographerId;
-    if (db.photo_sessions.Any(b => b.client_id == clientId && b.caase == 3 && b.photographer_id == photographerId))
+    if (db.photo_sessions.Any(b => b.client_id == clientId && b.caase == 2 && b.photographer_id == photographerId))
     {
 
 

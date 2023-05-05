@@ -5,7 +5,9 @@
             </div>
         </div>
     </div>*@
-
+@{
+    Layout = null;
+}
 <div class="col-sm-12 col-xl-12">
     <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">Percentages of photography sessions according to the type of photography</h6>
@@ -32,7 +34,7 @@
         success: function (data) {
             // parse the data and use it to create the chart
             var ctx = document.getElementById("singelBarChartt");
-            ctx.height = 150;
+            ctx.height = 250;
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {

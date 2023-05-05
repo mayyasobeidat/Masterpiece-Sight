@@ -1,7 +1,7 @@
 ﻿@model sight.Models.photo_sessions
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Booking details | Sight";
     Layout = "~/Views/Shared/_LayoutUsersPages.cshtml";
 }
 
@@ -17,6 +17,8 @@
         color: #4a4a4a;
     }
 
+
+
     @@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
     .bbb {
@@ -28,6 +30,7 @@
         width: 60%;
         padding: 4.5%;
     }
+
 
     @@media only screen and (min-device-width: 481px) and (max-device-width:768px) {
 
@@ -44,6 +47,21 @@
             padding: 10%;
         }
     }
+
+    .table td::-webkit-scrollbar {
+        width: 0.1em;
+        height: 10px;
+        background-color: #f8f9fa;
+    }
+
+    .table td::-webkit-scrollbar-thumb {
+        background-color: #555;
+    }
+
+        .table td::-webkit-scrollbar-thumb:hover {
+            background-color: darkorange;
+        }
+
 </style>
 
 <main id="main" class="main" style="padding-top: 60px;">
@@ -63,187 +81,214 @@
 
                     <div id="form3">
 
-                        <h2>New Booking</h2>
+                        <h2>Booking details</h2>
 
 
 
 
                         <div>
                             <hr />
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th>
-                                            Session Date
-                                        </th>
-                                        <td>
-                                            @String.Format("{0:MM/dd/yyyy}", Model.session_date)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Session Time
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.session_time)
-                                        </td>
-                                    </tr>
-                                    @*<tr>
-            <th>
-                Status
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.status)
-            </td>
-        </tr>*@
-                                    <tr>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <td>
-                                            @if (Model.caase == 1)
-                                            {
-                                                <span>waiting</span>
-                                            }
-                                            else if (Model.caase == 2)
-                                            {
-                                                <span>accept</span>
-                                            }
-                                            else if (Model.caase == 3)
-                                            {
-                                                <span>reject</span>
-                                            }
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                Session Date
+                                            </th>
+                                            <td>
+                                                @String.Format("{0:MM/dd/yyyy}", Model.session_date)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Session Time
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.session_time)
+                                            </td>
+                                        </tr>
 
-                                            @*@Html.DisplayFor(model => model.caase)*@
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Book Date
-                                        </th>
-                                        <td>
-                                            @String.Format("{0:MM/dd/yyyy}", Model.created_at)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            City
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.city.cityName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Client Name
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.client.fullName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Client Phone
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.phone)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Client Email
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.client.AspNetUser.Email)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Photographer
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.photographer.FullName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Photography Type
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.PhotographyType.TypeName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Description
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.theDescription)
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        <tr>
+                                            <th>
+                                                Price
+                                            </th>
+                                            <td>
+                                                @ViewBag.SessionPrice JD , @Html.DisplayFor(model => model.session_minutes)
+
+                                            </td>
+                                        </tr>
+                                        @*<tr>
+                                                <th>
+                                                    Status
+                                                </th>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.status)
+                                                </td>
+                                            </tr>*@
+                                        <tr>
+                                            <th class="col-3">
+                                                Status
+                                            </th>
+                                            <td>
+                                                @if (Model.caase == 1)
+                                                {
+                                                    <span>waiting</span>
+                                                }
+                                                else if (Model.caase == 2)
+                                                {
+                                                    <span>accept</span>
+                                                }
+                                                else if (Model.caase == 3)
+                                                {
+                                                    <span>reject</span>
+                                                }
+
+                                                @*@Html.DisplayFor(model => model.caase)*@
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Book Date
+                                            </th>
+                                            <td>
+                                                @String.Format("{0:MM/dd/yyyy}", Model.created_at)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                City
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.city.cityName)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Client Name
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.client.fullName)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Client Phone
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.phone)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Client Email
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.client.AspNetUser.Email)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Photographer
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.photographer.FullName)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Photography Type
+                                            </th>
+                                            <td>
+                                                @Html.DisplayFor(model => model.PhotographyType.TypeName)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Description
+                                            </th>
+                                            <td style=" overflow: auto; ">
+                                                <p style="height:40px">@Html.DisplayFor(model => model.theDescription)</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         @if (User.IsInRole("Photographer"))
                         {
-                            <p>
-                                @*@Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" }) |*@
-                                |
+                            <div class="container">
+                                <div class="row">
+                                    @if (Model.caase == 1 && Model.session_date > DateTime.Now)
+                                    {
 
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropp">
-                                    Accept
-                                </button>
+                                        <div class="col-md-2 m-2">
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropp">
+                                                Accept
+                                            </button>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="staticBackdropp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdroppLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdroppLabel">
-                                                    Accept Booking
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to Accept this booking?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <a href="/photo_sessions/Accept/@Model.id" class="btn btn-success">Accept</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                @*@Html.ActionLink("Reject", "Reject", new { id = Model.id }, new { @class = "btn btn-danger" })*@
-
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                    Reject
-                                </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">
-                                                    Reject Booking
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to Reject this booking?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <a href="/photo_sessions/Reject/@Model.id" class="btn btn-danger">Reject</a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="staticBackdropp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdroppLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdroppLabel">
+                                                                Accept Booking
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to Accept this booking?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <a href="/photo_sessions/Accept/@Model.id" class="btn btn-success">Accept</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="col-md-2 m-2">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                Reject
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">
+                                                                Reject Booking
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to Reject this booking?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <a href="/photo_sessions/Reject/@Model.id" class="btn btn-danger">Reject</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>}
+                                    <div class="col-md-2 m-2"> @*@Html.ActionLink("Back", "BookingPhotographer")*@<a href="/photo_sessions/BookingPhotographer" class="btn btn-warning">Back</a> </div>
                                 </div>
+                            </div>
+
+
+
+                            @*@Html.ActionLink("Accept", "Accept", new { id = Model.id }, new { @class = "btn btn-success" }) |*@
+
+
+
+
+
+
+                            @*@Html.ActionLink("Reject", "Reject", new { id = Model.id }, new { @class = "btn btn-danger" })*@
 
 
 
@@ -251,14 +296,20 @@
 
 
 
-                                @*@Html.ActionLink("Edit", "Edit", new { id = Model.id }) |*@
-                                @Html.ActionLink("Back", "BookingPhotographer")
-                            </p>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = Model.id }) |*@
+
+
                         }
-                        else
+                        else if (User.IsInRole("Client"))
                         {
                             <p>
                                 @Html.ActionLink("Back", "Edit", "Clients")
+                            </p>
+                        }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <p>
+                                @Html.ActionLink("Back", "Index", "photo_sessions")
                             </p>
                         }
 
@@ -277,17 +328,3 @@
     </div>
 </main>
 <!-- End #main -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-

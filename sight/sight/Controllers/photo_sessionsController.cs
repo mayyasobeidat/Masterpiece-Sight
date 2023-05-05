@@ -37,7 +37,7 @@ namespace sight.Controllers
 
             int PhoID = @ViewBag.phoID;
 
-            int newBookingCount = db.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.caase == 1  &&  p.session_date >= DateTime.Today).Count();
+            int newBookingCount = db.photo_sessions.Where(p => p.photographer_id == PhoID && p.status == false && p.caase == 1  &&  p.session_date >= DateTime.Today && p.session_minutes != null).Count();
             ViewBag.newBookingCount = newBookingCount;
             return View();
 
@@ -63,7 +63,8 @@ namespace sight.Controllers
                             .Include(p => p.photographer)
                             .Include(p => p.PhotographyType)
                             .Include(p => p.PhotographerPricing)
-                            .Where(p => p.client_id == iduser && p.session_date >= today);
+                            .Where(p => p.client_id == iduser && p.session_date >= today)
+                            .OrderBy(p => p.session_date);
 
             return View(photo_sessions.ToList());
 
@@ -138,7 +139,8 @@ namespace sight.Controllers
                             .Include(p => p.photographer)
                             .Include(p => p.PhotographyType)
                             .Include(p => p.PhotographerPricing)
-                            .Where(p => p.photographer_id == idPho && p.status == true && p.session_date >= today);
+                            .Where(p => p.photographer_id == idPho && p.status == true && p.session_date >= today)
+                            .OrderBy(p => p.session_date);
 
             return View(photo_sessions.ToList());
 
@@ -157,7 +159,8 @@ namespace sight.Controllers
                             .Include(p => p.photographer)
                             .Include(p => p.PhotographyType)
                             .Include(p => p.PhotographerPricing)
-                            .Where(p => p.photographer_id == idPho && p.status == true && p.session_date <= today);
+                            .Where(p => p.photographer_id == idPho && p.status == true && p.session_date <= today)
+                            .OrderBy(p => p.session_date);
 
             return View(photo_sessions.ToList());
 
@@ -193,7 +196,36 @@ namespace sight.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
-            if (photo_sessions == null)
+
+            string time = db.photo_sessions.FirstOrDefault(a => a.id == id).session_minutes;
+            int type = db.photo_sessions.FirstOrDefault(a => a.id == id).TypeID;
+            int photographerr = db.photo_sessions.FirstOrDefault(a => a.id == id).photographer_id;
+
+            if (time != null)
+            {
+                if (time == "60 minutes")
+                {
+                    decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == photographerr && a.PhotographyTypeID == type).PriceOneHour;
+                    Session["SessionPrice"] = price;
+                    ViewBag.SessionPrice = price;
+
+                }
+                else if (time == "90 minutes")
+                {
+                    decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == photographerr && a.PhotographyTypeID == type).PriceOneAndHalfHour;
+                    Session["SessionPrice"] = price;
+                    ViewBag.SessionPrice = price;
+
+                }
+                else if (time == "120 minutes")
+                {
+                    decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == photographerr && a.PhotographyTypeID == type).PriceTwoHours;
+                    Session["SessionPrice"] = price;
+                    ViewBag.SessionPrice = price;
+
+                }
+            }
+                if (photo_sessions == null)
             {
                 return HttpNotFound();
             }
@@ -377,6 +409,20 @@ namespace sight.Controllers
             {
                 return HttpNotFound();
             }
+            Session["type"] = photo_sessions.TypeID;
+            Session["PhotographerID"] = photo_sessions.photographer_id;
+            Session["City"] = photo_sessions.city_id;
+            Session["Time"] = photo_sessions.session_time;
+            Session["date"] = photo_sessions.session_date;
+            Session["user"] = photo_sessions.client_id;
+            Session["phone"] = photo_sessions.phone;
+
+            Session["theDescription"] = photo_sessions.theDescription;
+            Session["howMany"] = photo_sessions.howMany;
+            Session["created_at"] = photo_sessions.created_at;
+            Session["status"] = photo_sessions.status;
+            Session["caase"] = photo_sessions.caase;
+
 
             int photographerId = (int)Session["PhotographerID"];
             var photographyTypeID = (int)Session["type"];
@@ -404,7 +450,6 @@ namespace sight.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,photographer_id,client_id,city_id,TypeID,session_date,session_time,status,created_at,howMany,theDescription,pricing_id,session_minutes")] photo_sessions photo_sessions, int? id, string minutes)
         {
-
 
             if (ModelState.IsValid)
             {

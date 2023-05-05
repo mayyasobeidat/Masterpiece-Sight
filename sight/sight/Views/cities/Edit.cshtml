@@ -1,38 +1,41 @@
 ﻿@model sight.Models.city
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit City";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>city</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.cityName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="text" class="form-control" value="@Model.cityName" maxlength="25" name="cityName" id="cityName" required />
-                @Html.ValidationMessageFor(model => model.cityName, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+
+
+<div class="row g-4">
+    <div class="col-sm-12 col-xl-12">
+        <div class="bg-secondary rounded h-100 p-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <h4>city</h4>
+                <hr />
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.id)
+
+                <div class="row">
+                    <div class="form-group col-xl-12">
+                        <input type="text" class="form-control" placeholder="Enter the city name" maxlength="1000" name="cityName" id="cityName" required value="@Model.cityName" /><br />
+                        @Html.ValidationMessageFor(model => model.cityName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-xl-2">
+                        <input type="submit" value="Create" class="btn btn-warning" />|    @Html.ActionLink("Back", "Create")
+                        <br />
+                    </div>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back", "Create")
 </div>
+
+

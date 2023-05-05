@@ -7,19 +7,25 @@
 
 @foreach (var item in Model)
 {
+
+    if (item.session_minutes != null)
+    {
     <hr />
     <table class="table-bordered table table-hover table-responsive">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.session_date)
+                Session Date
             </th>
             <td>
                 @String.Format("{0:MM/dd/yyyy}", item.session_date)
             </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.id })
+            </td>
         </tr>
-        <tr>
+        @*<tr>
             <th>
-                @Html.DisplayNameFor(model => model.session_time)
+                Session Time
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.session_time)
@@ -48,12 +54,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhotographyType.TypeName)
             </td>
-        </tr>
-        <tr>
+        </tr>*@
+        @*<tr>
             <td colspan="2">
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.id })
             </td>
-        </tr>
+        </tr>*@
     </table>
+    }
 }

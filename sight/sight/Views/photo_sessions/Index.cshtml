@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photo_sessions>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bookings";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -94,7 +94,7 @@
                             @Html.DisplayFor(modelItem => item.client.AspNetUser.Email)
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-outline-warning" })
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-warning" })
                         </td>
                     </tr>
                 }

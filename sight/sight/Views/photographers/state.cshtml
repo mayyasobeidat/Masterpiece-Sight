@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<sight.Models.photographer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Photographers";
     Layout = "~/Views/Shared/_LayoutAdminDashboard.cshtml";
 }
 
@@ -85,7 +85,7 @@
 
                             }
                             <td>
-                                @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-outline-warning" })
+                                @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
 
                             </td>
 
