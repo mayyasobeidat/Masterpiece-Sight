@@ -23,22 +23,23 @@ namespace sight.Controllers
             int iduser = db.photographers.FirstOrDefault(a => a.user_id == x).id;
             ViewBag.photographersID = iduser;
 
-            var photos = db.photos.Include(p => p.photographer).Include(p => p.PhotographyType1).Where(p => p.photographer_id == iduser);
+            var photos = db.photos.Include(p => p.photographer).Include(p => p.PhotographyType1).Where(p => p.photographer_id == iduser).OrderByDescending(p => p.id);
+            ;
             return View(photos.ToList());
         }
 
         // GET: photos/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photo photo = db.photos.Find(id);
-            if (photo == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photo);
         }
 
@@ -100,20 +101,20 @@ namespace sight.Controllers
             int iduser = db.photographers.FirstOrDefault(a => a.user_id == x).id;
             ViewBag.photographersID = iduser;
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photo photo = db.photos.Find(id);
             Session["IMG"] = photo.photo_url;
             Session["iduser"] = iduser;
 
 
 
-            if (photo == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo == null)
+            //{
+            //    return HttpNotFound();
+            //}
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", photo.photographer_id);
             ViewBag.photographyType = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photo.photographyType);
             return View(photo);
@@ -150,15 +151,15 @@ namespace sight.Controllers
         // GET: photos/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photo photo = db.photos.Find(id);
-            if (photo == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photo);
         }
 

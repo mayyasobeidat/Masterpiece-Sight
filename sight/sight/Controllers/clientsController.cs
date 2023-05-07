@@ -17,30 +17,36 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: clients
+
+
         public ActionResult Index()
         {
             var clients = db.clients.Include(c => c.AspNetUser);
             return View(clients.ToList());
         }
 
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult state()
         {
-            var clients = db.clients.Include(p => p.AspNetUser).Where(a=> a.state != "block");
+            var clients = db.clients.Include(p => p.AspNetUser);
+
             return View(clients.ToList());
         }
 
         // GET: clients/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             client client = db.clients.Find(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
+            //if (client == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(client);
         }
 
@@ -74,19 +80,19 @@ namespace sight.Controllers
         {
             var x = User.Identity.GetUserId();
             id = db.clients.FirstOrDefault(a => a.user_id == x).id;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             client client = db.clients.Find(id);
             Session["photo"] = client.photo;
             Session["user_id"] = client.user_id;
 
 
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
+            //if (client == null)
+            //{
+            //    return HttpNotFound();
+            //}
             ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", client.user_id);
             return View(client);
         }
@@ -121,17 +127,19 @@ namespace sight.Controllers
         }
 
         // GET: clients/Delete/5
+
+    
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             client client = db.clients.Find(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
+            //if (client == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(client);
         }
 

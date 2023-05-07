@@ -128,6 +128,7 @@
     <Property Name="session_minutes" Type="varchar" MaxLength="50" />
     <Property Name="phone" Type="nvarchar(max)" />
     <Property Name="caase" Type="int" />
+    <Property Name="totalPrice" Type="float" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>

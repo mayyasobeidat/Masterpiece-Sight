@@ -21,28 +21,41 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: photographers
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var photographers = db.photographers.Include(p => p.AspNetUser).Include(p => p.Subscriptions);
             return View(photographers.ToList());
         }
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Indexx()
         {
             var photographers = db.photographers.Include(p => p.AspNetUser);
             return View(photographers.ToList());
         }
 
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Indexxx()
         {
             var photographers = db.photographers.Include(p => p.AspNetUser);
             return View(photographers.ToList());
         }
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Photos()
         {
             var photos = db.photos.Include(p => p.photographer).Include(p => p.PhotographyType1);
             return View(photos.ToList());
         }
 
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult state()
         {
             var photographers = db.photographers.Include(p => p.AspNetUser);
@@ -50,7 +63,7 @@ namespace sight.Controllers
         }
 
 
-
+       
         public ActionResult Search(string search, string searchBut)
         {
             if (searchBut == "FullName")
@@ -116,10 +129,12 @@ namespace sight.Controllers
 
 
 
+      
         public ActionResult Pays()
         {
             return View();
         }
+
 
         public ActionResult Accept(int? id)
         {
@@ -198,26 +213,28 @@ namespace sight.Controllers
         //    return RedirectToAction("Indexxx", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
         //}
 
+
         public ActionResult Deactivate(int? id)
         {
             var photographer = db.photographers.Find(id);
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             photographer.is_hidden = true;
             db.Entry(photographer).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index", "photographers"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
         }
 
+
         public ActionResult Activate(int? id)
         {
             var photographer = db.photographers.Find(id);
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             photographer.is_hidden = false;
             db.Entry(photographer).State = EntityState.Modified;
             db.SaveChanges();
@@ -613,6 +630,21 @@ namespace sight.Controllers
 
 
 
+        public ActionResult ptice(int?id) // لعرض الاسعار عند المستخدمين
+        {
+            int userId = (int)id;
+            var PhotographerPricings = db.PhotographerPricings.Include(p => p.photographer)
+                .Include(p => p.PhotographyType)
+                .Where(p => p.photographer.id == userId)
+                .ToList();
+            return View(PhotographerPricings.ToList());
+        }
+
+
+
+
+
+
 
         public ActionResult PhotographerProfile(int? id)
         {
@@ -623,20 +655,20 @@ namespace sight.Controllers
                 ViewBag.clientid = iduser;
                 ViewBag.photographerId = id;
             }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
 
             var photographer = db.photographers.Find(id);
 
             ViewBag.Name = photographer.FullName;
 
 
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
             if (!photographer.accept || photographer.is_hidden)
             {
@@ -676,17 +708,23 @@ namespace sight.Controllers
 
 
         // GET: photographers/Details/5
+
+
+
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photographer photographer = db.photographers.Find(id);
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographer);
         }
 
@@ -725,10 +763,10 @@ namespace sight.Controllers
                 id = db.photographers.FirstOrDefault(a => a.user_id == x).id;
                 ViewBag.photographerid = id;
 
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                //if (id == null)
+                //{
+                //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //}
 
                 photographer photographer = db.photographers.Find(id);
                 Session["coverPhoto"] = photographer.coverPhoto;
@@ -838,17 +876,19 @@ namespace sight.Controllers
         }
 
         // GET: photographers1/Delete/5
+
+
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //    if (id == null)
+            //    {
+            //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //    }
             photographer photographer = db.photographers.Find(id);
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographer);
         }
 

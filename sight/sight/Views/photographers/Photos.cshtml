@@ -114,7 +114,7 @@
             <div class="col-sm-12">
                 <div class="card-deck">
 
-                    @foreach (var item in Model.OrderByDescending(p => p.created_at))
+                    @foreach (var item in Model.OrderByDescending(p => p.id))
                     {
                         <div class="cardd">
                             <a href="~/assetsUser/img/portfolio/@item.photo_url" download="@item.photographer.FullName">

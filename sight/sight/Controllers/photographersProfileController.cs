@@ -33,15 +33,15 @@ namespace sight.Controllers
         // GET: photographersProfile/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photographer photographer = db.photographers.Find(id);
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographer);
         }
 
@@ -71,17 +71,16 @@ namespace sight.Controllers
         }
 
         // GET: photographersProfile/Edit/5
-        [Authorize(Roles = "Photographer")]
         public ActionResult Edit(int? id)
         {
             var x = User.Identity.GetUserId();
             id = db.photographers.FirstOrDefault(a => a.user_id == x)?.id;
             ViewBag.phoID = id;
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
 
             photographer photographer = db.photographers.Find(id);
             Session["coverPhoto"] = photographer.coverPhoto;
@@ -92,10 +91,10 @@ namespace sight.Controllers
             Session["user_id"] = photographer.user_id;
 
 
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
             // Add the values you want to display to ViewBag
             var subscription = db.Subscriptions
@@ -120,7 +119,6 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Photographer")]
 
         public ActionResult Edit([Bind(Include = "id,user_id,FullName,subscription_type,profilePhoto,coverPhoto,bio,accept,is_hidden,created_at,age,instagram,facebook,twitter,linkedin,PhoneNumber")] photographer photographer, HttpPostedFileBase coverPhoto, HttpPostedFileBase profilePhoto)
         {
@@ -159,7 +157,6 @@ namespace sight.Controllers
             return View(photographer);     
         }
 
-        [Authorize(Roles = "Photographer")]
         public ActionResult AddType(int id)
         {
             try
@@ -205,7 +202,6 @@ namespace sight.Controllers
             }
 
         }
-        [Authorize(Roles = "Photographer")]
 
         public ActionResult DeleteType(int id)
         {
@@ -229,7 +225,6 @@ namespace sight.Controllers
 
 
 
-        [Authorize(Roles = "Photographer")]
 
         public ActionResult AddCity(int id)
         {
@@ -265,7 +260,6 @@ namespace sight.Controllers
             }
 
         }
-        [Authorize(Roles = "Photographer")]
 
         public ActionResult DeleteCity(int id)
         {
@@ -295,15 +289,15 @@ namespace sight.Controllers
         // GET: photographersProfile/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photographer photographer = db.photographers.Find(id);
-            if (photographer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographer);
         }
 

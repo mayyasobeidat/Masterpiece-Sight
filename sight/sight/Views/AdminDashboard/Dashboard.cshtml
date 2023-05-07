@@ -1,7 +1,123 @@
-﻿
+﻿@model IEnumerable<sight.Models.photographer>
+
 @{
     ViewBag.Title = "Dashboard";
 }
 
+<div class="col-sm-12 col-xl-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">New Photographers</h6>
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
 
 
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Where(x => !x.accept && x.state != "block" && x.state != "deleted"))
+                    {
+                        <tr>
+                            <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                            <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
+                            <td>@String.Format("{0:MM/dd/yyyy}", item.created_at) <b style="color:lawngreen"> &nbsp; New</b></td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", "photographers", new { id = item.id }, new { @class = "btn btn-warning" })
+
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Accept", "Accept", "photographers", new { id = item.id }, new { @class = "btn btn-success" })
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Reject", "Reject", new { id = item.id }, new { @class = "btn btn-danger" })*@
+
+                                @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
+
+                            </td>
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<div class="col-sm-12 col-xl-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">New Subscription</h6>
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col"></th>
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+                        @{sight.Models.sightEntities datab = new sight.Models.sightEntities();
+                        sight.Models.Subscription photos = new sight.Models.Subscription();
+                        var photo = datab.Subscriptions.Where(x => x.photographer.accept).OrderByDescending(x => x.ID).Take(12).ToList();
+
+                        foreach (var item in photo)
+                        {
+                            <tr>
+                                <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.PhotographerId)">@Html.DisplayFor(modelItem => item.photographer.FullName)</a></td>
+                                <td><img src="~/assetsUser/img/@item.photographer.profilePhoto" width="30px" class="myIMG" /></td>
+                                @if (item.startDate == DateTime.Today)
+                                {
+                                    <td>@String.Format("{0:MM/dd/yyyy}", item.startDate) <b style="color:lawngreen"> &nbsp; New</b></td>
+
+
+
+                                }
+                                else
+                                {
+                                    <td>@String.Format("{0:MM/dd/yyyy}", item.startDate)</td>
+
+                                }
+                                <td>@String.Format("{0:MM/dd/yyyy}", item.endDate)</td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", "photographers", new { id = item.photographer.id }, new { @class = "btn btn-warning" })
+
+                                </td>
+
+
+
+                            </tr>
+
+                        }
+                        }
+                          
+                </tbody>
+
+
+
+
+
+
+
+                </table>
+        </div>
+    </div>
+</div>

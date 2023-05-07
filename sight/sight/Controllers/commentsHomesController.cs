@@ -16,12 +16,18 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: commentsHomes
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var commentsHomes = db.commentsHomes.Include(c => c.photographer);
             return View(commentsHomes.ToList());
         }
 
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Accept(int? id)
         {
             var comment = db.commentsHomes.Find(id);
@@ -35,6 +41,9 @@ namespace sight.Controllers
             return RedirectToAction("Index"); // أعد توجيه المستخدم إلى صفحة العرض الرئيسية للتعليقات
         }
 
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Hide(int? id)
         {
             var comment = db.commentsHomes.Find(id);
@@ -51,19 +60,22 @@ namespace sight.Controllers
         // GET: commentsHomes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             commentsHome commentsHome = db.commentsHomes.Find(id);
-            if (commentsHome == null)
-            {
-                return HttpNotFound();
-            }
+            //if (commentsHome == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(commentsHome);
         }
 
         // GET: commentsHomes/Create
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Photographer")]
         public ActionResult Create(int? id)
         {
 
@@ -81,6 +93,9 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Photographer")]
         public ActionResult Create([Bind(Include = "id,photographer_id,comment,is_approved,created_at")] commentsHome commentsHome)
         {
             if (ModelState.IsValid)
@@ -107,15 +122,15 @@ namespace sight.Controllers
         // GET: commentsHomes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             commentsHome commentsHome = db.commentsHomes.Find(id);
-            if (commentsHome == null)
-            {
-                return HttpNotFound();
-            }
+            //if (commentsHome == null)
+            //{
+            //    return HttpNotFound();
+            //}
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", commentsHome.photographer_id);
             return View(commentsHome);
         }
@@ -138,17 +153,20 @@ namespace sight.Controllers
         }
 
         // GET: commentsHomes/Delete/5
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             commentsHome commentsHome = db.commentsHomes.Find(id);
-            if (commentsHome == null)
-            {
-                return HttpNotFound();
-            }
+            //if (commentsHome == null)
+            //{
+            //    //return HttpNotFound();
+            //}
             return View(commentsHome);
         }
 

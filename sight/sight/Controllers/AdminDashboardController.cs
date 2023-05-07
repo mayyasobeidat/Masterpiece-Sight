@@ -14,8 +14,8 @@ using sight.Models;
 
 namespace sight.Controllers
 {
-    [HandleError(View = "Error")]
-    [Authorize(Roles = "Admin")]
+
+
     public class AdminDashboardController : Controller
     {
         // GET: AdminDashboard
@@ -58,8 +58,9 @@ namespace sight.Controllers
             return Content(count.ToString());
         }
 
-   
 
+
+    
 
         public ActionResult Index()
         {
@@ -67,17 +68,15 @@ namespace sight.Controllers
         }
 
 
-
-
-
-
-
-
-
-
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Statistics()
         {
-    
+            var ServicesCount = db.PhotographerTypes.Count();
+            ViewBag.ServicesCount = ServicesCount;
+
+            var CommentsCount = db.commentsHomes.Count();
+            ViewBag.CommentsCount = CommentsCount;
             return View();
         }
         //public ActionResult Statisticssss()
@@ -98,10 +97,12 @@ namespace sight.Controllers
         //}
 
 
-
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Dashboard()
         {
-            return View();
+            var photographers = db.photographers.Include(p => p.AspNetUser);
+            return View(photographers.ToList());
         }
 
         public ActionResult MostPopulerCities()
@@ -151,7 +152,7 @@ namespace sight.Controllers
             return Json(myData, JsonRequestBehavior.AllowGet);
         }
 
-
+    
         public ActionResult MostPopulerTypes()
         {
             int TotalType = db.photo_sessions.Count();
@@ -172,8 +173,8 @@ namespace sight.Controllers
                     if (type.TypeID == item1.TypesID)
                     {
                         float avg = Convert.ToInt32(TotalType);
-                        float coun = Convert.ToInt32(item1.TypesID);
-                        result = (coun / avg) * 100;
+                        float coun = Convert.ToInt32(item1.TypesCount);
+                        result = (  coun/ avg) * 100;
                         string Perc = result.ToString("0.00");
                         double Finalpercent = Convert.ToDouble(Perc);
                         typeper[c] = Finalpercent;
@@ -197,7 +198,7 @@ namespace sight.Controllers
             };
             return Json(myDatas, JsonRequestBehavior.AllowGet);
         }
-
+      
         public ActionResult PhotoSessions()
         {
             double Total = db.photo_sessions.Count();
@@ -233,7 +234,7 @@ namespace sight.Controllers
             return Json(myData, JsonRequestBehavior.AllowGet);
         }
 
-
+    
         public ActionResult Photographers()
         {
             double Total = db.photographers.Count();
@@ -320,7 +321,7 @@ namespace sight.Controllers
 
 
 
-
+  
         public ActionResult MonthlyStatistics()
         {
             var stats = db.photo_sessions.GroupBy(x => new { x.session_date.Year, x.session_date.Month })

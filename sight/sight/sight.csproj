@@ -363,8 +363,7 @@
     <Content Include="assetsUser\img\444.png" />
     <Content Include="assetsUser\img\555.png" />
     <Content Include="assetsUser\img\55511.png" />
-    <Content Include="assetsUser\img\about.jpg" />
-    <Content Include="assetsUser\img\apple-touch-icon.png" />
+    <Content Include="assetsUser\img\aboutus.jpg" />
     <Content Include="assetsUser\img\baraa.png" />
     <Content Include="assetsUser\img\baraaCover.png" />
     <Content Include="assetsUser\img\body.jpg" />
@@ -378,6 +377,7 @@
     <Content Include="assetsUser\img\clients\client-8.png" />
     <Content Include="assetsUser\img\conn.png" />
     <Content Include="assetsUser\img\counts-img.jpg" />
+    <Content Include="assetsUser\img\counts.jpg" />
     <Content Include="assetsUser\img\cta-bg.jpg" />
     <Content Include="assetsUser\img\cta-bg1.jpg" />
     <Content Include="assetsUser\img\cta-bg2.jpg" />

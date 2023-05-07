@@ -11,6 +11,8 @@ using sight.Models;
 
 namespace sight.Controllers
 {
+    [HandleError(View = "Error")]
+    [Authorize(Roles = "Admin")]
     public class photosAdminsController : Controller
     {
         private sightEntities db = new sightEntities();
@@ -18,22 +20,23 @@ namespace sight.Controllers
         // GET: photosAdmins
         public ActionResult Index()
         {
-            var photosAdmins = db.photosAdmins.Include(p => p.photographer).Include(p => p.PhotographyType1);
+
+            var photosAdmins = db.photosAdmins.Include(p => p.photographer).Include(p => p.PhotographyType1).OrderByDescending(x => x.id);
             return View(photosAdmins.ToList());
         }
 
         // GET: photosAdmins/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photosAdmin photosAdmin = db.photosAdmins.Find(id);
-            if (photosAdmin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photosAdmin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photosAdmin);
         }
 
@@ -76,17 +79,17 @@ namespace sight.Controllers
         public ActionResult Edit(int? id)
         {
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photosAdmin photosAdmin = db.photosAdmins.Find(id);
             Session["photo"] = photosAdmin.photo;
 
-            if (photosAdmin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photosAdmin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             ViewBag.photographerID = new SelectList(db.photographers, "id", "FullName", photosAdmin.photographerID);
             ViewBag.photographyType = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photosAdmin.photographyType);
             return View(photosAdmin);
@@ -124,15 +127,15 @@ namespace sight.Controllers
         // GET: photosAdmins/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photosAdmin photosAdmin = db.photosAdmins.Find(id);
-            if (photosAdmin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photosAdmin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photosAdmin);
         }
 

@@ -14,6 +14,8 @@ using Microsoft.AspNet.Identity;
 using sight.Models;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace sight.Controllers
 {
@@ -22,6 +24,10 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: photo_sessions
+
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var photo_sessions = db.photo_sessions.Include(p => p.city).Include(p => p.client).Include(p => p.photographer).Include(p => p.PhotographyType).Include(p => p.PhotographerPricing);
@@ -83,7 +89,8 @@ namespace sight.Controllers
                             .Include(p => p.photographer)
                             .Include(p => p.PhotographyType)
                             .Include(p => p.PhotographerPricing)
-                            .Where(p => p.client_id == iduser && p.session_date <= today);
+                            .Where(p => p.client_id == iduser && p.session_date <= today)
+                              .OrderByDescending(p => p.session_date);
 
             return View(photo_sessions.ToList());
 
@@ -189,61 +196,35 @@ namespace sight.Controllers
 
 
         // GET: photo_sessions1/Details/5
+
+
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            ViewBag.id = id;
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
 
-            string time = db.photo_sessions.FirstOrDefault(a => a.id == id).session_minutes;
-            int type = db.photo_sessions.FirstOrDefault(a => a.id == id).TypeID;
-            int photographerr = db.photo_sessions.FirstOrDefault(a => a.id == id).photographer_id;
-
-            if (time != null)
-            {
-                if (time == "60 minutes")
-                {
-                    decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == photographerr && a.PhotographyTypeID == type).PriceOneHour;
-                    Session["SessionPrice"] = price;
-                    ViewBag.SessionPrice = price;
-
-                }
-                else if (time == "90 minutes")
-                {
-                    decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == photographerr && a.PhotographyTypeID == type).PriceOneAndHalfHour;
-                    Session["SessionPrice"] = price;
-                    ViewBag.SessionPrice = price;
-
-                }
-                else if (time == "120 minutes")
-                {
-                    decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == photographerr && a.PhotographyTypeID == type).PriceTwoHours;
-                    Session["SessionPrice"] = price;
-                    ViewBag.SessionPrice = price;
-
-                }
-            }
-                if (photo_sessions == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo_sessions == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photo_sessions);
         }
-
         public ActionResult Accept(int? id)
         {
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
-            if (photo_sessions == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo_sessions == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
             photo_sessions.status = true;
             photo_sessions.caase = 2;
@@ -256,15 +237,15 @@ namespace sight.Controllers
         public ActionResult Reject(int? id)
         {
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
-            if (photo_sessions == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo_sessions == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
             photo_sessions.status = false;
             photo_sessions.caase = 3;
@@ -398,10 +379,10 @@ namespace sight.Controllers
             int iduser = db.clients.FirstOrDefault(a => a.user_id == x).id;
             ViewBag.clientid = iduser;
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             //int photoSessionsID = db.photo_sessions.OrderByDescending(a=>a.id).FirstOrDefault(s => s.client_id == iduser).id;
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
 
@@ -434,6 +415,7 @@ namespace sight.Controllers
             ViewBag.PriceOneHour = pricings.PriceOneHour;
             ViewBag.PriceOneAndHalfHour = pricings.PriceOneAndHalfHour;
             ViewBag.PriceTwoHours = pricings.PriceTwoHours;
+
 
 
             var pricingList = new List<PhotographerPricing> { pricings };
@@ -471,10 +453,38 @@ namespace sight.Controllers
                 photo_sessions.caase = (int)Session["caase"];
 
 
+                int idPhoto = (int)Session["PhotographerID"];
+                int id_type = (int)Session["type"];
+                if (minutes != null)
+                {
+                    if (minutes == "60 minutes")
+                    {
+                        decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == idPhoto && a.PhotographyTypeID == id_type).PriceOneHour;
+                        photo_sessions.totalPrice = (float)price;
+
+                    }
+                    else if (minutes == "90 minutes")
+                    {
+                        decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == idPhoto && a.PhotographyTypeID == id_type).PriceOneAndHalfHour;
+                        photo_sessions.totalPrice = (float)price;
+
+
+                    }
+                    else if (minutes == "120 minutes")
+                    {
+                        decimal price = db.PhotographerPricings.FirstOrDefault(a => a.PhotographerID == idPhoto && a.PhotographyTypeID == id_type).PriceTwoHours;
+                        photo_sessions.totalPrice = (float)price;
+
+
+                    }
+                }
+
                 db.Entry(photo_sessions).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Edit", "Clients");
             }
+
+
          
             return View(photo_sessions);
         }
@@ -482,16 +492,17 @@ namespace sight.Controllers
         // GET: photo_sessions1/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.id = id;
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             photo_sessions photo_sessions = db.photo_sessions.Find(id);
-            if (photo_sessions == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photo_sessions == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photo_sessions);
         }
 

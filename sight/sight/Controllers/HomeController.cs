@@ -29,7 +29,8 @@ namespace sight.Controllers
 
         public ActionResult gallery()
         {
-            var photos = db.photosAdmins;
+
+            var photos = db.photosAdmins.OrderByDescending(x => x.id).Take(15);
             return View(photos.ToList());
         }
 

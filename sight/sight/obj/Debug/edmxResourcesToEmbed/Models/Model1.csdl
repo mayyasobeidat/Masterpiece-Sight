@@ -244,6 +244,7 @@
     <Property Name="session_minutes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="caase" Type="Int32" />
+    <Property Name="totalPrice" Type="Double" />
   </EntityType>
   <EntityType Name="photographer_cities">
     <Key>

@@ -17,6 +17,8 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: admins
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var admins = db.admins.Include(a => a.AspNetUser);
@@ -24,21 +26,25 @@ namespace sight.Controllers
         }
 
         // GET: admins/Details/5
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             admin admin = db.admins.Find(id);
-            if (admin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (admin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(admin);
         }
 
         // GET: admins/Create
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email");
@@ -50,6 +56,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "id,FullName,profilePhoto,user_id,created_at")] admin admin)
         {
             if (ModelState.IsValid)
@@ -64,21 +72,23 @@ namespace sight.Controllers
         }
 
         // GET: admins/Edit/5
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             var x = User.Identity.GetUserId();
             id = db.admins.FirstOrDefault(a => a.user_id == x).id;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             admin admin = db.admins.Find(id);
             Session["profilePhoto"] = admin.profilePhoto;
 
-            if (admin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (admin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             ViewBag.user_id = new SelectList(db.AspNetUsers, "Id", "Email", admin.user_id);
             return View(admin);
         }
@@ -88,6 +98,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "id,FullName,profilePhoto,user_id,created_at")] admin admin, HttpPostedFileBase profilePhoto)
         {
             admin.profilePhoto = Session["profilePhoto"].ToString();
@@ -110,17 +122,19 @@ namespace sight.Controllers
         }
 
         // GET: admins/Delete/5
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             admin admin = db.admins.Find(id);
-            if (admin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (admin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(admin);
         }
 

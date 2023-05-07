@@ -7,7 +7,7 @@
 
 
 
-<style>
+@*<style>
 
 
     .myIMG {
@@ -24,7 +24,7 @@
         .myIMG:hover {
             transform: scale(4);
         }
-</style>
+</style>*@
 
 
 @*<div class="row g-4">
@@ -87,7 +87,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var item in Model.Where(x => !x.accept))
+                        @foreach (var item in Model.Where(x => !x.accept && x.state != "block" && x.state != "deleted"))
                         {
                             <tr>
                                 <td><a href="/photographers/PhotographerProfile/@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.FullName)</a></td>

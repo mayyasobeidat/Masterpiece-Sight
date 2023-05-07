@@ -120,15 +120,17 @@ namespace sight.Controllers
         // GET: comments/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            ViewBag.id = id;
+
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             comment comment = db.comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
+            //if (comment == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(comment);
         }
 
@@ -436,7 +438,7 @@ namespace sight.Controllers
 
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         // Update the photographer's state to "block"
                         photographer photographers = new photographer();
                         var photographer = db.photographers.FirstOrDefault(p => p.user_id == id);
@@ -478,7 +480,7 @@ namespace sight.Controllers
 
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         // Update the photographer's state to "block"
                         client clients = new client();
                         var client = db.clients.FirstOrDefault(p => p.user_id == id);
@@ -521,7 +523,7 @@ namespace sight.Controllers
 
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         // Update the client's state to "unblock"
                         var client = db.clients.FirstOrDefault(p => p.user_id == id);
                         if (client != null)
@@ -564,7 +566,7 @@ namespace sight.Controllers
 
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // Update the photographer's state to "unblock"
                         photographer photographers = new photographer();
@@ -583,7 +585,6 @@ namespace sight.Controllers
             // Redirect the user to an error page if the user is not found or the update fails
             return RedirectToAction("blackList", "AspNetUsers");
         }
-
 
 
 

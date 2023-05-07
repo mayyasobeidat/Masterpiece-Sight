@@ -1,4 +1,5 @@
 ﻿@model sight.Models.photo_sessions
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Delete Booking | Sight";
@@ -47,196 +48,655 @@
     }
 </style>
 
-<main id="main" class="main" style="padding-top: 60px;">
-
-    <div class="container">
-
-
-        <section class="section profile">
 
 
 
-            <div class="row d-flex align-items-center justify-content-center">
+@if (User.Identity.IsAuthenticated)
+{
+    sight.Models.sightEntities db = new sight.Models.sightEntities();
+    var photo = db.photo_sessions.ToList();
 
-                <div class="card bookCard">
+    if (User.IsInRole("Photographer"))
 
+    {
 
-
-                    <div id="form3">
-
-
-
-                        <h2>Delete</h2>
-
-                        <h3>Are you sure you want to delete this booking?</h3>
+        int x = ViewBag.id;
 
 
+        string currentUserId = User.Identity.GetUserId(); // افتراضي اسم الدالة هو GetUserId
+        int iduserph = db.photographers.FirstOrDefault(a => a.user_id == currentUserId).id;
+        var booking = db.photo_sessions.FirstOrDefault(b => b.id == x && (b.photographer_id == iduserph));
+
+        if (Model.photographer_id == iduserph)
+        {
+            <main id="main" class="main" style="padding-top: 60px;">
+
+                <div class="container">
 
 
-                        <div>
-                            <hr />
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th>
-                                            Session Date
-                                        </th>
-                                        <td>
-                                            @String.Format("{0:MM/dd/yyyy}", Model.session_date)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Session Time
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.session_time)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Session Duration
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.session_minutes)
-                                        </td>
-                                    </tr>
-                                    @*<tr>
-            <th>
-                Status
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.status)
-            </td>
-        </tr>*@
-                                    <tr>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <td>
-                                            @if (Model.caase == 1)
-                                            {
-                                                <span>waiting</span>
-                                            }
-                                            else if (Model.caase == 2)
-                                            {
-                                                <span>accept</span>
-                                            }
-                                            else if (Model.caase == 3)
-                                            {
-                                                <span>reject</span>
-                                            }
+                    <section class="section profile">
 
-                                            @*@Html.DisplayFor(model => model.caase)*@
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Book Date
-                                        </th>
-                                        <td>
-                                            @String.Format("{0:MM/dd/yyyy}", Model.created_at)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            City
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.city.cityName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Client Name
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.client.fullName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Client Phone
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.phone)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Client Email
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.client.AspNetUser.Email)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Photographer
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.photographer.FullName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Photography Type
-                                        </th>
-                                        <td>
-                                            @Html.DisplayFor(model => model.PhotographyType.TypeName)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Description
-                                        </th>
-                                        <td style=" overflow: auto; ">
-                                            <p style="height:40px">@Html.DisplayFor(model => model.theDescription)</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+
+                        <div class="row d-flex align-items-center justify-content-center">
+
+                            <div class="card bookCard">
+
+
+
+                                <div id="form3">
+
+
+
+                                    <h2>Delete</h2>
+
+                                    <h3>Are you sure you want to delete this booking?</h3>
+
+
+
+
+                                    <div>
+                                        <hr />
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Session Date
+                                                    </th>
+                                                    <td>
+                                                        @String.Format("{0:MM/dd/yyyy}", Model.session_date)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Session Time
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.session_time)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Price
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.totalPrice) JD , @Html.DisplayFor(model => model.session_minutes)
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Session Duration
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.session_minutes)
+                                                    </td>
+                                                </tr>
+                                                @*<tr>
+                                                        <th>
+                                                            Status
+                                                        </th>
+                                                        <td>
+                                                            @Html.DisplayFor(model => model.status)
+                                                        </td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <th>
+                                                        Status
+                                                    </th>
+                                                    <td>
+                                                        @if (Model.caase == 1)
+                                                        {
+                                                            <span>waiting</span>
+                                                        }
+                                                        else if (Model.caase == 2)
+                                                        {
+                                                            <span>accept</span>
+                                                        }
+                                                        else if (Model.caase == 3)
+                                                        {
+                                                            <span>reject</span>
+                                                        }
+
+                                                        @*@Html.DisplayFor(model => model.caase)*@
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Book Date
+                                                    </th>
+                                                    <td>
+                                                        @String.Format("{0:MM/dd/yyyy}", Model.created_at)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        City
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.city.cityName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Client Name
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.client.fullName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Client Phone
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.phone)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Client Email
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.client.AspNetUser.Email)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Photographer
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.photographer.FullName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Photography Type
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.PhotographyType.TypeName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Description
+                                                    </th>
+                                                    <td style=" overflow: auto; ">
+                                                        <p style="height:40px">@Html.DisplayFor(model => model.theDescription)</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+                                    @if (Model.caase == 1 || Model.caase == 3)
+                                    {
+                                        using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-actions no-color">
+                                                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                                                @if (User.IsInRole("Photographer"))
+                                                {
+                                                    @Html.ActionLink("Back", "BookingPhotographer")
+
+                                                }
+                                                else
+                                                {
+
+                                                    @Html.ActionLink("Back", "Edit", "Clients")
+
+                                                }
+
+                                            </div>
+                                        }
+
+                                    }
+
+
+
+                                </div>
+
+
+                            </div>
                         </div>
-           
 
-
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
-
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger" /> |
-                        @if (User.IsInRole("Photographer"))
-                        {
-                            @Html.ActionLink("Back", "BookingPhotographer")
-
-                        }
-                        else
-                        {
-                            
-                                @Html.ActionLink("Back", "Edit", "Clients")
-                            
-                        }
-
-                    </div>
-                        }
-
-
-
-                    </div>
-
+                    </section>
 
                 </div>
+            </main>
+
+
+        }
+        else
+        {
+            <main id="main" class="main" style="padding-top: 60px;">
+
+                <div class="container">
+
+
+                    <section class="section profile">
+
+
+
+                        <div class="row d-flex align-items-center justify-content-center">
+
+                            <div class="card bookCard">
+
+
+
+                                <div id="form3">
+
+                                    <h2>Booking details</h2>
+
+
+
+
+                                    <div>
+                                        <hr />
+                                        <h1>This information is private</h1>
+
+                                    </div>
+                                    @if (User.IsInRole("Photographer"))
+                                    {
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-2 m-2"> @*@Html.ActionLink("Back", "BookingPhotographer")*@<a href="/photo_sessions/BookingPhotographer" class="btn btn-warning">Back</a> </div>
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                    else if (User.IsInRole("Client"))
+                                    {
+                                        <p>
+                                            @Html.ActionLink("Back", "Edit", "Clients")
+                                        </p>
+                                    }
+                                    else if (User.IsInRole("Admin"))
+                                    {
+                                        <p>
+                                            @Html.ActionLink("Back", "Index", "photo_sessions")
+                                        </p>
+                                    }
+
+
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
+            </main>
+
+        }
+
+    }
+    else if (User.IsInRole("Client"))
+    {
+        int x = ViewBag.id;
+
+        string currentUserId = User.Identity.GetUserId(); // افتراضي اسم الدالة هو GetUserId
+        int iduser = db.clients.FirstOrDefault(a => a.user_id == currentUserId).id;
+        var booking = db.photo_sessions.FirstOrDefault(b => b.id == x && (b.client_id == iduser));
+
+        if (Model.client_id == iduser)
+        {
+            <main id="main" class="main" style="padding-top: 60px;">
+
+                <div class="container">
+
+
+                    <section class="section profile">
+
+
+
+                        <div class="row d-flex align-items-center justify-content-center">
+
+                            <div class="card bookCard">
+
+
+
+                                <div id="form3">
+
+
+
+                                    <h2>Delete</h2>
+
+                                    <h3>Are you sure you want to delete this booking?</h3>
+
+
+
+
+                                    <div>
+                                        <hr />
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        Session Date
+                                                    </th>
+                                                    <td>
+                                                        @String.Format("{0:MM/dd/yyyy}", Model.session_date)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Session Time
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.session_time)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Price
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.totalPrice) JD , @Html.DisplayFor(model => model.session_minutes)
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Session Duration
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.session_minutes)
+                                                    </td>
+                                                </tr>
+                                                @*<tr>
+                                                        <th>
+                                                            Status
+                                                        </th>
+                                                        <td>
+                                                            @Html.DisplayFor(model => model.status)
+                                                        </td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <th>
+                                                        Status
+                                                    </th>
+                                                    <td>
+                                                        @if (Model.caase == 1)
+                                                        {
+                                                            <span>waiting</span>
+                                                        }
+                                                        else if (Model.caase == 2)
+                                                        {
+                                                            <span>accept</span>
+                                                        }
+                                                        else if (Model.caase == 3)
+                                                        {
+                                                            <span>reject</span>
+                                                        }
+
+                                                        @*@Html.DisplayFor(model => model.caase)*@
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Book Date
+                                                    </th>
+                                                    <td>
+                                                        @String.Format("{0:MM/dd/yyyy}", Model.created_at)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        City
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.city.cityName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Client Name
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.client.fullName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Client Phone
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.phone)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Client Email
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.client.AspNetUser.Email)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Photographer
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.photographer.FullName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Photography Type
+                                                    </th>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.PhotographyType.TypeName)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Description
+                                                    </th>
+                                                    <td style=" overflow: auto; ">
+                                                        <p style="height:40px">@Html.DisplayFor(model => model.theDescription)</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    @if (Model.caase == 1 || Model.caase == 3)
+                                    {
+                                        using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-actions no-color">
+                                                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                                                @if (User.IsInRole("Photographer"))
+                                                {
+                                                    @Html.ActionLink("Back", "BookingPhotographer")
+
+                                                }
+                                                else
+                                                {
+
+                                                    @Html.ActionLink("Back", "Edit", "Clients")
+
+                                                }
+
+                                            </div>
+                                        }
+
+                                    }
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
+            </main>
+
+        }
+        else
+        {
+            <main id="main" class="main" style="padding-top: 60px;">
+
+                <div class="container">
+
+
+                    <section class="section profile">
+
+
+
+                        <div class="row d-flex align-items-center justify-content-center">
+
+                            <div class="card bookCard">
+
+
+
+                                <div id="form3">
+
+                                    <h2>Booking details</h2>
+
+
+
+
+                                    <div>
+                                        <hr />
+                                        <h1>This information is private</h1>
+
+                                    </div>
+                                    @if (User.IsInRole("Photographer"))
+                                    {
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-2 m-2"> @*@Html.ActionLink("Back", "BookingPhotographer")*@<a href="/photo_sessions/BookingPhotographer" class="btn btn-warning">Back</a> </div>
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                    else if (User.IsInRole("Client"))
+                                    {
+                                        <p>
+                                            @Html.ActionLink("Back", "Edit", "Clients")
+                                        </p>
+                                    }
+                                    else if (User.IsInRole("Admin"))
+                                    {
+                                        <p>
+                                            @Html.ActionLink("Back", "Index", "photo_sessions")
+                                        </p>
+                                    }
+
+
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
+            </main>
+
+        }
+    }
+    else
+    {
+        <main id="main" class="main" style="padding-top: 60px;">
+
+            <div class="container">
+
+
+                <section class="section profile">
+
+
+
+                    <div class="row d-flex align-items-center justify-content-center">
+
+                        <div class="card bookCard">
+
+
+
+                            <div id="form3">
+
+                                <h2>Booking details</h2>
+
+
+
+
+                                <div>
+                                    <hr />
+                                    <h1>This information is private</h1>
+
+                                </div>
+                                @if (User.IsInRole("Photographer"))
+                                {
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-2 m-2"> @*@Html.ActionLink("Back", "BookingPhotographer")*@<a href="/photo_sessions/BookingPhotographer" class="btn btn-warning">Back</a> </div>
+                                        </div>
+                                    </div>
+
+
+                                }
+                                else if (User.IsInRole("Client"))
+                                {
+                                    <p>
+                                        @Html.ActionLink("Back", "Edit", "Clients")
+                                    </p>
+                                }
+                                else if (User.IsInRole("Admin"))
+                                {
+                                    <p>
+                                        @Html.ActionLink("Back", "Index", "photo_sessions")
+                                    </p>
+                                }
+
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </section>
+
             </div>
+        </main>
 
-        </section>
+    }
 
-    </div>
-</main>
+}
+
+
+
+
+
+
+
+
+
+
+
 <!-- End #main -->
-
-
-
-
-
-

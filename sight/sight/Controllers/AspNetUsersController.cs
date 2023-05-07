@@ -15,10 +15,14 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: AspNetUsers
+
         public ActionResult Index()
         {
             return View(db.AspNetUsers.ToList());
         }
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult blackList()
         {
             //var blockedPhotographers = db.photographers
@@ -40,7 +44,8 @@ namespace sight.Controllers
             return View(blockedPhotographers.ToList());
         }
 
-
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult blackListClient()
         {
             var blockedClients = db.clients
@@ -50,6 +55,7 @@ namespace sight.Controllers
         }
 
         // GET: AspNetUsers/Details/5
+
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -65,6 +71,7 @@ namespace sight.Controllers
         }
 
         // GET: AspNetUsers/Create
+   
         public ActionResult Create()
         {
             return View();
@@ -75,6 +82,7 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
@@ -90,15 +98,15 @@ namespace sight.Controllers
         // GET: AspNetUsers/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
+            //if (aspNetUser == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(aspNetUser);
         }
 
@@ -121,15 +129,15 @@ namespace sight.Controllers
         // GET: AspNetUsers/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
+            //if (aspNetUser == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(aspNetUser);
         }
 

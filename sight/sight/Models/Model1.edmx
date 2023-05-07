@@ -133,6 +133,7 @@
           <Property Name="session_minutes" Type="varchar" MaxLength="50" />
           <Property Name="phone" Type="nvarchar(max)" />
           <Property Name="caase" Type="int" />
+          <Property Name="totalPrice" Type="float" />
         </EntityType>
         <EntityType Name="photographer_cities">
           <Key>
@@ -939,6 +940,7 @@
           <Property Name="session_minutes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="caase" Type="Int32" />
+          <Property Name="totalPrice" Type="Double" />
         </EntityType>
         <EntityType Name="photographer_cities">
           <Key>
@@ -1491,6 +1493,7 @@
           <EntitySetMapping Name="photo_sessions">
             <EntityTypeMapping TypeName="sightModel.photo_sessions">
               <MappingFragment StoreEntitySet="photo_sessions">
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
                 <ScalarProperty Name="caase" ColumnName="caase" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="session_minutes" ColumnName="session_minutes" />

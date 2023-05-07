@@ -11,6 +11,8 @@ using sight.Models;
 
 namespace sight.Controllers
 {
+    [HandleError(View = "Error")]
+    [Authorize(Roles = "Admin")]
     public class PhotographyTypesController : Controller
     {
         private sightEntities db = new sightEntities();
@@ -27,15 +29,15 @@ namespace sight.Controllers
         // GET: PhotographyTypes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             PhotographyType photographyType = db.PhotographyTypes.Find(id);
-            if (photographyType == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographyType == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographyType);
         }
 
@@ -78,17 +80,17 @@ namespace sight.Controllers
         public ActionResult Edit(int? id)
         {
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             PhotographyType photographyType = db.PhotographyTypes.Find(id);
             Session["ImageUrl"] = photographyType.ImageUrl;
 
-            if (photographyType == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographyType == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographyType);
         }
 
@@ -124,15 +126,15 @@ namespace sight.Controllers
         // GET: PhotographyTypes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             PhotographyType photographyType = db.PhotographyTypes.Find(id);
-            if (photographyType == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographyType == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographyType);
         }
 

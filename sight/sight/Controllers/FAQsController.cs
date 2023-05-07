@@ -15,27 +15,35 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: FAQs
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.FAQs.ToList());
         }
 
         // GET: FAQs/Details/5
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             FAQ fAQ = db.FAQs.Find(id);
-            if (fAQ == null)
-            {
-                return HttpNotFound();
-            }
+            //if (fAQ == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(fAQ);
         }
 
         // GET: FAQs/Create
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +54,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "id,question,answer")] FAQ fAQ)
         {
             if (ModelState.IsValid)
@@ -59,17 +69,20 @@ namespace sight.Controllers
         }
 
         // GET: FAQs/Edit/5
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             FAQ fAQ = db.FAQs.Find(id);
-            if (fAQ == null)
-            {
-                return HttpNotFound();
-            }
+            //if (fAQ == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(fAQ);
         }
 
@@ -78,6 +91,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "id,question,answer")] FAQ fAQ)
         {
             if (ModelState.IsValid)
@@ -90,17 +105,19 @@ namespace sight.Controllers
         }
 
         // GET: FAQs/Delete/5
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             FAQ fAQ = db.FAQs.Find(id);
-            if (fAQ == null)
-            {
-                return HttpNotFound();
-            }
+            //if (fAQ == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(fAQ);
         }
 

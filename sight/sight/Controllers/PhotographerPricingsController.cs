@@ -16,6 +16,11 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: PhotographerPricings1
+
+
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Photographer")]
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
@@ -29,15 +34,15 @@ namespace sight.Controllers
         // GET: PhotographerPricings1/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             PhotographerPricing photographerPricing = db.PhotographerPricings.Find(id);
-            if (photographerPricing == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographerPricing == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographerPricing);
         }
 
@@ -69,21 +74,25 @@ namespace sight.Controllers
         }
 
         // GET: PhotographerPricings1/Edit/5
+
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Photographer")]
         public ActionResult Edit(int? id)
         {
          
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             PhotographerPricing photographerPricing = db.PhotographerPricings.Find(id);
             Session["photographer"] = photographerPricing.PhotographerID;
             Session["type"] = photographerPricing.PhotographyTypeID;
-            if (photographerPricing == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographerPricing == null)
+            //{
+            //    return HttpNotFound();
+            //}
             //ViewBag.PhotographerID = new SelectList(db.photographers, "id", "FullName", photographerPricing.PhotographerID);
             //ViewBag.PhotographyTypeID = new SelectList(db.PhotographyTypes, "TypeID", "TypeName", photographerPricing.PhotographyTypeID);
             return View(photographerPricing);
@@ -94,6 +103,9 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Photographer")]
         public ActionResult Edit([Bind(Include = "ID,PhotographerID,PhotographyTypeID,PriceOneHour,PriceOneAndHalfHour,PriceTwoHours")] PhotographerPricing photographerPricing)
         {
 
@@ -113,15 +125,15 @@ namespace sight.Controllers
         // GET: PhotographerPricings1/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             PhotographerPricing photographerPricing = db.PhotographerPricings.Find(id);
-            if (photographerPricing == null)
-            {
-                return HttpNotFound();
-            }
+            //if (photographerPricing == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(photographerPricing);
         }
 

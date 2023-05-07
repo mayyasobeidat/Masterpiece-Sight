@@ -42,6 +42,9 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Photo</th>
                         <th scope="col">Create at</th>
+                        <th scope="col">Create at</th>
+                        <th scope="col">State</th>
+
                         <th scope="col"></th>
 
 
@@ -65,7 +68,19 @@
                             </td>
                             <td><img src="~/assetsUser/img/@item.photo" width="30px" class="myIMG" /></td>
                             <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
-                          
+
+
+                            @if (item.state == "block")
+                            {
+                            <td style="color:red">Blocked</td>
+
+                            }
+                            else
+                            {
+                            <td style="color:limegreen">Active</td>
+
+                            }
+
                             <td>
                                 @Html.ActionLink("Block", "BlockUserClient", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
 

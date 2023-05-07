@@ -66,15 +66,38 @@
                             </td>
                             <td><img src="~/assetsUser/img/@item.profilePhoto" width="30px" class="myIMG" /></td>
                             <td>@String.Format("{0:MM/dd/yyyy}", item.created_at)</td>
+                   
+
                             @if (item.accept)
                             {
-                                <td style="color:limegreen">Accepted</td>
+
+                                if (item.state == "block")
+                                {
+                                    <td style="color:red">Blocked</td>
+
+                                }
+                                else
+                                {
+                                    <td style="color:limegreen">Accepted</td>
+
+                                }
+
                             }
                             else
                             {
-                                <td style="color:red">Not Accepted</td>
+                                if (item.state == "block")
+                                {
+                                    <td style="color:red">Blocked</td>
+
+                                }
+                                else
+                                {
+                                    <td style="color:red">Not Accepted</td>
+
+                                }
 
                             }
+
                             @if (item.is_hidden)
                             {
                                 <td style="color:red">Deactivated</td>
@@ -84,6 +107,8 @@
                                 <td style="color:limegreen">Activated</td>
 
                             }
+
+
                             <td>
                                 @Html.ActionLink("Block", "BlockUser", "Account", new { id = item.user_id }, new { @class = "btn btn-danger" })
 

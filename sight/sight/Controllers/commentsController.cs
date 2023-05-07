@@ -80,15 +80,15 @@ namespace sight.Controllers
         // GET: comments/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             comment comment = db.comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
+            //if (comment == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(comment);
         }
 
@@ -135,15 +135,15 @@ namespace sight.Controllers
         // GET: comments/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             comment comment = db.comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
+            //if (comment == null)
+            //{
+            //    return HttpNotFound();
+            //}
             ViewBag.client_id = new SelectList(db.clients, "id", "user_id", comment.client_id);
             ViewBag.photographer_id = new SelectList(db.photographers, "id", "user_id", comment.photographer_id);
             return View(comment);
@@ -170,15 +170,16 @@ namespace sight.Controllers
         // GET: comments/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            ViewBag.id = id;
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             comment comment = db.comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
+            //if (comment == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(comment);
         }
 

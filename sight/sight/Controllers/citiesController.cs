@@ -15,27 +15,34 @@ namespace sight.Controllers
         private sightEntities db = new sightEntities();
 
         // GET: cities
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.cities.ToList());
         }
 
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         // GET: cities/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             city city = db.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
+            //if (city == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(city);
         }
 
         // GET: cities/Create
+
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +53,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "id,cityName")] city city)
         {
             if (ModelState.IsValid)
@@ -59,17 +68,19 @@ namespace sight.Controllers
         }
 
         // GET: cities/Edit/5
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             city city = db.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
+            //if (city == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(city);
         }
 
@@ -78,6 +89,8 @@ namespace sight.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "id,cityName")] city city)
         {
             if (ModelState.IsValid)
@@ -90,17 +103,19 @@ namespace sight.Controllers
         }
 
         // GET: cities/Delete/5
+        [HandleError(View = "Error")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             city city = db.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
+            //if (city == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(city);
         }
 

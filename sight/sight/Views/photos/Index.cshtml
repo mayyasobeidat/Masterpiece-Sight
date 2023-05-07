@@ -23,11 +23,11 @@
     }
 
  
-    .mmm {
+    .mmmp {
         width: 100%;
     }
 
-    .mm {
+    .p {
         top: 0;
         left: 0;
         width: 100%;
@@ -54,7 +54,7 @@
                             @Html.ActionLink("✎", "Edit", new { id = item.id }, new { @class = "pos" }) <span style="color:ghostwhite">|</span>
                             @Html.ActionLink("✘", "Delete", new { id = item.id }, new { @class = "deletA" })
                         </div>
-                        <div class="mmm"><img class="mm" src="~/assetsUser/img/portfolio/@item.photo_url" alt="..." /></div>
+                        <div class="mmmp"><img class="p" src="~/assetsUser/img/portfolio/@item.photo_url" alt="..." /></div>
                         <div class="portfolio-caption p-1" style="background-color: #00000030 ">
                             <span class="portfolio-caption-subheading text-muted"> @item.PhotographyType1.TypeName </span>
                             @if( item.title != null)

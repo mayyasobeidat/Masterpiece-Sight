@@ -92,6 +92,7 @@
     <EntitySetMapping Name="photo_sessions">
       <EntityTypeMapping TypeName="sightModel.photo_sessions">
         <MappingFragment StoreEntitySet="photo_sessions">
+          <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
           <ScalarProperty Name="caase" ColumnName="caase" />
           <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="session_minutes" ColumnName="session_minutes" />

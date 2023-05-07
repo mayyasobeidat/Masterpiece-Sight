@@ -7,6 +7,19 @@
 
 
 <style>
+    ::-webkit-scrollbar {
+        width: 0.3em;
+        height: 10px;
+        background-color: #f8f9fa;
+    }
+
+   ::-webkit-scrollbar-thumb {
+        background-color: #555;
+    }
+
+       ::-webkit-scrollbar-thumb:hover {
+            background-color: darkorange;
+        }
     @@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
     .card-custom {
@@ -92,6 +105,8 @@
             padding: 20px 20px;
         }
     }
+
+ 
 </style>
 
 
@@ -170,6 +185,7 @@
                             <p class="card-text" style="color:#ddd;">
                                 @Html.DisplayFor(modelItem => item.bio)
                             </p>
+                         
                         </div>
                         <div class="cardButt">
                             @*@Html.ActionLink("Request to Book" + @Html.DisplayFor(modelItem => item.FullName.Split(' ')[0]), "Create", "photo-sessions", new { id = item.id }, new { @class = "btn btn-warning" })*@

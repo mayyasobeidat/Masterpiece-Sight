@@ -26,15 +26,15 @@ namespace sight.Controllers
         // GET: Subscriptions1/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             Subscription subscription = db.Subscriptions.Find(id);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }
+            //if (subscription == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(subscription);
         }
 
@@ -71,17 +71,17 @@ namespace sight.Controllers
             ViewBag.photographerid = id;
 
         
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             var subID = db.Subscriptions.FirstOrDefault(a => a.PhotographerId == id).ID;
 
             Subscription subscription = db.Subscriptions.Find(subID);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }      
+            //if (subscription == null)
+            //{
+            //    return HttpNotFound();
+            //}      
             ViewBag.PhotographerId = new SelectList(db.photographers, "id", "user_id", subscription.PhotographerId);
             return View(subscription);
         }
@@ -125,15 +125,15 @@ namespace sight.Controllers
         // GET: Subscriptions1/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             Subscription subscription = db.Subscriptions.Find(id);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }
+            //if (subscription == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(subscription);
         }
 
